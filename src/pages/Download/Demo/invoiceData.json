@@ -1,0 +1,68 @@
+{
+  "company": {
+      "name": "Company Name",
+      "subtitle": "Company Subtitle",
+      "addressLine1": "123 Company St",
+      "addressLine2": "Suite 100",
+      "city": "City",
+      "state": "State",
+      "postalCode": "12345",
+      "contactName": "John Doe",
+      "contactTel": "123-456-7890",
+      "contactEmail": "john.doe@example.com",
+      "gstin": "12ABCDE3456F7Z8"
+  },
+  "invoice": {
+      "invoiceNumber": "INV-12345",
+      "challanNumber": "CH-67890",
+      "creationDate": "2023-01-01",
+      "dueDate": "2023-01-31"
+  },
+  "customer": {
+      "name": "Customer Name",
+      "gstin": "12ABCDE3456F7Z9",
+      "telephone": "098-765-4321",
+      "email":"clien@gmail.conm"
+  },
+  "items": [
+      {
+          "name": "Product 1",
+          "qty": 10,
+          "rate": 100,
+          "total": 1000
+      },
+      {
+          "name": "Product 2",
+          "qty": 5,
+          "rate": 200,
+          "total": 1000
+      }
+  ],
+  "totals": {
+      "totalQty": 15,
+      "totalItems": 2,
+      "totalAmount": 2000,
+      "discountPercent": 5,
+      "discountAmount": 100,
+      "totalBeforeTax": 1900,
+      "gstPercent": 18,
+      "gstAmount": 342,
+      "sgstPercent": 9,
+      "sgstAmount": 171,
+      "otherTaxPercent": 2,
+      "otherTaxAmount": 38,
+      "finalAmount": 2280
+  },
+  "bankDetails": {
+      "bankName": "Bank Name",
+      "accountNumber": "1234567890",
+      "branchName": "Branch Name",
+      "ifscCode": "IFSC0001234"
+  },
+  "totalInWords": "Two Thousand Two Hundred Eighty",
+  "termsAndConditions": [
+      "Term 1: Payment is due within 30 days.",
+      "Term 2: Late payments will incur a 5% fee.",
+      "Term 3: All sales are final."
+  ]
+}

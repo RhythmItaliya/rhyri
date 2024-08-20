@@ -1,0 +1,117 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 4%;
+
+    --accent: 246 35% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --primary: 240 10% 4%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 209 100% 45%;
+    --secondary-foreground: 0 0% 100%;
+
+    --destructive: 359 84% 57%;
+    --destructive-foreground: 0 0% 100%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 4%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 4%;
+
+    --pending: 39 100% 50%;
+    --draft: 240 6% 63%;
+    --paid: 158 100% 33%;
+
+    --muted: 0 0% 44%;
+
+    --border: 30 3% 85%;
+    --ring: 246 35% 50%;
+    --input: 30 3% 85%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 240 10% 4%;
+    --foreground: 0 0% 98%;
+
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 10% 4%;
+
+    --popover: 240 10% 4%;
+    --popover-foreground: 0 0% 98%;
+
+    --card: 240 10% 4%;
+    --card-foreground: 0 0% 98%;
+
+    --muted: 240 5% 64%;
+
+    --border: 240 4% 16%;
+    --input: 240 4% 16%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-inter bg-background text-foreground min-h-screen;
+  }
+}
+
+@layer utilities {
+  .max-width {
+    @apply w-full max-w-7xl mx-auto px-6;
+  }
+
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+
+  .flex-between {
+    @apply flex items-center justify-between;
+  }
+
+  .y-paddings {
+    @apply py-12 sm:py-24;
+  }
+}
+
+@layer components {
+  .site-header {
+    @apply w-full sticky top-0 border-b py-2.5 bg-background;
+  }
+
+  .hero {
+    @apply w-full max-w-5xl mx-auto flex-center flex-col text-center gap-4;
+  }
+
+  .hero-heading {
+    @apply text-3xl sm:text-5xl xl:text-7xl font-bold;
+  }
+
+  .hero-subtitle {
+    @apply text-base sm:text-lg xl:text-xl text-muted max-w-xl;
+  }
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
