@@ -1,11 +1,11 @@
 import { Icons } from "../../components/Icons"
 import { Card, CardContent } from "../../components/ui/Card"
 
-export function WhyPayUp() {
+export function WhyRhyri() {
   return (
     <section className="flex-center flex-col gap-8">
       <h2 className="text-center text-2xl sm:text-3xl font-semibold">
-        Why PayUp?
+        Why Rhyri?
       </h2>
 
       <div className="grid gap-4 sm:grid-cols-2 max-w-4xl">
@@ -27,7 +27,7 @@ export function WhyPayUp() {
         <Card>
           <CardContent className="space-y-2 p-8">
             <Icons.dashboard
-              className="h-10 w-10 text-white"
+              className="h-10 w-10 text-foreground"
               aria-hidden="true"
             />
             <h3 className="text-lg font-semibold">Dashboard Overview</h3>

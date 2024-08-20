@@ -3,11 +3,15 @@ import { z } from "zod"
 export const invoiceValidator = z.object({
   companyName: z.string().min(1, { message: "required" }),
   companyEmail: z.string().email({ message: "Invalid email address" }),
-  companyTelephone: z.string().min(1, { message: "required" }),
+  companyTelephone: z.string()
+    .regex(/^\d+$/, { message: "Only numbers are allowed" })
+    .min(1, { message: "required" }),
   companyAddress: z.string().min(1, { message: "required" }),
   companyState: z.string().min(1, { message: "required" }),
   companyCity: z.string().min(1, { message: "required" }),
-  companyPostCode: z.string().min(1, { message: "required" }),
+  companyPostCode: z.string()
+    .regex(/^\d+$/, { message: "Only numbers are allowed" })
+    .min(1, { message: "required" }),
   companyCountry: z.string().min(1, { message: "required" }),
   companyTagline: z.string().optional(),
   companyGSTNumber: z.string().min(1, { message: "required" }),
@@ -18,8 +22,12 @@ export const invoiceValidator = z.object({
   clientAddress: z.string().optional(),
   clientCity: z.string().optional(),
   clientGSTNumber: z.string().optional(),
-  clientTelephone: z.string().optional(),
-  clientPostCode: z.string().optional(),
+  clientTelephone: z.string()
+    .regex(/^\d+$/, { message: "Only numbers are allowed" })
+    .optional(),
+  clientPostCode: z.string()
+    .regex(/^\d+$/, { message: "Only numbers are allowed" })
+    .optional(),
   clientCountry: z.string().optional(),
 
   invoiceDate: z.date({ required_error: "An invoice date is required" }),

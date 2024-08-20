@@ -11,7 +11,7 @@ export function UnderTheHood() {
       <div className="grid gap-4 sm:grid-cols-2 max-w-4xl">
         <Card>
           <CardContent className="space-y-2 p-8">
-            <Icons.react className="h-10 w-10 text-white" aria-hidden="true" />
+            <Icons.react className="h-10 w-10 text-foreground" aria-hidden="true" />
             <h3 className="text-lg font-semibold">React</h3>
             <p className="text-muted">
               Client component, Context API, hooks, Code splitting
@@ -31,7 +31,6 @@ export function UnderTheHood() {
             </p>
           </CardContent>
         </Card>
-
         <Card>
           <CardContent className="space-y-2 p-8">
             <Icons.component

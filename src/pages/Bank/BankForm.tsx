@@ -48,6 +48,13 @@ export function BankForm({
     onSubmit(formData);
   };
 
+
+  const handleNumberChange = (fieldName: keyof BankInputs) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    const formattedValue = value.replace(/[^0-9]/g, '');
+    form.setValue(fieldName, formattedValue);
+  };
+
   return (
     <Form {...form}>
       <form className="max-w-full space-y-10">
@@ -58,7 +65,7 @@ export function BankForm({
               <FormItem>
                 <FormLabel>Bank Name</FormLabel>
                 <FormControl>
-                  <Input {...field} autoComplete="off" />
+                  <Input {...field} autoComplete="off" className="uppercase" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -68,7 +75,7 @@ export function BankForm({
               <FormItem>
                 <FormLabel>Account Number</FormLabel>
                 <FormControl>
-                  <Input {...field} autoComplete="off" />
+                  <Input {...field} autoComplete="off" className="uppercase" onChange={handleNumberChange('bankAccountNumber')} value={field.value} inputMode="numeric" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -78,7 +85,7 @@ export function BankForm({
               <FormItem>
                 <FormLabel>Branch Name</FormLabel>
                 <FormControl>
-                  <Input {...field} autoComplete="off" />
+                  <Input {...field} autoComplete="off" className="uppercase" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -88,7 +95,7 @@ export function BankForm({
               <FormItem>
                 <FormLabel>IFSC Code</FormLabel>
                 <FormControl>
-                  <Input {...field} autoComplete="off" />
+                  <Input {...field} autoComplete="off" className="uppercase" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -98,7 +105,7 @@ export function BankForm({
               <FormItem>
                 <FormLabel>Full Address</FormLabel>
                 <FormControl>
-                  <Input {...field} autoComplete="off" />
+                  <Input {...field} autoComplete="off" className="uppercase" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -108,7 +115,7 @@ export function BankForm({
               <FormItem>
                 <FormLabel>City</FormLabel>
                 <FormControl>
-                  <Input {...field} autoComplete="off" />
+                  <Input {...field} autoComplete="off" className="uppercase" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -118,7 +125,7 @@ export function BankForm({
               <FormItem>
                 <FormLabel>State</FormLabel>
                 <FormControl>
-                  <Input {...field} autoComplete="off" />
+                  <Input {...field} autoComplete="off" className="uppercase" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -128,7 +135,7 @@ export function BankForm({
               <FormItem>
                 <FormLabel>Post Code</FormLabel>
                 <FormControl>
-                  <Input {...field} autoComplete="off" />
+                  <Input {...field} autoComplete="off" className="uppercase" onChange={handleNumberChange('bankPostCode')} value={field.value} inputMode="numeric" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -138,7 +145,7 @@ export function BankForm({
               <FormItem>
                 <FormLabel>Country</FormLabel>
                 <FormControl>
-                  <Input {...field} autoComplete="off" />
+                  <Input {...field} autoComplete="off" className="uppercase" />
                 </FormControl>
                 <FormMessage />
               </FormItem>

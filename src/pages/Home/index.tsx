@@ -5,7 +5,7 @@ import { buttonVariants } from "../../components/ui/Button"
 import { Link } from "react-router-dom"
 import { cn } from "../../lib/utils"
 import { UnderTheHood } from "./UnderTheHood"
-import { WhyPayUp } from "./WhyPayUp"
+import { WhyRhyri } from "./WhyRhyri"
 
 export function HomePage() {
   return (
@@ -40,7 +40,7 @@ export function HomePage() {
 
         <img src="/dashboard.png" alt="PayUp dashboard page" />
 
-        <WhyPayUp />
+        <WhyRhyri />
 
         <UnderTheHood />
 

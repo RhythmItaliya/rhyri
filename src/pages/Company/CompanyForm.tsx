@@ -49,6 +49,13 @@ export function CompanyForm({
         onSubmit(formData);
     };
 
+    const handleNumberChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const { value } = event.target;
+        const formattedValue = value.replace(/[^0-9]/g, '').toUpperCase();
+        form.setValue('companyPostCode', formattedValue);
+        form.setValue('companyTelephone', formattedValue);
+    };
+
     return (
         <Form {...form}>
             <form className="max-w-full space-y-10">
@@ -59,7 +66,7 @@ export function CompanyForm({
                             <FormItem>
                                 <FormLabel>Company Name</FormLabel>
                                 <FormControl>
-                                    <Input {...field} autoComplete="off" />
+                                    <Input {...field} autoComplete="off" className="uppercase" />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -69,7 +76,7 @@ export function CompanyForm({
                             <FormItem>
                                 <FormLabel>Company Email</FormLabel>
                                 <FormControl>
-                                    <Input {...field} autoComplete="off" />
+                                    <Input {...field} autoComplete="off" className="lowercase" />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -79,7 +86,7 @@ export function CompanyForm({
                             <FormItem>
                                 <FormLabel>Company Telephone</FormLabel>
                                 <FormControl>
-                                    <Input {...field} autoComplete="off" />
+                                    <Input {...field} autoComplete="off" className="uppercase" onChange={handleNumberChange} value={field.value} inputMode="numeric" />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -89,7 +96,7 @@ export function CompanyForm({
                             <FormItem>
                                 <FormLabel>Full Address</FormLabel>
                                 <FormControl>
-                                    <Input {...field} autoComplete="off" />
+                                    <Input {...field} autoComplete="off" className="uppercase" />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -99,7 +106,7 @@ export function CompanyForm({
                             <FormItem>
                                 <FormLabel>Company City</FormLabel>
                                 <FormControl>
-                                    <Input {...field} autoComplete="off" />
+                                    <Input {...field} autoComplete="off" className="uppercase" />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -109,7 +116,7 @@ export function CompanyForm({
                             <FormItem>
                                 <FormLabel>Company State</FormLabel>
                                 <FormControl>
-                                    <Input {...field} autoComplete="off" />
+                                    <Input {...field} autoComplete="off" className="uppercase" />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -119,7 +126,7 @@ export function CompanyForm({
                             <FormItem>
                                 <FormLabel>Post Code</FormLabel>
                                 <FormControl>
-                                    <Input {...field} autoComplete="off" />
+                                    <Input {...field} autoComplete="off" className="uppercase" onChange={handleNumberChange} value={field.value} inputMode="numeric" />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -129,7 +136,7 @@ export function CompanyForm({
                             <FormItem>
                                 <FormLabel>Company Country</FormLabel>
                                 <FormControl>
-                                    <Input {...field} autoComplete="off" />
+                                    <Input {...field} autoComplete="off" className="uppercase" />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -139,7 +146,7 @@ export function CompanyForm({
                             <FormItem>
                                 <FormLabel>Company Tagline</FormLabel>
                                 <FormControl>
-                                    <Input {...field} autoComplete="off" />
+                                    <Input {...field} autoComplete="off" className="uppercase" />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -149,7 +156,7 @@ export function CompanyForm({
                             <FormItem>
                                 <FormLabel>GST Number</FormLabel>
                                 <FormControl>
-                                    <Input {...field} autoComplete="off" />
+                                    <Input {...field} autoComplete="off" className="uppercase" />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -159,7 +166,7 @@ export function CompanyForm({
                             <FormItem>
                                 <FormLabel>Contact Person</FormLabel>
                                 <FormControl>
-                                    <Input {...field} autoComplete="off" />
+                                    <Input {...field} autoComplete="off" className="uppercase" />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>

@@ -48,6 +48,13 @@ export function ClientForm({
     onSubmit(formData);
   };
 
+
+  const handleNumberChange = (fieldName: keyof ClientInputs) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    const formattedValue = value.replace(/[^0-9]/g, '');
+    form.setValue(fieldName, formattedValue);
+  };
+
   return (
     <Form {...form}>
       <form className="max-w-full space-y-10">
@@ -58,7 +65,7 @@ export function ClientForm({
               <FormItem>
                 <FormLabel>Client Name</FormLabel>
                 <FormControl>
-                  <Input {...field} autoComplete="off" />
+                  <Input {...field} autoComplete="off" className="uppercase" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -68,7 +75,7 @@ export function ClientForm({
               <FormItem>
                 <FormLabel>Client Email</FormLabel>
                 <FormControl>
-                  <Input {...field} autoComplete="off" />
+                  <Input {...field} autoComplete="off" className="lowercase" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -78,7 +85,7 @@ export function ClientForm({
               <FormItem>
                 <FormLabel>Client Telephone</FormLabel>
                 <FormControl>
-                  <Input {...field} autoComplete="off" />
+                  <Input {...field} autoComplete="off" className="uppercase" onChange={handleNumberChange('clientTelephone')} value={field.value} inputMode="numeric" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -88,7 +95,7 @@ export function ClientForm({
               <FormItem>
                 <FormLabel>Client GST Number</FormLabel>
                 <FormControl>
-                  <Input {...field} autoComplete="off" />
+                  <Input {...field} autoComplete="off" className="uppercase" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -99,7 +106,7 @@ export function ClientForm({
               <FormItem>
                 <FormLabel>Full Address</FormLabel>
                 <FormControl>
-                  <Input {...field} autoComplete="off" />
+                  <Input {...field} autoComplete="off" className="uppercase" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -110,7 +117,7 @@ export function ClientForm({
               <FormItem>
                 <FormLabel>Client City</FormLabel>
                 <FormControl>
-                  <Input {...field} autoComplete="off" />
+                  <Input {...field} autoComplete="off" className="uppercase" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -121,7 +128,7 @@ export function ClientForm({
               <FormItem>
                 <FormLabel>Client State</FormLabel>
                 <FormControl>
-                  <Input {...field} autoComplete="off" />
+                  <Input {...field} autoComplete="off" className="uppercase" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -132,7 +139,7 @@ export function ClientForm({
               <FormItem>
                 <FormLabel>Post Code</FormLabel>
                 <FormControl>
-                  <Input {...field} autoComplete="off" />
+                  <Input {...field} autoComplete="off" className="uppercase" onChange={handleNumberChange('clientPostCode')} value={field.value} inputMode="numeric" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -143,7 +150,7 @@ export function ClientForm({
               <FormItem>
                 <FormLabel>Client Country</FormLabel>
                 <FormControl>
-                  <Input {...field} autoComplete="off" />
+                  <Input {...field} autoComplete="off" className="uppercase" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
