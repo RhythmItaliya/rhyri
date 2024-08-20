@@ -28,7 +28,7 @@ export function HomePage() {
               Get started
             </Link>
             <Link
-              to="https://github.com/Raphico/payUp"
+              to="https://github.com/RhythmItaliya"
               target="_blank"
               className={cn(buttonVariants({ variant: "outline" }))}
             >
@@ -47,18 +47,9 @@ export function HomePage() {
         <footer>
           <p className="text-center">
             Built by{" "}
-            <Link to="https://github.com/Raphico" className="underline">
-              Raphico
+            <Link to="https://github.com/RhythmItaliya" className="underline">
+              Rhythm Italiya
             </Link>
-            . Hosted on{" "}
-            <Link to="https://vercel.com" className="underline">
-              Vercel
-            </Link>
-            . The source code is available on{" "}
-            <Link to="https://github.com/Raphico/payUp" className="underline">
-              Github
-            </Link>
-            .
           </p>
         </footer>
       </main>
