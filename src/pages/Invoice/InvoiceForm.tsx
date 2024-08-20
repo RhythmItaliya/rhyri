@@ -32,12 +32,13 @@ import { Icons } from "../../components/Icons"
 import { cn } from "../../lib/utils"
 import { addDays, format } from "date-fns"
 import { Calendar } from "../../components/ui/Calendar"
-import { Client, Company, Invoice } from "../../types"
+import { Bank, Client, Company, Invoice } from "../../types"
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell, TableFooter, } from "../../components/ui/Table"
 import { useEffect, useState } from "react"
 import { Timestamp } from "@firebase/firestore"
 import ClientSelectButton from "../../components/popup/ClientPopup"
 import CompanySelectButton from "../../components/popup/CompanyPopup"
+import BankSelectButton from "../../components/popup/BankPopup"
 
 const Total = ({
   control,
@@ -113,6 +114,11 @@ export function InvoiceForm({
       otherTaxType: invoice?.otherTaxType || "percentage",
       otherTaxPercentage: invoice?.otherTaxType === "percentage" ? invoice?.otherTaxPercentage || 0 : 0,
       otherTaxAmount: invoice?.otherTaxType === "fixed" ? invoice?.otherTaxAmount || 0 : 0,
+
+      bankName: invoice?.bankName || '',
+      bankAccountNumber: invoice?.bankAccountNumber || '',
+      bankBranchName: invoice?.bankBranchName || '',
+      bankIfscCode: invoice?.bankIfscCode || '',
     },
   })
 
@@ -170,9 +176,7 @@ export function InvoiceForm({
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const formData = form.getValues();
-    console.log("Form Data before submit:", formData);
     onSubmit(formData);
-    console.log("Button clicked!");
   };
 
   const handleClientSelection = (client: Client) => {
@@ -199,6 +203,13 @@ export function InvoiceForm({
     setValue('companyGSTNumber', company.companyGSTNumber || '');
     setValue('companyPersonName', company.companyPersonName || '');
   };
+
+  const handleBankSelection = (bank: Bank) => {
+    setValue('bankName', bank.bankName || '');
+    setValue('bankAccountNumber', bank.bankAccountNumber || '');
+    setValue('bankIfscCode', bank.bankIfscCode || '');
+    setValue('bankBranchName', bank.bankBranchName || '');
+  }
 
   return (
     <Form {...form}>
@@ -263,6 +274,22 @@ export function InvoiceForm({
           </div>
         </div>
 
+        <div className="space-y-4">
+          <div className="flex justify-between items-center">
+            <p className="font-semibold text-accent">Bank Details</p>
+            <BankSelectButton onBankSelect={handleBankSelection} />
+          </div>
+          <div className="grid gap-4">
+            <FormField control={form.control} name="bankName" render={({ field }) => (<FormItem><FormLabel>Bank Name</FormLabel><FormControl><Input {...field} autoComplete="off" /></FormControl><FormMessage /></FormItem>)} />
+
+            <FormField control={form.control} name="bankAccountNumber" render={({ field }) => (<FormItem><FormLabel>Account Number</FormLabel><FormControl><Input {...field} autoComplete="off" /></FormControl><FormMessage /></FormItem>)} />
+
+            <FormField control={form.control} name="bankIfscCode" render={({ field }) => (<FormItem><FormLabel>IFSC Code</FormLabel><FormControl><Input {...field} autoComplete="off" /></FormControl><FormMessage /></FormItem>)} />
+
+            <FormField control={form.control} name="bankBranchName" render={({ field }) => (<FormItem><FormLabel>Branch Name</FormLabel><FormControl><Input {...field} autoComplete="off" /></FormControl><FormMessage /></FormItem>)} />
+          </div>
+        </div>
+
         <div className="grid sm:grid-cols-2 gap-4">
           <FormField control={form.control} name="invoiceCustomNumber" render={({ field }) => (<FormItem><p className="font-semibold text-accent">Invoice Number</p><FormControl><Input {...field} autoComplete="off" /></FormControl><FormMessage /></FormItem>)} />
 
@@ -281,7 +308,6 @@ export function InvoiceForm({
           <div className="flex items-center justify-between">
             <p className="font-semibold text-accent">Item List</p>{itemListError && (<p className="text-sm font-medium text-destructive">{itemListError.message}</p>)}
           </div>
-
           <div className="grid gap-6">
             {itemListFieldArray.fields.map((field, index) => (
               <div key={field.id} className="flex flex-col items-center md:flex-row md:items-end gap-2">
@@ -334,26 +360,13 @@ export function InvoiceForm({
               <TableRow>
                 <TableCell className="text-center font-bold">Total</TableCell>
                 <TableCell className="text-gray-600 text-center font-bold">
-                  {itemListFieldArray.fields
-                    .reduce((acc, _, index) => {
-                      const quantity = parseFloat(form.watch(`itemList.${index}.quantity`) as unknown as string) || 0;
-                      return acc + quantity;
-                    }, 0)}
+                  {itemListFieldArray.fields.reduce((acc, _, index) => { const quantity = parseFloat(form.watch(`itemList.${index}.quantity`) as unknown as string) || 0; return acc + quantity; }, 0)}
                 </TableCell>
                 <TableCell className="text-gray-600 text-center font-bold">
-                  {itemListFieldArray.fields
-                    .reduce((acc, _, index) => {
-                      const price = parseFloat(form.watch(`itemList.${index}.price`) as unknown as string) || 0;
-                      return acc + price;
-                    }, 0)}
+                  {itemListFieldArray.fields.reduce((acc, _, index) => { const price = parseFloat(form.watch(`itemList.${index}.price`) as unknown as string) || 0; return acc + price; }, 0)}
                 </TableCell>
                 <TableCell className="text-gray-600 text-right font-bold">
-                  {itemListFieldArray.fields
-                    .reduce((acc, _, index) => {
-                      const quantity = parseFloat(form.watch(`itemList.${index}.quantity`) as unknown as string) || 0;
-                      const price = parseFloat(form.watch(`itemList.${index}.price`) as unknown as string) || 0;
-                      return acc + (quantity * price);
-                    }, 0)}
+                  {itemListFieldArray.fields.reduce((acc, _, index) => { const quantity = parseFloat(form.watch(`itemList.${index}.quantity`) as unknown as string) || 0; const price = parseFloat(form.watch(`itemList.${index}.price`) as unknown as string) || 0; return acc + (quantity * price); }, 0)}
                 </TableCell>
               </TableRow>
             </TableFooter>
@@ -402,9 +415,7 @@ export function InvoiceForm({
                     Discount ({discountType === 'percentage' ? `${discountPercentage.toString()}%` : `$${discountAmount.toString()}`})
                   </TableCell>
                   <TableCell className="text-gray-600 text-right">
-                    {discountType === 'percentage'
-                      ? `${mainTotal.times(discountPercentage).div(100).toString()}`
-                      : `${discountAmount.toString()}`}
+                    {discountType === 'percentage' ? `${mainTotal.times(discountPercentage).div(100).toString()}` : `${discountAmount.toString()}`}
                   </TableCell>
                 </TableRow>
                 <TableRow>
@@ -424,9 +435,7 @@ export function InvoiceForm({
                     Other Tax ({otherTaxType === 'percentage' ? `${otherTaxPercentage.toString()}%` : `$${otherTaxAmount.toString()}`})
                   </TableCell>
                   <TableCell className="text-gray-600 text-right">
-                    {otherTaxType === 'percentage'
-                      ? `${totalAfterDiscount.times(otherTaxPercentage).div(100).toString()}`
-                      : `${otherTaxAmount.toString()}`}
+                    {otherTaxType === 'percentage' ? `${totalAfterDiscount.times(otherTaxPercentage).div(100).toString()}` : `${otherTaxAmount.toString()}`}
                   </TableCell>
                 </TableRow>
                 <TableRow>
@@ -439,12 +448,7 @@ export function InvoiceForm({
                 <TableFooter>
                   <TableRow>
                     <TableCell className="flex items-center space-x-2">
-                      <Input
-                        type="checkbox"
-                        className="form-checkbox h-4 w-4 text-blue-600 cursor-pointer transition-transform duration-300 ease-in-out"
-                        checked={showFinalAmount}
-                        onChange={() => setShowFinalAmount(!showFinalAmount)}
-                      />
+                      <Input type="checkbox" className="form-checkbox h-4 w-4 text-blue-600 cursor-pointer transition-transform duration-300 ease-in-out" checked={showFinalAmount} onChange={() => setShowFinalAmount(!showFinalAmount)} />
                     </TableCell>
                     <TableCell className="text-right">
                       {showFinalAmount ? `- ${formatTotalFinal(totalFinal)}` : 'Rounded Amount'}
@@ -461,18 +465,7 @@ export function InvoiceForm({
         </div>
 
         <div className="w-full grid">
-          <Button
-            type="button"
-            variant="accent"
-            sizes="sm"
-            disabled={isPending}
-            onClick={handleClick}
-          >
-            {isPending && (
-              <Icons.spinner className="h-4 w-4 animate-spin mr-2" aria-hidden="true" />
-            )}
-            Save Changes
-          </Button>
+          <Button type="button" variant="accent" sizes="sm" disabled={isPending} onClick={handleClick} > {isPending && (<Icons.spinner className="h-4 w-4 animate-spin mr-2" aria-hidden="true" />)}Save Changes</Button>
         </div>
       </form>
     </Form >

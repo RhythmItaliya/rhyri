@@ -231,15 +231,15 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
                             </div>
                             <div className="flex justify-between mb-1">
                                 <span className="text-gray-600 uppercase">{fieldNames.accountNumber}:</span>
-                                <span className="font-semibold">{bankDetails.accountNumber}</span>
-                            </div>
-                            <div className="flex justify-between mb-1">
-                                <span className="text-gray-600 uppercase">{fieldNames.branchName}:</span>
-                                <span className="font-semibold">{bankDetails.branchName}</span>
+                                <span className="font-semibold">{bankDetails.bankAccountNumber}</span>
                             </div>
                             <div className="flex justify-between">
                                 <span className="text-gray-600 uppercase">{fieldNames.ifscCode}:</span>
-                                <span className="font-semibold">{bankDetails.ifscCode}</span>
+                                <span className="font-semibold">{bankDetails.bankIfscCode}</span>
+                            </div>
+                            <div className="flex justify-between mb-1">
+                                <span className="text-gray-600 uppercase">{fieldNames.branchName}:</span>
+                                <span className="font-semibold">{bankDetails.bankBranchName}</span>
                             </div>
                         </div>
                     </div>

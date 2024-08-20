@@ -7,13 +7,13 @@ import {
     TableRow,
 } from "../../components/ui/Table";
 import { Card, CardContent } from "../../components/ui/Card";
-import { Skeleton } from "../../components/Skeleton";
 import { useAuth } from "../../contexts/AuthContext";
 import { Navigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { fetchBank } from "./fetchBank";
 import { catchError } from "../../lib/utils";
 import { BankActions } from "../../components/action/BankActions";
+import { UserSkeleton } from "../UserSkeleton";
 
 export function BankPage() {
     const { id } = useParams();
@@ -37,7 +37,7 @@ export function BankPage() {
     return (
         <>
             {isLoading ? (
-                <Skeleton className="w-full h-10 rounded-md max-w-5xl mx-auto" />
+                <UserSkeleton />
             ) : bank ? (
                 <div className="space-y-4 w-full max-w-5xl mx-auto">
                     <Card>
@@ -93,43 +93,43 @@ export function BankPage() {
                                     <TableBody>
                                         <TableRow>
                                             <TableCell>Bank Name</TableCell>
-                                            <TableCell>{bank.bankName}</TableCell>
+                                            <TableCell className="uppercase">{bank.bankName}</TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell>Account Number</TableCell>
-                                            <TableCell>{bank.bankAccountNumber}</TableCell>
+                                            <TableCell className="uppercase">{bank.bankAccountNumber}</TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell>Branch Name</TableCell>
-                                            <TableCell>{bank.bankBranchName}</TableCell>
+                                            <TableCell className="uppercase">{bank.bankBranchName}</TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell>IFSC Code</TableCell>
-                                            <TableCell>{bank.bankIfscCode}</TableCell>
+                                            <TableCell className="uppercase">{bank.bankIfscCode}</TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell>Address</TableCell>
-                                            <TableCell>{bank.bankAddress}</TableCell>
+                                            <TableCell className="uppercase">{bank.bankAddress}</TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell>Country</TableCell>
-                                            <TableCell>{bank.bankCountry}</TableCell>
+                                            <TableCell className="uppercase">{bank.bankCountry}</TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell>City</TableCell>
-                                            <TableCell>{bank.bankCity}</TableCell>
+                                            <TableCell className="uppercase">{bank.bankCity}</TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell>Post Code</TableCell>
-                                            <TableCell>{bank.bankPostCode}</TableCell>
+                                            <TableCell className="uppercase">{bank.bankPostCode}</TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell>State</TableCell>
-                                            <TableCell>{bank.bankState}</TableCell>
+                                            <TableCell className="uppercase">{bank.bankState}</TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell>Account Type</TableCell>
-                                            <TableCell>{bank.bankCategory}</TableCell>
+                                            <TableCell className="uppercase">{bank.bankCategory}</TableCell>
                                         </TableRow>
                                     </TableBody>
                                 </Table>

@@ -46,9 +46,7 @@ export function CompanyForm({
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         const formData = form.getValues();
-        console.log("Form Data before submit:", formData);
         onSubmit(formData);
-        console.log("Button clicked!");
     };
 
     return (

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { db } from '../../lib/firebase';
-import { Client } from '../../types';
+import { Bank } from '../../types';
 import { useAuth } from '../../contexts/AuthContext';
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '../ui/Table';
 import { Button } from '../ui/Button';
@@ -10,17 +10,17 @@ import { PaginationState } from '../../pages/Clientes/schema';
 import { Input } from '../ui/Input';
 import { Skeleton } from '../Skeleton';
 
-interface ClientPopupProps {
-    onSelect: (client: Client) => void;
+interface BankPopupProps {
+    onSelect: (bank: Bank) => void;
     onClose: () => void;
 }
 
-const ClientPopup: React.FC<ClientPopupProps> = ({ onSelect, onClose }) => {
-    const [clients, setClients] = useState<Client[]>([]);
-    const [selectedClientId, setSelectedClientId] = useState<string | null>(null);
+const BankPopup: React.FC<BankPopupProps> = ({ onSelect, onClose }) => {
+    const [banks, setBanks] = useState<Bank[]>([]);
+    const [selectedBankId, setSelectedBankId] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
-    const [allClients, setAllClients] = useState<Client[]>([]);
+    const [allBanks, setAllBanks] = useState<Bank[]>([]);
 
     const [combinedFilter, setCombinedFilter] = useState<string>('');
 
@@ -40,55 +40,55 @@ const ClientPopup: React.FC<ClientPopupProps> = ({ onSelect, onClose }) => {
 
     if (!currentUser) return null;
 
-    const fetchClients = async () => {
+    const fetchBanks = async () => {
         if (!currentUser) {
             setError('User not authenticated');
             setLoading(false);
             return;
         }
         try {
-            const clientQuery = query(
-                collection(db, 'clients'),
+            const bankQuery = query(
+                collection(db, 'banks'),
                 where('uid', '==', currentUser.uid),
             );
-            const querySnapshot = await getDocs(clientQuery);
-            const fetchedClients: Client[] = querySnapshot.docs.map(doc => ({
+            const querySnapshot = await getDocs(bankQuery);
+            const fetchedBanks: Bank[] = querySnapshot.docs.map(doc => ({
                 ...doc.data(),
                 id: doc.id,
-            } as Client));
+            } as Bank));
 
-            setAllClients(fetchedClients);
-            updateClientsForCurrentPage(fetchedClients);
+            setAllBanks(fetchedBanks);
+            updateBanksForCurrentPage(fetchedBanks);
         } catch (error) {
             console.error(error);
-            setError('Failed to fetch clients');
+            setError('Failed to fetch banks');
         } finally {
             setLoading(false);
         }
     };
 
     useEffect(() => {
-        fetchClients();
+        fetchBanks();
     }, [currentUser]);
 
     useEffect(() => {
-        updateClientsForCurrentPage(allClients);
-    }, [pagination.pageIndex, allClients, combinedFilter]);
+        updateBanksForCurrentPage(allBanks);
+    }, [pagination.pageIndex, allBanks, combinedFilter]);
 
-    const updateClientsForCurrentPage = (clientsList: Client[]) => {
-        const filteredClients = clientsList.filter(client => {
-            const searchString = `${client.clientName} ${client.clientEmail} ${client.clientTelephone || ''}`.toLowerCase();
+    const updateBanksForCurrentPage = (banksList: Bank[]) => {
+        const filteredBanks = banksList.filter(bank => {
+            const searchString = `${bank.bankName} ${bank.bankAccountNumber} ${bank.bankBranchName || ''}`.toLowerCase();
             return searchString.includes(combinedFilter.toLowerCase());
         });
         const { pageIndex, pageSize } = pagination;
         const start = pageIndex * pageSize;
         const end = start + pageSize;
-        setClients(filteredClients.slice(start, end));
+        setBanks(filteredBanks.slice(start, end));
     };
 
-    const handleClientSelection = (client: Client) => {
-        setSelectedClientId(client.id);
-        onSelect(client);
+    const handleBankSelection = (bank: Bank) => {
+        setSelectedBankId(bank.id);
+        onSelect(bank);
     };
 
     const handleGetPrevPage = () => {
@@ -101,7 +101,7 @@ const ClientPopup: React.FC<ClientPopupProps> = ({ onSelect, onClose }) => {
     };
 
     const handleGetNextPage = () => {
-        if ((pagination.pageIndex + 1) * pagination.pageSize < allClients.length) {
+        if ((pagination.pageIndex + 1) * pagination.pageSize < allBanks.length) {
             setPagination(prevState => ({
                 ...prevState,
                 pageIndex: prevState.pageIndex + 1,
@@ -110,8 +110,8 @@ const ClientPopup: React.FC<ClientPopupProps> = ({ onSelect, onClose }) => {
     };
 
     const handleClose = () => {
-        setClients([]);
-        setSelectedClientId(null);
+        setBanks([]);
+        setSelectedBankId(null);
         setPagination({
             pageIndex: 0,
             pageSize: 5,
@@ -125,7 +125,7 @@ const ClientPopup: React.FC<ClientPopupProps> = ({ onSelect, onClose }) => {
     };
 
     const hasPrevPage = pagination.pageIndex > 0;
-    const hasNextPage = (pagination.pageIndex + 1) * pagination.pageSize < allClients.length;
+    const hasNextPage = (pagination.pageIndex + 1) * pagination.pageSize < allBanks.length;
 
     const highlightMatch = (text: string, filter: string) => {
         if (!filter) return text;
@@ -146,7 +146,7 @@ const ClientPopup: React.FC<ClientPopupProps> = ({ onSelect, onClose }) => {
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-900 bg-opacity-50">
             <div className={`container max-w-full md:max-w-4xl bg-${isDarkTheme ? 'black text-white' : 'white text-black'} rounded-lg shadow-lg overflow-y-auto p-4 md:p-6`}>
                 <div className="flex flex-col md:flex-row justify-between items-center p-2">
-                    <p className="text-lg font-semibold">Select Client</p>
+                    <p className="text-lg font-semibold">Select Bank</p>
                     <Button type="button" onClick={handleClose} className="mt-2 md:mt-0">
                         Close
                     </Button>
@@ -155,7 +155,7 @@ const ClientPopup: React.FC<ClientPopupProps> = ({ onSelect, onClose }) => {
                 <div className="my-2 flex flex-col gap-4 md:flex-row md:gap-4">
                     <Input
                         type="text"
-                        placeholder="Search by Name, Email, or Phone"
+                        placeholder="Search by Name or Account Number"
                         value={combinedFilter}
                         onChange={(e) => setCombinedFilter(e.target.value)}
                         className="p-2 border rounded w-full"
@@ -172,9 +172,9 @@ const ClientPopup: React.FC<ClientPopupProps> = ({ onSelect, onClose }) => {
                     <Table className="w-full">
                         <TableHeader>
                             <TableRow>
-                                <TableHead className="text-left">Name</TableHead>
-                                <TableHead className="text-left">Telephone</TableHead>
-                                <TableHead className="text-left">Email</TableHead>
+                                <TableHead className="text-left">Bank Name</TableHead>
+                                <TableHead className="text-left">Account Number</TableHead>
+                                <TableHead className="text-left">Branch Name</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
@@ -184,21 +184,21 @@ const ClientPopup: React.FC<ClientPopupProps> = ({ onSelect, onClose }) => {
                                         <Skeleton className='w-full h-32 rounded-md' />
                                     </TableCell>
                                 </TableRow>
-                            ) : clients.length > 0 ? (
-                                clients.map((client) => (
+                            ) : banks.length > 0 ? (
+                                banks.map((bank) => (
                                     <TableRow
-                                        key={client.id}
-                                        onClick={() => handleClientSelection(client)}
-                                        className={`cursor-pointer ${selectedClientId === client.id ? 'bg-blue-100' : ''}`}
+                                        key={bank.id}
+                                        onClick={() => handleBankSelection(bank)}
+                                        className={`cursor-pointer ${selectedBankId === bank.id ? 'bg-blue-100' : ''}`}
                                     >
-                                        <TableCell>{highlightMatch(client.clientName, combinedFilter)}</TableCell>
-                                        <TableCell>{highlightMatch(client.clientTelephone || '', combinedFilter)}</TableCell>
-                                        <TableCell>{highlightMatch(client.clientEmail, combinedFilter)}</TableCell>
+                                        <TableCell>{highlightMatch(bank.bankName, combinedFilter)}</TableCell>
+                                        <TableCell>{highlightMatch(bank.bankAccountNumber || '', combinedFilter)}</TableCell>
+                                        <TableCell>{highlightMatch(bank.bankBranchName || '', combinedFilter)}</TableCell>
                                     </TableRow>
                                 ))
                             ) : (
                                 <TableRow>
-                                    <TableCell colSpan={3}>No clients found</TableCell>
+                                    <TableCell colSpan={3}>No banks found</TableCell>
                                 </TableRow>
                             )}
                         </TableBody>
@@ -230,38 +230,39 @@ const ClientPopup: React.FC<ClientPopupProps> = ({ onSelect, onClose }) => {
     );
 };
 
-interface ClientSelectButtonProps {
-    onClientSelect: (client: Client) => void;
+interface BankSelectButtonProps {
+    onBankSelect: (bank: Bank) => void;
 }
 
-const ClientSelectButton: React.FC<ClientSelectButtonProps> = ({ onClientSelect }) => {
-    const [showClientPopup, setShowClientPopup] = useState<boolean>(false);
+const BankSelectButton: React.FC<BankSelectButtonProps> = ({ onBankSelect }) => {
+    const [showBankPopup, setShowBankPopup] = useState<boolean>(false);
 
-    const handleSelect = (client: Client) => {
-        setShowClientPopup(false);
-        onClientSelect(client);
+    const handleSelect = (bank: Bank) => {
+        setShowBankPopup(false);
+        onBankSelect(bank);
     };
 
     const handleClose = () => {
-        setShowClientPopup(false);
+        setShowBankPopup(false);
     };
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        setShowClientPopup(true);
+        setShowBankPopup(true);
     };
+
 
     return (
         <>
             <Button type="button" onClick={handleClick}>
-                Select Client
+                Select Bank
             </Button>
 
-            {showClientPopup && (
-                <ClientPopup onSelect={handleSelect} onClose={handleClose} />
+            {showBankPopup && (
+                <BankPopup onSelect={handleSelect} onClose={handleClose} />
             )}
         </>
     );
 };
 
-export default ClientSelectButton;
+export default BankSelectButton;

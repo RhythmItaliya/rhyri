@@ -56,6 +56,10 @@ export const invoiceValidator = z.object({
   otherTaxPercentage: z.coerce.number().min(0, { message: "Invalid discount percentage" }).default(0),
   otherTaxAmount: z.coerce.number().min(0, { message: "Invalid other tax" }).default(0),
 
+  bankName: z.string().min(1, { message: "Bank name is required" }),
+  bankAccountNumber: z.string().min(1, { message: "Account number is required" }),
+  bankBranchName: z.string().min(1, { message: "IFSC code is required" }),
+  bankIfscCode: z.string().min(1, { message: "Branch name is required" }),
 })
 
 export type InvoiceInputs = z.infer<typeof invoiceValidator>

@@ -126,9 +126,9 @@ export const transformInvoiceData = (data: InvoiceData): TransformedData => {
         },
         bankDetails: {
             bankName: data.bankName || "N/A",
-            accountNumber: data.accountNumber || "N/A",
-            branchName: data.branchName || "N/A",
-            ifscCode: data.ifscCode || "N/A",
+            bankAccountNumber: data.bankAccountNumber || "N/A",
+            bankBranchName: data.bankBranchName || "N/A",
+            bankIfscCode: data.bankIfscCode || "N/A",
         },
         totalInWords: amountInWords,
         termsAndConditions: [

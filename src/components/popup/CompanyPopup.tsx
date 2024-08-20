@@ -22,8 +22,7 @@ const CompanyPopup: React.FC<CompanyPopupProps> = ({ onSelect, onClose }) => {
     const [error, setError] = useState<string | null>(null);
     const [allCompanies, setAllCompanies] = useState<Company[]>([]);
 
-    const [nameFilter, setNameFilter] = useState<string>('');
-    const [emailFilter, setEmailFilter] = useState<string>('');
+    const [combinedFilter, setCombinedFilter] = useState<string>('');
 
     const { currentUser } = useAuth();
     const { theme } = useTheme();
@@ -74,13 +73,13 @@ const CompanyPopup: React.FC<CompanyPopupProps> = ({ onSelect, onClose }) => {
 
     useEffect(() => {
         updateCompaniesForCurrentPage(allCompanies);
-    }, [pagination.pageIndex, allCompanies, nameFilter, emailFilter]);
+    }, [pagination.pageIndex, allCompanies, combinedFilter]);
 
     const updateCompaniesForCurrentPage = (companiesList: Company[]) => {
-        const filteredCompanies = companiesList.filter(company =>
-            company.companyName.toLowerCase().includes(nameFilter.toLowerCase()) &&
-            company.companyEmail.toLowerCase().includes(emailFilter.toLowerCase())
-        );
+        const filteredCompanies = companiesList.filter(client => {
+            const searchString = `${client.companyName} ${client.companyEmail} ${client.companyName || ''}`.toLowerCase();
+            return searchString.includes(combinedFilter.toLowerCase());
+        });
         const { pageIndex, pageSize } = pagination;
         const start = pageIndex * pageSize;
         const end = start + pageSize;
@@ -128,6 +127,21 @@ const CompanyPopup: React.FC<CompanyPopupProps> = ({ onSelect, onClose }) => {
     const hasPrevPage = pagination.pageIndex > 0;
     const hasNextPage = (pagination.pageIndex + 1) * pagination.pageSize < allCompanies.length;
 
+    const highlightMatch = (text: string, filter: string) => {
+        if (!filter) return text;
+
+        const highlightColor = isDarkTheme ? 'bg-[#666600]' : 'bg-[#FFD700]';
+
+        const parts = text.split(new RegExp(`(${filter})`, 'gi'));
+        return parts.map((part, index) =>
+            part.toLowerCase() === filter.toLowerCase() ? (
+                <span key={index} className={highlightColor}>{part}</span>
+            ) : (
+                part
+            )
+        );
+    };
+
     return (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-900 bg-opacity-50">
             <div className={`container max-w-full md:max-w-4xl bg-${isDarkTheme ? 'black text-white' : 'white text-black'} rounded-lg shadow-lg overflow-y-auto p-4 md:p-6`}>
@@ -138,27 +152,16 @@ const CompanyPopup: React.FC<CompanyPopupProps> = ({ onSelect, onClose }) => {
                     </Button>
                 </div>
 
-                <div className="mb-4 flex flex-col gap-4 md:flex-row md:gap-4">
+                <div className="my-2 flex flex-col gap-4 md:flex-row md:gap-4">
                     <Input
                         type="text"
-                        placeholder="Name"
-                        value={nameFilter}
-                        onChange={(e) => setNameFilter(e.target.value)}
-                        className="p-2 border rounded w-full md:w-1/3"
+                        placeholder="Search by Name, Email"
+                        value={combinedFilter}
+                        onChange={(e) => setCombinedFilter(e.target.value)}
+                        className="p-2 border rounded w-full"
                         autoComplete="new-password"
-                        name="name-filter"
-                        id="name-filter"
-                        inputMode="text"
-                    />
-                    <Input
-                        type="text"
-                        placeholder="Email"
-                        value={emailFilter}
-                        onChange={(e) => setEmailFilter(e.target.value)}
-                        className="p-2 border rounded w-full md:w-1/3"
-                        autoComplete="new-password"
-                        name="email-filter"
-                        id="email-filter"
+                        name="combined-filter"
+                        id="combined-filter"
                         inputMode="text"
                     />
                 </div>
@@ -187,8 +190,8 @@ const CompanyPopup: React.FC<CompanyPopupProps> = ({ onSelect, onClose }) => {
                                         onClick={() => handleCompanySelection(company)}
                                         className={`cursor-pointer ${selectedCompanyId === company.id ? 'bg-blue-100' : ''}`}
                                     >
-                                        <TableCell>{company.companyName}</TableCell>
-                                        <TableCell>{company.companyEmail}</TableCell>
+                                        <TableCell>{highlightMatch(company.companyName, combinedFilter)}</TableCell>
+                                        <TableCell>{highlightMatch(company.companyEmail || '', combinedFilter)}</TableCell>
                                     </TableRow>
                                 ))
                             ) : (

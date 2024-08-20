@@ -33,9 +33,9 @@ export interface InvoiceData {
     otherTaxAmount?: number;
 
     bankName: string;
-    accountNumber: string;
-    branchName: string;
-    ifscCode: string;
+    bankAccountNumber: string;
+    bankBranchName: string;
+    bankIfscCode: string;
 
     companyName: string;
     companyEmail: string;
@@ -127,9 +127,9 @@ export interface TransformedData {
 
 export interface BankDetails {
     bankName: string;
-    accountNumber: string;
-    branchName: string;
-    ifscCode: string;
+    bankAccountNumber: string;
+    bankBranchName: string;
+    bankIfscCode: string;
 }
 
 export interface FieldNames {
