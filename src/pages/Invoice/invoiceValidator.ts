@@ -2,39 +2,32 @@ import { z } from "zod"
 
 export const invoiceValidator = z.object({
   companyName: z.string().min(1, { message: "required" }),
-  companyEmail: z.string().email({ message: "Invalid email address" }),
-  companyTelephone: z.string()
-    .regex(/^\d+$/, { message: "Only numbers are allowed" })
-    .min(1, { message: "required" }),
+  companyEmail: z.string().email({ message: "Invalid email address" }).optional(),
+  companyTelephone: z.string().min(1, { message: "required" }),
+  companyTagline: z.string().min(1, { message: "required" }),
   companyAddress: z.string().min(1, { message: "required" }),
   companyState: z.string().min(1, { message: "required" }),
   companyCity: z.string().min(1, { message: "required" }),
-  companyPostCode: z.string()
-    .regex(/^\d+$/, { message: "Only numbers are allowed" })
-    .min(1, { message: "required" }),
-  companyCountry: z.string().min(1, { message: "required" }),
-  companyTagline: z.string().optional(),
-  companyGSTNumber: z.string().min(1, { message: "required" }),
   companyPersonName: z.string().min(1, { message: "required" }),
+  companyCountry: z.string().min(1, { message: "required" }),
+  companyPostCode: z.string().optional(),
+  companyGSTNumber: z.string().optional(),
 
-  clientName: z.string().min(1, { message: "Client name is required" }),
+  clientName: z.string().min(1, { message: "required" }),
   clientEmail: z.string().email({ message: "Invalid email address" }).optional(),
-  clientAddress: z.string().optional(),
-  clientCity: z.string().optional(),
-  clientGSTNumber: z.string().optional(),
-  clientTelephone: z.string()
-    .regex(/^\d+$/, { message: "Only numbers are allowed" })
-    .optional(),
-  clientPostCode: z.string()
-    .regex(/^\d+$/, { message: "Only numbers are allowed" })
-    .optional(),
+  clientAddress: z.string().min(1, { message: "required" }),
+  clientCity: z.string().min(1, { message: "required" }),
   clientCountry: z.string().optional(),
+  clientPostCode: z.string().optional(),
+  clientGSTNumber: z.string().optional(),
+  clientTelephone: z.string().optional(),
 
   invoiceDate: z.date({ required_error: "An invoice date is required" }),
-
   paymentTerms: z.string().min(1, { message: "required" }),
+  dueDate: z.date({ required_error: "An due date is required" }),
+  challanNumber: z.string().min(1, { message: "required" }),
 
-  serviceDescription: z.string().min(1, { message: "required" }),
+  // serviceDescription: z.string().min(1, { message: "required" }),
 
   itemList: z
     .array(
@@ -51,9 +44,6 @@ export const invoiceValidator = z.object({
   invoiceCustomNumber: z.string().min(1, { message: "required" }),
   rateTotal: z.coerce.number().min(0, { message: "Invalid Rate Total" }).default(0),
   qtyTotal: z.coerce.number().min(0, { message: "Invalid Qty tax" }).default(0),
-  challanNumber: z.string().min(1, { message: "required" }),
-
-  dueDate: z.date({ required_error: "An due date is required" }),
 
   discountType: z.enum(["percentage", "fixed"]),
   discountPercentage: z.coerce.number().min(0, { message: "Invalid discount percentage" }).default(0),

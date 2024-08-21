@@ -43,17 +43,21 @@ export function CompanyForm({
         },
     });
 
-    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const handleClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        const formData = form.getValues();
-        onSubmit(formData);
+        const isValid = await form.trigger();
+        if (isValid) {
+            const formData = form.getValues();
+            onSubmit(formData);
+        } else {
+            console.log('Form validation failed');
+        }
     };
 
-    const handleNumberChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleNumberChange = (fieldName: keyof CompanyInputs) => (event: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
-        const formattedValue = value.replace(/[^0-9]/g, '').toUpperCase();
-        form.setValue('companyPostCode', formattedValue);
-        form.setValue('companyTelephone', formattedValue);
+        const formattedValue = value.replace(/[^0-9]/g, '');
+        form.setValue(fieldName, formattedValue);
     };
 
     return (
@@ -86,7 +90,7 @@ export function CompanyForm({
                             <FormItem>
                                 <FormLabel>Company Telephone</FormLabel>
                                 <FormControl>
-                                    <Input {...field} autoComplete="off" className="uppercase" onChange={handleNumberChange} value={field.value} inputMode="numeric" />
+                                    <Input {...field} autoComplete="off" className="uppercase" onChange={handleNumberChange('companyTelephone')} value={field.value} inputMode="numeric" />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -126,7 +130,7 @@ export function CompanyForm({
                             <FormItem>
                                 <FormLabel>Post Code</FormLabel>
                                 <FormControl>
-                                    <Input {...field} autoComplete="off" className="uppercase" onChange={handleNumberChange} value={field.value} inputMode="numeric" />
+                                    <Input {...field} autoComplete="off" className="uppercase" onChange={handleNumberChange('companyPostCode')} value={field.value} inputMode="numeric" />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -156,7 +160,7 @@ export function CompanyForm({
                             <FormItem>
                                 <FormLabel>GST Number</FormLabel>
                                 <FormControl>
-                                    <Input {...field} autoComplete="off" className="uppercase" />
+                                    <Input {...field} autoComplete="off" className="uppercase" maxLength={15} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>

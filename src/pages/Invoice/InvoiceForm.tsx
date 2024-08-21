@@ -99,7 +99,7 @@ export function InvoiceForm({
 
       invoiceDate: invoice?.invoiceDate ? invoice.invoiceDate.toDate() : new Date(),
       paymentTerms: invoice?.paymentTerms || "",
-      serviceDescription: invoice?.serviceDescription || "",
+      // serviceDescription: invoice?.serviceDescription || "",
       itemList: invoice?.itemList || [],
       invoiceCustomNumber: invoice?.invoiceCustomNumber || "",
       challanNumber: invoice?.challanNumber || "",
@@ -173,10 +173,16 @@ export function InvoiceForm({
     }
   }, [paymentTerms, invoiceDate, setValue]);
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+
+  const handleClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    const formData = form.getValues();
-    onSubmit(formData);
+    const isValid = await form.trigger();
+    if (isValid) {
+      const formData = form.getValues();
+      onSubmit(formData);
+    } else {
+      console.log('Form validation failed');
+    }
   };
 
   const handleClientSelection = (client: Client) => {
@@ -240,7 +246,7 @@ export function InvoiceForm({
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
               <FormField control={form.control} name="companyPersonName" render={({ field }) => (<FormItem><FormLabel>Contact Person</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" /></FormControl><FormMessage /></FormItem>)} />
 
-              <FormField control={form.control} name="companyGSTNumber" render={({ field }) => <FormItem><FormLabel>GST Number</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" /></FormControl><FormMessage /></FormItem>} />
+              <FormField control={form.control} name="companyGSTNumber" render={({ field }) => <FormItem><FormLabel>GST Number</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" maxLength={15} /></FormControl><FormMessage /></FormItem>} />
 
               <FormField control={form.control} name="companyCountry" render={({ field }) => <FormItem><FormLabel>Country</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" /></FormControl><FormMessage /></FormItem>} />
 
@@ -263,7 +269,7 @@ export function InvoiceForm({
 
             <FormField control={form.control} name="clientEmail" render={({ field }) => (<FormItem><FormLabel>Client's Email</FormLabel><FormControl><Input {...field} autoComplete="off" className="lowercase" /></FormControl><FormMessage /></FormItem>)} />
 
-            <FormField control={form.control} name="clientGSTNumber" render={({ field }) => (<FormItem><FormLabel>Client GST Number</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" /></FormControl><FormMessage /></FormItem>)} />
+            <FormField control={form.control} name="clientGSTNumber" render={({ field }) => (<FormItem><FormLabel>Client GST Number</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" maxLength={15} /></FormControl><FormMessage /></FormItem>)} />
 
             <FormField control={form.control} name="clientAddress" render={({ field }) => (<FormItem><FormLabel>Street Address</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" /></FormControl><FormMessage /></FormItem>)} />
 
@@ -390,7 +396,7 @@ export function InvoiceForm({
               <FormField control={form.control} name="discountAmount" render={({ field }) => (<FormItem><FormLabel>Discount Amount</FormLabel><FormControl><Input {...field} type="number" step="0.01" min="0" /></FormControl><FormMessage /></FormItem>)} />
             )}
 
-            <FormField control={form.control} name="gst" render={({ field }) => (<FormItem><FormLabel>GST (%)</FormLabel><FormControl><Input {...field} type="number" step="0.01" min="0" max="100" /></FormControl><FormMessage /></FormItem>)} />
+            <FormField control={form.control} name="gst" render={({ field }) => (<FormItem><FormLabel>CGST (%)</FormLabel><FormControl><Input {...field} type="number" step="0.01" min="0" max="100" /></FormControl><FormMessage /></FormItem>)} />
 
             <FormField control={form.control} name="sgst" render={({ field }) => (<FormItem><FormLabel>SGST (%)</FormLabel><FormControl><Input {...field} type="number" step="0.01" min="0" max="100" /></FormControl><FormMessage /></FormItem>)} />
 
@@ -428,7 +434,7 @@ export function InvoiceForm({
                   <TableCell className="text-right font-bold">{totalAfterDiscount.toString()}</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell>GST ({gst.toString()}%)</TableCell>
+                  <TableCell>CGST ({gst.toString()}%)</TableCell>
                   <TableCell className="text-gray-600 text-right">{gstAmount.toString()}</TableCell>
                 </TableRow>
                 <TableRow>

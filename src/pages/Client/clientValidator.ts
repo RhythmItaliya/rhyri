@@ -1,19 +1,15 @@
 import { z } from "zod";
 
 export const clientValidator = z.object({
-  clientName: z.string().min(1, { message: "required" }),
+  clientName: z.string().min(1, { message: "Client name is required" }),
   clientEmail: z.string().email({ message: "Invalid email address" }).optional(),
-  clientTelephone: z.string()
-    .regex(/^\d*$/, { message: "Only numbers are allowed" })
-    .optional(),
-  clientPostCode: z.string()
-    .regex(/^\d*$/, { message: "Only numbers are allowed" })
-    .optional(),
-  clientAddress: z.string().optional(),
+  clientAddress: z.string().min(1, { message: "Client address is required" }),
+  clientCity: z.string().min(1, { message: "Client city is required" }),
+  clientCountry: z.string().min(1, { message: "Client country is required" }),
+  clientState: z.string().min(1, { message: "Client state is required" }),
+  clientPostCode: z.string().min(1, { message: "Client post code is required" }),
+  clientTelephone: z.string().optional(),
   clientCategory: z.string().optional(),
-  clientState: z.string().optional(),
-  clientCity: z.string().optional(),
-  clientCountry: z.string().optional(),
   clientGSTNumber: z.string().optional(),
 });
 

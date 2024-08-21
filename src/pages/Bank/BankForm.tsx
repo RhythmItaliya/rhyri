@@ -42,12 +42,16 @@ export function BankForm({
     },
   });
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    const formData = form.getValues();
-    onSubmit(formData);
+    const isValid = await form.trigger();
+    if (isValid) {
+      const formData = form.getValues();
+      onSubmit(formData);
+    } else {
+      console.log('Form validation failed');
+    }
   };
-
 
   const handleNumberChange = (fieldName: keyof BankInputs) => (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;

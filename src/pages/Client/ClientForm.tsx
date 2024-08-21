@@ -42,12 +42,16 @@ export function ClientForm({
     },
   });
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    const formData = form.getValues();
-    onSubmit(formData);
+    const isValid = await form.trigger();
+    if (isValid) {
+      const formData = form.getValues();
+      onSubmit(formData);
+    } else {
+      console.log('Form validation failed');
+    }
   };
-
 
   const handleNumberChange = (fieldName: keyof ClientInputs) => (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
@@ -95,7 +99,7 @@ export function ClientForm({
               <FormItem>
                 <FormLabel>Client GST Number</FormLabel>
                 <FormControl>
-                  <Input {...field} autoComplete="off" className="uppercase" />
+                  <Input {...field} autoComplete="off" className="uppercase" maxLength={15} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
