@@ -1,4 +1,4 @@
-# [PayUp](https://pay-up-roan.vercel.app)
+# [Rhyri](https://pay-up-roan.vercel.app)
 
 An invoice app built with react and firebase
 

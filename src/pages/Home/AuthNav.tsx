@@ -10,7 +10,7 @@ export function AuthNav() {
       <nav className="max-width flex-between">
         <div className="flex items-center gap-2">
           <Icons.logo className="h-8 w-8" aria-hidden="true" />
-          <span className="hidden font-bold lg:inline-block">PayUp</span>
+          <span className="hidden font-bold lg:inline-block">Rhyri</span>
         </div>
 
         <div className="flex items-center gap-2">

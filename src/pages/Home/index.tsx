@@ -38,7 +38,7 @@ export function HomePage() {
           </div>
         </section>
 
-        <img src="/dashboard.png" alt="PayUp dashboard page" />
+        <img src="/dashboard.png" alt="Rhyri dashboard page" />
 
         <WhyRhyri />
 
