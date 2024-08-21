@@ -21,27 +21,27 @@ export function BankActions({
   bankId,
 }: BankClientActionsProps) {
   const navigate = useNavigate();
-  const { deleteAccountMutation } = useBankClient();
+  const { deleteBankMutation } = useBankClient();
 
   const handleView = (event: React.MouseEvent) => {
     event.stopPropagation();
-    navigate(`/account/${bankId}`);
+    navigate(`/bank/${bankId}`);
   };
 
   const handleEdit = (event: React.MouseEvent) => {
     event.stopPropagation();
-    navigate(`/account/edit/${bankId}`);
+    navigate(`/bank/edit/${bankId}`);
   };
 
   const handleDelete = async (event: React.MouseEvent) => {
     event.stopPropagation();
     try {
-      await deleteAccountMutation.mutateAsync(bankId);
+      await deleteBankMutation.mutateAsync(bankId);
       if (isBankPage) {
-        navigate("/accounts");
+        navigate("/banks");
       }
     } catch (error) {
-      console.error("Failed to delete account:", error);
+      console.error("Failed to delete bank:", error);
     }
   };
 
@@ -64,7 +64,7 @@ export function BankActions({
           <DropdownMenuSeparator />
           <DropdownMenuItem
             onClick={handleDelete}
-            disabled={deleteAccountMutation.isPending}
+            disabled={deleteBankMutation.isPending}
           >
             Delete
           </DropdownMenuItem>

@@ -7,7 +7,7 @@ import { catchError } from "../lib/utils";
 export const useBankClient = () => {
   const queryClient = useQueryClient();
 
-  const deleteAccountMutation = useMutation({
+  const deleteBankMutation = useMutation({
     mutationFn: async (bankId: string) => {
       try {
         const accountRef = doc(db, "banks", bankId);
@@ -33,6 +33,6 @@ export const useBankClient = () => {
   });
 
   return {
-    deleteAccountMutation,
+    deleteBankMutation,
   };
 };
