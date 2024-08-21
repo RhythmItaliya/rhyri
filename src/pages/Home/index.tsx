@@ -1,9 +1,9 @@
 import { AuthNav } from "./AuthNav"
-import { Icons } from "../../components/Icons"
+// import { Icons } from "../../components/Icons"
 import { buttonVariants } from "../../components/ui/Button"
 
 import { Link } from "react-router-dom"
-import { cn } from "../../lib/utils"
+// import { cn } from "../../lib/utils"
 import { UnderTheHood } from "./UnderTheHood"
 import { WhyRhyri } from "./WhyRhyri"
 
