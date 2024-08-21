@@ -27,14 +27,14 @@ export function HomePage() {
             >
               Get started
             </Link>
-            <Link
+            {/* <Link
               to="https://github.com/RhythmItaliya"
               target="_blank"
               className={cn(buttonVariants({ variant: "outline" }))}
             >
               <Icons.github className="h-4 w-4 mr-2" aria-hidden="true" />
               Github
-            </Link>
+            </Link> */}
           </div>
         </section>
 
