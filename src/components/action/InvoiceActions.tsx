@@ -14,6 +14,7 @@ import { useInvoice } from "../../hooks/useInvoice";
 import { useAuth } from "../../contexts/AuthContext";
 import { useEffect, useState } from "react";
 import ProgressPopup from "../../components/popup/ProgressPopup";
+import { useDownloadInvoice } from "../../lib/invoiceUtils";
 
 interface InvoiceActionsProps {
   isInvoicePage: boolean;
@@ -34,12 +35,11 @@ export function InvoiceActions({
     markInvoiceAsPaidMutation,
     addInvoiceToDraftMutation,
     deleteInvoiceMutation,
-    downloadInvoiceMutation,
   } = useInvoice();
 
   const [uid, setUid] = useState<string | null>(null);
   const { currentUser } = useAuth();
-  const [progress, setProgress] = useState<string | null>(null);
+  const { downloadInvoice, progress } = useDownloadInvoice();
 
   useEffect(() => {
     if (currentUser) {
@@ -52,24 +52,10 @@ export function InvoiceActions({
     navigate(`/invoice/${invoiceId}`);
   };
 
-  const handleDownload = async (event: React.MouseEvent) => {
+
+  const handleDownload = (event: React.MouseEvent) => {
     event.stopPropagation();
-    if (uid === null) {
-      console.error("UID is not available");
-      return;
-    }
-    setProgress("Fetching data...");
-    try {
-      await downloadInvoiceMutation.mutateAsync({
-        invoiceId,
-        uid,
-        onProgress: (progress) => setProgress(progress),
-      });
-      setTimeout(() => setProgress(null), 1000);
-    } catch (error) {
-      setProgress("Error occurred");
-      setTimeout(() => setProgress(null), 3000);
-    }
+    downloadInvoice(invoiceId, uid);
   };
 
   const handleEdit = (event: React.MouseEvent) => {
@@ -146,7 +132,7 @@ export function InvoiceActions({
           <DropdownMenuItem onClick={handleDownload}>Download</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-      <ProgressPopup progress={progress} onClose={() => setProgress(null)} />
+      <ProgressPopup progress={progress} onClose={() => { }} />
     </>
   );
 }

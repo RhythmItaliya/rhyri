@@ -16,9 +16,12 @@ import { fetchUserInvoices } from "./fetchUserInvoices"
 
 import { InvoiceStatus } from "../../types"
 import { ColumnDef, PaginationState } from "./schema"
+import { useDownloadInvoice } from "../../lib/invoiceUtils"
+import ProgressPopup from "../../components/popup/ProgressPopup"
 
 export function InvoicesPage() {
   const { currentUser } = useAuth()
+  const { downloadInvoice, progress } = useDownloadInvoice();
 
   if (!currentUser) return null
 
@@ -107,54 +110,64 @@ export function InvoicesPage() {
       prevState.map((column) =>
         column.id === columnId && column.canHide
           ? {
-              ...column,
-              isVisible: !column.isVisible,
-            }
+            ...column,
+            isVisible: !column.isVisible,
+          }
           : { ...column }
       )
     )
   }
 
+  const handleDownload = (invoiceId: string, event: React.MouseEvent) => {
+    event.preventDefault();
+    event.stopPropagation();
+    downloadInvoice(invoiceId, currentUser.uid);
+  };
+
   return (
-    <div className="space-y-8">
-      <div className="flex-between">
-        <PageHeader>
-          <PageHeaderHeading>Invoices</PageHeaderHeading>
-        </PageHeader>
-
-        <Link
-          to="/invoice/new"
-          className={cn(buttonVariants({ variant: "accent", sizes: "sm" }))}
-        >
-          New invoice
-        </Link>
-      </div>
-
-      <div className="space-y-6">
+    <>
+      <div className="space-y-8">
         <div className="flex-between">
-          <InvoicesTableFilter
-            statusFilterValue={pagination.statusFilterValue || ""}
-            handleStatusFiltering={handleStatusFiltering}
-          />
-          <InvoicesTableViewOptions
-            columns={columns}
-            toggleColumnVisibility={toggleColumnVisibility}
-          />
+          <PageHeader>
+            <PageHeaderHeading>Invoices</PageHeaderHeading>
+          </PageHeader>
+
+          <Link
+            to="/invoice/new"
+            className={cn(buttonVariants({ variant: "accent", sizes: "sm" }))}
+          >
+            New invoice
+          </Link>
         </div>
 
-        <InvoicesTable
-          isPending={isPending}
-          invoices={data?.userInvoices}
-          columns={columns}
-        />
+        <div className="space-y-6">
+          <div className="flex-between">
+            <InvoicesTableFilter
+              statusFilterValue={pagination.statusFilterValue || ""}
+              handleStatusFiltering={handleStatusFiltering}
+            />
+            <InvoicesTableViewOptions
+              columns={columns}
+              toggleColumnVisibility={toggleColumnVisibility}
+            />
+          </div>
 
-        <InvoicesTablePagination
-          handleGetPrevPage={handleGetPrevPage}
-          handleGetNextPage={handleGetNextPage}
-          hasPrevPage={!data?.userInvoices || !hasPrevPage}
-          hasNextPage={!data?.userInvoices || !data?.hasNextPage}
-        />
+          <InvoicesTable
+            isPending={isPending}
+            invoices={data?.userInvoices}
+            columns={columns}
+            onDownload={handleDownload}
+          />
+
+          <InvoicesTablePagination
+            handleGetPrevPage={handleGetPrevPage}
+            handleGetNextPage={handleGetNextPage}
+            hasPrevPage={!data?.userInvoices || !hasPrevPage}
+            hasNextPage={!data?.userInvoices || !data?.hasNextPage}
+          />
+        </div>
       </div>
-    </div>
+      <ProgressPopup progress={progress} onClose={() => { }} />
+    </>
   )
 }

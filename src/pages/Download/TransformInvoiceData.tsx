@@ -132,9 +132,11 @@ export const transformInvoiceData = (data: InvoiceData): TransformedData => {
         },
         totalInWords: amountInWords,
         termsAndConditions: [
-            "Term 1: Payment is due within 30 days.",
-            "Term 2: Late payments will incur a 5% fee.",
-            "Term 3: All sales are final."
+            "Payment is due within 7 days",
+            "Failure to pay will result in the application being rejected.",
+            "Interest of 30% per annum will be charged after the due date.",
+            "Disputes will be settled in Surat Court only.",
+            "Goods and items personally selected will not be taken back."
         ]
     };
 

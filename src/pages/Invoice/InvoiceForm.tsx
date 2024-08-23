@@ -29,7 +29,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { CalendarIcon, TrashIcon } from "@radix-ui/react-icons"
 import { Icons } from "../../components/Icons"
 
-import { cn } from "../../lib/utils"
+import { cn, formatCurrency } from "../../lib/utils"
 import { addDays, format } from "date-fns"
 import { Calendar } from "../../components/ui/Calendar"
 import { Bank, Client, Company, Invoice } from "../../types"
@@ -423,7 +423,7 @@ export function InvoiceForm({
                 </TableRow>
                 <TableRow>
                   <TableCell>
-                    Discount ({discountType === 'percentage' ? `${discountPercentage.toString()}%` : `$${discountAmount.toString()}`})
+                    Other Tax ({discountType === 'percentage' ? `${discountPercentage.toString()}%` : formatCurrency(Number(discountAmount.toString()))})
                   </TableCell>
                   <TableCell className="text-gray-600 text-right">
                     {discountType === 'percentage' ? `${mainTotal.times(discountPercentage).div(100).toString()}` : `${discountAmount.toString()}`}
@@ -443,7 +443,7 @@ export function InvoiceForm({
                 </TableRow>
                 <TableRow>
                   <TableCell>
-                    Other Tax ({otherTaxType === 'percentage' ? `${otherTaxPercentage.toString()}%` : `$${otherTaxAmount.toString()}`})
+                    Other Tax ({otherTaxType === 'percentage' ? `${otherTaxPercentage.toString()}%` : formatCurrency(Number(otherTaxAmount.toString()))})
                   </TableCell>
                   <TableCell className="text-gray-600 text-right">
                     {otherTaxType === 'percentage' ? `${totalAfterDiscount.times(otherTaxPercentage).div(100).toString()}` : `${otherTaxAmount.toString()}`}
@@ -467,7 +467,7 @@ export function InvoiceForm({
                   </TableRow>
                   <TableRow className={`transition-opacity duration-300 ease-in-out ${showFinalAmount ? 'opacity-100' : 'opacity-0'}`}>
                     <TableCell className="text-gray-500">Rounded Amount</TableCell>
-                    <TableCell className="text-right font-bold">{totalFinal.toFixed(0)}</TableCell>
+                    <TableCell className="text-right font-bold">{formatCurrency(Number(totalFinal))}</TableCell>
                   </TableRow>
                 </TableFooter>
               )}

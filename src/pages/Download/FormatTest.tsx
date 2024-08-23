@@ -1,5 +1,6 @@
 import React from 'react';
 import { FormatTestProps } from '../../types/invoiceTypes';
+import { formatCurrency } from '../../lib/utils';
 
 const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
     const {
@@ -31,7 +32,10 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
                 <div className="address w-1/2 flex text-start pl-2 border-r border-black p-1">
                     <p className="text-xs font-semibold uppercase leading-tight">
                         <span className="block mb-1">{company.companyAddress}</span>
-                        <span className="block">{company.companyCity}, {company.companyState} {company.companyPostCode}</span>
+                        <span className="block mb-1">
+                            {company.companyCity}, {company.companyPostCode}
+                        </span>
+                        <span className="block">{company.companyState}, {company.companyCountry}</span>
                     </p>
                 </div>
 
@@ -179,10 +183,10 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
                             {items.map((item, index) => (
                                 <tr key={index}>
                                     <td style={{ padding: '4px', textAlign: 'center' }}>{index + 1}</td>
-                                    <td style={{ padding: '4px', textAlign: 'center' }}>{item.name}</td>
+                                    <td style={{ padding: '4px 20px', textAlign: 'start', textTransform: 'uppercase' }}>{item.name}</td>
                                     <td style={{ padding: '4px', textAlign: 'center' }}>{item.qty}</td>
-                                    <td style={{ padding: '4px', textAlign: 'center' }}>{item.rate}</td>
-                                    <td style={{ padding: '4px', textAlign: 'center' }}>{item.total}</td>
+                                    <td style={{ padding: '4px', textAlign: 'center' }}>{formatCurrency(item.rate)}</td>
+                                    <td style={{ padding: '4px', textAlign: 'center' }}>{formatCurrency(item.total)}</td>
                                 </tr>
                             ))}
                         </tbody>
@@ -207,8 +211,8 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
                         <tr>
                             <td style={{ padding: '8px', textAlign: 'center', fontWeight: '600', borderRight: '1px solid black' }} colSpan={2}>{fieldNames.total}</td>
                             <td style={{ padding: '8px', textAlign: 'center', fontWeight: '600' }}>{totals.totalQty}</td>
-                            <td style={{ padding: '8px', textAlign: 'center', fontWeight: '600' }}>{totals.totalItems}</td>
-                            <td style={{ padding: '8px', textAlign: 'center', fontWeight: '600' }}>₹{totals.totalAmount}</td>
+                            <td style={{ padding: '8px', textAlign: 'center', fontWeight: '600' }}>{formatCurrency(totals.totalItems)}</td>
+                            <td style={{ padding: '8px', textAlign: 'center', fontWeight: '600' }}>{formatCurrency(totals.totalAmount)}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -254,12 +258,12 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
                                     {fieldNames.discount} ({totals.discountPercent}{totals.discountType === "percentage" ? "%" : "₹"})
                                 </td>
                                 <td className="py-2 px-4 font-bold text-right">
-                                    ₹{totals.discountApplied}
+                                    {formatCurrency(totals.discountApplied)}
                                 </td>
                             </tr>
                             <tr className="text-xs">
                                 <td className="py-2 px-4 border-r border-black font-semibold text-left uppercase">{fieldNames.totalBeforeTax}</td>
-                                <td className="py-2 px-4 font-bold text-right">₹{totals.totalBeforeTax}</td>
+                                <td className="py-2 px-4 font-bold text-right">{formatCurrency(totals.totalBeforeTax)}</td>
                             </tr>
                             <tr className="text-xs">
                                 <td className="py-2 px-4 border-r border-black font-semibold text-left uppercase">{fieldNames.gst} ({totals.gstPercent}%)</td>
@@ -274,16 +278,16 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
                                     {fieldNames.otherTax} ({totals.otherTaxPercent}{totals.otherTaxType === "percentage" ? "%" : "₹"})
                                 </td>
                                 <td className="py-2 px-4 font-bold text-right">
-                                    ₹{totals.otherTaxAmount}
+                                    {formatCurrency(totals.otherTaxAmount)}
                                 </td>
                             </tr>
                             <tr className="text-xs">
                                 <td className="px-4 border-r border-black font-semibold text-left uppercase"></td>
-                                <td className="px-4 border-t border-black font-bold text-right">{totals.finalAmount}</td>
+                                <td className="px-4 border-t border-black font-bold text-right">{formatCurrency(totals.finalAmount)}</td>
                             </tr>
                             <tr className="text-lg border-t border-black">
                                 <td className="py-2 px-4 border-r border-black font-bold text-center uppercase text-blue-600">{fieldNames.total}</td>
-                                <td className="py-2 px-4 font-bold text-right">₹{totals.roundedAmount}</td>
+                                <td className="py-2 px-4 font-bold text-right">{formatCurrency(totals.roundedAmount)}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -299,9 +303,11 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
                     <div className="border-b border-black">
                         <p className="text-xs text-gray-600 text-center p-1">{fieldNames.termsAndConditions}</p>
                     </div>
-                    <ul className="list-disc list-inside text-xs text-gray-800 p-2">
+                    <ul className="list-disc list-inside text-xs text-gray-800 p-2 space-y-1">
                         {termsAndConditions.map((term, index) => (
-                            <li key={index}>{term}</li>
+                            <li key={index}>
+                                {term}
+                            </li>
                         ))}
                     </ul>
                 </div>
