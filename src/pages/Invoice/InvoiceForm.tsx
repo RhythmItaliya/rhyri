@@ -39,7 +39,7 @@ import { Timestamp } from "@firebase/firestore"
 import ClientSelectButton from "../../components/popup/ClientPopup"
 import CompanySelectButton from "../../components/popup/CompanyPopup"
 import BankSelectButton from "../../components/popup/BankPopup"
-// import { useLocation } from "react-router-dom"
+import { useLocation } from "react-router-dom"
 
 const Total = ({
   control,
@@ -124,19 +124,26 @@ export function InvoiceForm({
     },
   })
 
+  const location = useLocation();
+  const isEditing = location.pathname.includes('edit');
   const [showFinalAmount, setShowFinalAmount] = useState(false);
-  // const location = useLocation();
-  // const isEditing = location.pathname.includes('edit');
   const [companySelected, setCompanySelected] = useState(false);
   const [clientSelected, setClientSelected] = useState(false);
   const [bankSelected, setBankSelected] = useState(false);
+
+  useEffect(() => {
+    if (isEditing) {
+      setCompanySelected(true);
+      setClientSelected(true);
+      setBankSelected(true);
+    }
+  }, [isEditing]);
 
   const itemListFieldArray = useFieldArray({
     control: form.control,
     name: "itemList",
   })
   const itemListError = form.formState.errors.itemList
-
   const itemList = form.watch("itemList");
   const mainTotal = itemList.reduce((total, item) => {
     return new Decimal(total).plus(new Decimal(item.price || 0).times(item.quantity || 0));
@@ -181,25 +188,6 @@ export function InvoiceForm({
     }
   }, [paymentTerms, invoiceDate, setValue]);
 
-  const handleClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-
-    const isValid = await form.trigger();
-
-    if (!clientSelected || !companySelected || !bankSelected) {
-      alert('Please select a company, client, and bank details before submitting.');
-      return;
-    }
-
-    if (!isValid) {
-      console.log('Form validation failed');
-      return;
-    }
-
-    const formData = form.getValues();
-    onSubmit(formData);
-  };
-
   const handleClientSelection = (client: Client) => {
     setValue('clientName', client.clientName || '');
     setValue('clientEmail', client.clientEmail || '');
@@ -242,6 +230,25 @@ export function InvoiceForm({
     setValue(fieldName, formattedValue);
   };
 
+  const handleClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+    const isValid = await form.trigger();
+
+    if (!clientSelected || !companySelected || !bankSelected) {
+      alert('Please select a company, client, and bank details before submitting.');
+      return;
+    }
+
+    if (!isValid) {
+      console.log('Form validation failed');
+      return;
+    }
+
+    const formData = form.getValues();
+    onSubmit(formData);
+  };
+
   return (
     <Form {...form}>
       <form className="max-w-full space-y-10">
@@ -253,7 +260,7 @@ export function InvoiceForm({
           </div>
 
 
-          {companySelected && (
+          {companySelected && isEditing && (
             <div className="grid gap-4">
               <FormField control={form.control} name="companyName" render={({ field }) => (<FormItem> <FormLabel>Name</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" /></FormControl><FormMessage /></FormItem>)} />
 
@@ -288,7 +295,7 @@ export function InvoiceForm({
             <ClientSelectButton onClientSelect={handleClientSelection} />
           </div>
 
-          {clientSelected && (
+          {companySelected && isEditing && (
             <div className="grid gap-4">
               <FormField control={form.control} name="clientName" render={({ field }) => (<FormItem><FormLabel>Client'Name</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" /></FormControl><FormMessage /></FormItem>)} />
 
@@ -317,7 +324,7 @@ export function InvoiceForm({
             <BankSelectButton onBankSelect={handleBankSelection} />
           </div>
 
-          {bankSelected && (
+          {companySelected && isEditing && (
             <div className="grid gap-4">
               <FormField control={form.control} name="bankName" render={({ field }) => (<FormItem><FormLabel>Bank Name</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" /></FormControl><FormMessage /></FormItem>)} />
 
