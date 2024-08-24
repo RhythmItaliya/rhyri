@@ -252,7 +252,8 @@ export function InvoiceForm({
             <CompanySelectButton onCompanySelect={handleCompanySelection} />
           </div>
 
-          {isEditing && (
+
+          {companySelected && (
             <div className="grid gap-4">
               <FormField control={form.control} name="companyName" render={({ field }) => (<FormItem> <FormLabel>Name</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" /></FormControl><FormMessage /></FormItem>)} />
 
@@ -287,7 +288,7 @@ export function InvoiceForm({
             <ClientSelectButton onClientSelect={handleClientSelection} />
           </div>
 
-          {isEditing && (
+          {clientSelected && (
             <div className="grid gap-4">
               <FormField control={form.control} name="clientName" render={({ field }) => (<FormItem><FormLabel>Client'Name</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" /></FormControl><FormMessage /></FormItem>)} />
 
@@ -316,7 +317,7 @@ export function InvoiceForm({
             <BankSelectButton onBankSelect={handleBankSelection} />
           </div>
 
-          {isEditing && (
+          {bankSelected && (
             <div className="grid gap-4">
               <FormField control={form.control} name="bankName" render={({ field }) => (<FormItem><FormLabel>Bank Name</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" /></FormControl><FormMessage /></FormItem>)} />
 
@@ -338,7 +339,16 @@ export function InvoiceForm({
         <div className="grid sm:grid-cols-3 gap-2">
           <FormField control={form.control} name="invoiceDate" render={({ field }) => (<FormItem><p className="font-semibold text-accent">Invoice Date</p><Popover><PopoverTrigger asChild><FormControl><Button variant={"outline"} className={cn("w-full justify-between")}>{field.value ? (format(field.value, "PPP")) : (format(invoiceDate, "PPP"))} <CalendarIcon className="h-4 w-4 text-muted" /></Button></FormControl></PopoverTrigger><PopoverContent className="w-auto p-0" align="start"><Calendar mode="single" selected={field.value} onSelect={field.onChange} disabled={(date) => date > new Date() || date < new Date("1900-01-01")} initialFocus /></PopoverContent></Popover><FormMessage /></FormItem>)} />
 
-          <FormField control={form.control} name="paymentTerms" render={({ field }) => (<FormItem><p className="font-semibold text-accent">Payment Terms</p><Select onValueChange={field.onChange} defaultValue={field.value}><FormControl><SelectTrigger><SelectValue placeholder="Select payment terms" /></SelectTrigger></FormControl><SelectContent><SelectItem value="1">Net 1 day</SelectItem><SelectItem value="7">Net 7 days</SelectItem><SelectItem value="14">Net 14 days</SelectItem><SelectItem value="30">Net 30 days</SelectItem></SelectContent></Select><FormMessage /></FormItem>)} />
+          <FormField control={form.control} name="paymentTerms" render={({ field }) => (<FormItem><p className="font-semibold text-accent">Payment Terms</p><Select onValueChange={field.onChange} defaultValue={field.value}><FormControl><SelectTrigger><SelectValue placeholder="Select payment terms" /></SelectTrigger></FormControl><SelectContent>
+            <SelectItem value="1">Net 1 day</SelectItem>
+            <SelectItem value="7">Net 7 days</SelectItem>
+            <SelectItem value="14">Net 14 days</SelectItem>
+            <SelectItem value="30">Net 30 days</SelectItem>
+            <SelectItem value="45">Net 45 days</SelectItem>
+            <SelectItem value="60">Net 60 days</SelectItem>
+            <SelectItem value="90">Net 90 days</SelectItem>
+          </SelectContent></Select><FormMessage /></FormItem>
+          )} />
 
           <FormField control={form.control} name="dueDate" render={({ field }) => (<FormItem><p className="font-semibold text-accent">Due Date</p><Popover><PopoverTrigger asChild><FormControl><Button variant={"outline"} className={cn("w-full justify-between")}>{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}<CalendarIcon className="h-4 w-4 text-muted" /></Button></FormControl></PopoverTrigger><PopoverContent className="w-auto p-0" align="start"><Calendar mode="single" selected={field.value} onSelect={field.onChange} disabled={(date) => date > new Date() || date < new Date("1900-01-01")} initialFocus /></PopoverContent></Popover><FormMessage /></FormItem>)} />
         </div>
