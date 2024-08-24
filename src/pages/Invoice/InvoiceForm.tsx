@@ -124,6 +124,7 @@ export function InvoiceForm({
     },
   })
 
+
   const location = useLocation();
   const isEditing = location.pathname.includes('edit');
   const [showFinalAmount, setShowFinalAmount] = useState(false);
@@ -188,6 +189,13 @@ export function InvoiceForm({
     }
   }, [paymentTerms, invoiceDate, setValue]);
 
+
+  const handleNumberChange = (fieldName: any) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    const formattedValue = value.replace(/[^0-9]/g, '');
+    setValue(fieldName, formattedValue);
+  };
+
   const handleClientSelection = (client: Client) => {
     setValue('clientName', client.clientName || '');
     setValue('clientEmail', client.clientEmail || '');
@@ -224,11 +232,6 @@ export function InvoiceForm({
     setBankSelected(true);
   }
 
-  const handleNumberChange = (fieldName: any) => (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
-    const formattedValue = value.replace(/[^0-9]/g, '');
-    setValue(fieldName, formattedValue);
-  };
 
   const handleClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -260,7 +263,7 @@ export function InvoiceForm({
           </div>
 
 
-          {companySelected && isEditing && (
+          {companySelected && (
             <div className="grid gap-4">
               <FormField control={form.control} name="companyName" render={({ field }) => (<FormItem> <FormLabel>Name</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" /></FormControl><FormMessage /></FormItem>)} />
 
@@ -295,7 +298,7 @@ export function InvoiceForm({
             <ClientSelectButton onClientSelect={handleClientSelection} />
           </div>
 
-          {companySelected && isEditing && (
+          {clientSelected && (
             <div className="grid gap-4">
               <FormField control={form.control} name="clientName" render={({ field }) => (<FormItem><FormLabel>Client'Name</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" /></FormControl><FormMessage /></FormItem>)} />
 
@@ -324,7 +327,7 @@ export function InvoiceForm({
             <BankSelectButton onBankSelect={handleBankSelection} />
           </div>
 
-          {companySelected && isEditing && (
+          {bankSelected && (
             <div className="grid gap-4">
               <FormField control={form.control} name="bankName" render={({ field }) => (<FormItem><FormLabel>Bank Name</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" /></FormControl><FormMessage /></FormItem>)} />
 
