@@ -68,10 +68,11 @@ export function InvoicePage() {
             <CardContent className="flex-between pt-4">
               <InvoiceStatusBadge status={invoice.invoiceStatus} />
               <InvoiceActions
+                isInvoicePage={true}
+                invoiceId={invoice.id}
                 isMarkedAsPaid={invoice.invoiceStatus === "paid"}
                 isDrafted={invoice.invoiceStatus === "drafted"}
-                invoiceId={invoice.id}
-                isInvoicePage={true}
+                isPending={invoice.invoiceStatus === "pending"}
               />
             </CardContent>
           </Card>
@@ -79,6 +80,10 @@ export function InvoicePage() {
           <Card>
             <CardContent className="space-y-8 p-8">
               <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-2">
+                <p className="text-gray-600">{invoice.uid}</p>
+                <p className="text-gray-600">{invoice.clientUid}</p>
+                <p className="text-gray-600">{invoice.id}</p>
+
                 <div className="space-y-1">
                   <p className="font-semibold text-sm text-gray-800">Invoice ID:</p>
                   <p className="text-gray-600">{invoice.id}</p>

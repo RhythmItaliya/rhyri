@@ -35,6 +35,7 @@ export interface Invoice {
   clientCountry: string
   clientGSTNumber?: string;
   clientTelephone?: string;
+  clientUid?: string;
 
   invoiceCustomNumber: string;
   challanNumber: string;
@@ -80,6 +81,7 @@ export interface Client {
   clientState?: string;
   clientAddress?: string;
   clientGSTNumber?: string;
+  clientUid?: string;
 }
 
 export type CompanyCategory = "startup" | "enterprise" | "smallBusiness"

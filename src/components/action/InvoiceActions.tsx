@@ -21,6 +21,7 @@ interface InvoiceActionsProps {
   invoiceId: string;
   isMarkedAsPaid: boolean;
   isDrafted: boolean;
+  isPending: boolean;
 }
 
 export function InvoiceActions({
@@ -28,18 +29,23 @@ export function InvoiceActions({
   invoiceId,
   isMarkedAsPaid,
   isDrafted,
+  isPending,
 }: InvoiceActionsProps) {
   const navigate = useNavigate();
 
   const {
     markInvoiceAsPaidMutation,
     addInvoiceToDraftMutation,
+    addInvoiceToPendingMutation,
     deleteInvoiceMutation,
   } = useInvoice();
 
   const [uid, setUid] = useState<string | null>(null);
   const { currentUser } = useAuth();
   const { downloadInvoice, progress } = useDownloadInvoice();
+  const [showMarkAsPaid, setShowMarkAsPaid] = useState<boolean>(false);
+  const [showAddToDraft, setShowAddToDraft] = useState<boolean>(false);
+  const [showMarkAsPending, setShowMarkAsPending] = useState<boolean>(false);
 
   useEffect(() => {
     if (currentUser) {
@@ -47,11 +53,36 @@ export function InvoiceActions({
     }
   }, [currentUser]);
 
+  useEffect(() => {
+    let markAsPaidVisible = false;
+    let addToDraftVisible = false;
+    let markAsPendingVisible = false;
+    if (isMarkedAsPaid) {
+      markAsPaidVisible = false;
+      addToDraftVisible = true;
+      markAsPendingVisible = true;
+    } else if (isDrafted) {
+      markAsPaidVisible = true;
+      addToDraftVisible = false;
+      markAsPendingVisible = true;
+    } else if (isPending) {
+      markAsPaidVisible = true;
+      addToDraftVisible = true;
+      markAsPendingVisible = false;
+    } else {
+      markAsPaidVisible = true;
+      addToDraftVisible = true;
+      markAsPendingVisible = true;
+    }
+    setShowMarkAsPaid(markAsPaidVisible);
+    setShowAddToDraft(addToDraftVisible);
+    setShowMarkAsPending(markAsPendingVisible);
+  }, [isMarkedAsPaid, isDrafted, isPending]);
+
   const handleView = (event: React.MouseEvent) => {
     event.stopPropagation();
     navigate(`/invoice/${invoiceId}`);
   };
-
 
   const handleDownload = (event: React.MouseEvent) => {
     event.stopPropagation();
@@ -82,6 +113,11 @@ export function InvoiceActions({
     markInvoiceAsPaidMutation.mutate(invoiceId);
   };
 
+  const handleMarkAsPending = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    addInvoiceToPendingMutation.mutate(invoiceId);
+  };
+
   const handleAddToDraft = (event: React.MouseEvent) => {
     event.stopPropagation();
     addInvoiceToDraftMutation.mutate(invoiceId);
@@ -105,7 +141,7 @@ export function InvoiceActions({
           )}
           <DropdownMenuItem onClick={handleEdit}>Edit</DropdownMenuItem>
           <DropdownMenuSeparator />
-          {!isMarkedAsPaid && (
+          {showMarkAsPaid && (
             <DropdownMenuItem
               onClick={handleMarkAsPaid}
               disabled={markInvoiceAsPaidMutation.isPending}
@@ -113,7 +149,7 @@ export function InvoiceActions({
               Mark as paid
             </DropdownMenuItem>
           )}
-          {!isDrafted && (
+          {showAddToDraft && (
             <DropdownMenuItem
               onClick={handleAddToDraft}
               disabled={addInvoiceToDraftMutation.isPending}
@@ -121,6 +157,15 @@ export function InvoiceActions({
               Add to draft
             </DropdownMenuItem>
           )}
+          {showMarkAsPending && (
+            <DropdownMenuItem
+              onClick={handleMarkAsPending}
+              disabled={addInvoiceToPendingMutation.isPending}
+            >
+              Mark as pending
+            </DropdownMenuItem>
+          )}
+          <DropdownMenuSeparator />
           <DropdownMenuSeparator />
           <DropdownMenuItem
             onClick={handleDelete}

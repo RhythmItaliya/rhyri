@@ -59,6 +59,29 @@ export const useInvoice = () => {
     },
   })
 
+  const addInvoiceToPendingMutation = useMutation({
+    mutationFn: async (invoiceId: string) => {
+      try {
+        const invoiceRef = doc(db, "invoices", invoiceId)
+        await updateDoc(invoiceRef, { invoiceStatus: "pending" })
+      } catch (error) {
+        error instanceof FirebaseError
+          ? console.error(error.message)
+          : console.error(error)
+        throw new Error("Unable to mark invoice as pending")
+      }
+    },
+    onSettled: async () => {
+      return await queryClient.invalidateQueries({
+        predicate: (query) =>
+          query.queryKey[0] === "invoice" || query.queryKey[0] === "invoices",
+      })
+    },
+    onError(error) {
+      catchError(error)
+    },
+  })
+
   const deleteInvoiceMutation = useMutation({
     mutationFn: async (invoiceId: string) => {
       try {
@@ -146,6 +169,7 @@ export const useInvoice = () => {
   return {
     markInvoiceAsPaidMutation,
     addInvoiceToDraftMutation,
+    addInvoiceToPendingMutation,
     deleteInvoiceMutation,
     downloadInvoiceMutation
   }

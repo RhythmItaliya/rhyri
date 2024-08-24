@@ -116,6 +116,13 @@ const EditBankPage = React.lazy(() =>
   }))
 );
 
+// other
+const ClientAllInvoice = React.lazy(() =>
+  import("./pages/Client/all/index").then((module) => ({
+    default: module.ClientAllInvoice,
+  }))
+)
+
 export default function App() {
   return (
     <Routes>
@@ -139,6 +146,7 @@ export default function App() {
       <Route element={<ClientLayout />}>
         <Route path="/client/new" element={<CreateClientPage />} />
         <Route path="/client/edit/:id" element={<EditClientPage />} />
+        <Route path="/client/invoice/:id" element={<ClientAllInvoice />} />
         <Route path="/client/:id" element={<ClientPage />} />
       </Route>
 

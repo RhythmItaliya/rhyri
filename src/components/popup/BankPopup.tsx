@@ -9,6 +9,7 @@ import { useTheme } from '../../contexts/ThemeContext';
 import { PaginationState } from '../../pages/Clientes/schema';
 import { Input } from '../ui/Input';
 import { Skeleton } from '../Skeleton';
+import { useNavigate } from 'react-router-dom';
 
 interface BankPopupProps {
     onSelect: (bank: Bank) => void;
@@ -23,6 +24,8 @@ const BankPopup: React.FC<BankPopupProps> = ({ onSelect, onClose }) => {
     const [allBanks, setAllBanks] = useState<Bank[]>([]);
 
     const [combinedFilter, setCombinedFilter] = useState<string>('');
+
+    const navigate = useNavigate();
 
     const { currentUser } = useAuth();
     const { theme } = useTheme();
@@ -142,14 +145,23 @@ const BankPopup: React.FC<BankPopupProps> = ({ onSelect, onClose }) => {
         );
     };
 
+    const handleNavigate = (event: React.MouseEvent) => {
+        event.stopPropagation();
+        navigate('/bank/new');
+    };
+
     return (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-900 bg-opacity-50">
             <div className={`container max-w-full md:max-w-4xl bg-${isDarkTheme ? 'black text-white' : 'white text-black'} rounded-lg shadow-lg overflow-y-auto p-4 md:p-6`}>
                 <div className="flex flex-col md:flex-row justify-between items-center p-2">
                     <p className="text-lg font-semibold">Select Bank</p>
-                    <Button type="button" onClick={handleClose} className="mt-2 md:mt-0">
-                        Close
-                    </Button>
+                    <div className="flex space-x-2 gap-5">
+                        <Button
+                            type="button"
+                            className="py-1 px-2 text-sm"
+                            onClick={handleNavigate}>Add New</Button>
+                        <Button type="button" className="py-1 px-2 text-sm" onClick={handleClose}>Close</Button>
+                    </div>
                 </div>
 
                 <div className="my-2 flex flex-col gap-4 md:flex-row md:gap-4">
@@ -191,9 +203,9 @@ const BankPopup: React.FC<BankPopupProps> = ({ onSelect, onClose }) => {
                                         onClick={() => handleBankSelection(bank)}
                                         className={`cursor-pointer ${selectedBankId === bank.id ? 'bg-blue-100' : ''}`}
                                     >
-                                        <TableCell>{highlightMatch(bank.bankName, combinedFilter)}</TableCell>
+                                        <TableCell className='uppercase'>{highlightMatch(bank.bankName, combinedFilter)}</TableCell>
                                         <TableCell>{highlightMatch(bank.bankAccountNumber || '', combinedFilter)}</TableCell>
-                                        <TableCell>{highlightMatch(bank.bankBranchName || '', combinedFilter)}</TableCell>
+                                        <TableCell className='uppercase'>{highlightMatch(bank.bankBranchName || '', combinedFilter)}</TableCell>
                                     </TableRow>
                                 ))
                             ) : (
@@ -226,7 +238,7 @@ const BankPopup: React.FC<BankPopupProps> = ({ onSelect, onClose }) => {
                     </Button>
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 

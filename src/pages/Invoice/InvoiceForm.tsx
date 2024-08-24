@@ -34,11 +34,12 @@ import { addDays, format } from "date-fns"
 import { Calendar } from "../../components/ui/Calendar"
 import { Bank, Client, Company, Invoice } from "../../types"
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell, TableFooter, } from "../../components/ui/Table"
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Timestamp } from "@firebase/firestore"
 import ClientSelectButton from "../../components/popup/ClientPopup"
 import CompanySelectButton from "../../components/popup/CompanyPopup"
 import BankSelectButton from "../../components/popup/BankPopup"
+import { useLocation } from "react-router-dom"
 
 const Total = ({
   control,
@@ -96,6 +97,7 @@ export function InvoiceForm({
       clientPostCode: invoice?.clientPostCode || "",
       clientGSTNumber: invoice?.clientGSTNumber || "",
       clientTelephone: invoice?.clientTelephone || "",
+      clientUid: invoice?.clientUid || "",
 
       invoiceDate: invoice?.invoiceDate ? invoice.invoiceDate.toDate() : new Date(),
       paymentTerms: invoice?.paymentTerms || "",
@@ -123,6 +125,12 @@ export function InvoiceForm({
   })
 
   const [showFinalAmount, setShowFinalAmount] = useState(false);
+  const location = useLocation();
+  const isEditing = location.pathname.includes('edit');
+  const [companySelected, setCompanySelected] = useState(false);
+  const [clientSelected, setClientSelected] = useState(false);
+  const [bankSelected, setBankSelected] = useState(false);
+
   const itemListFieldArray = useFieldArray({
     control: form.control,
     name: "itemList",
@@ -173,16 +181,23 @@ export function InvoiceForm({
     }
   }, [paymentTerms, invoiceDate, setValue]);
 
-
   const handleClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
+
     const isValid = await form.trigger();
-    if (isValid) {
-      const formData = form.getValues();
-      onSubmit(formData);
-    } else {
-      console.log('Form validation failed');
+
+    if (!clientSelected || !companySelected || !bankSelected) {
+      alert('Please select a company, client, and bank details before submitting.');
+      return;
     }
+
+    if (!isValid) {
+      console.log('Form validation failed');
+      return;
+    }
+
+    const formData = form.getValues();
+    onSubmit(formData);
   };
 
   const handleClientSelection = (client: Client) => {
@@ -194,6 +209,8 @@ export function InvoiceForm({
     setValue('clientPostCode', client.clientPostCode || '');
     setValue('clientGSTNumber', client.clientGSTNumber || '');
     setValue('clientTelephone', client.clientTelephone || '');
+    setValue('clientUid', client.id);
+    setClientSelected(true);
   };
 
   const handleCompanySelection = (company: Company) => {
@@ -208,6 +225,7 @@ export function InvoiceForm({
     setValue('companyTagline', company.companyTagline || '');
     setValue('companyGSTNumber', company.companyGSTNumber || '');
     setValue('companyPersonName', company.companyPersonName || '');
+    setCompanySelected(true);
   };
 
   const handleBankSelection = (bank: Bank) => {
@@ -215,6 +233,7 @@ export function InvoiceForm({
     setValue('bankAccountNumber', bank.bankAccountNumber || '');
     setValue('bankIfscCode', bank.bankIfscCode || '');
     setValue('bankBranchName', bank.bankBranchName || '');
+    setBankSelected(true);
   }
 
   const handleNumberChange = (fieldName: any) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -232,31 +251,34 @@ export function InvoiceForm({
             <p className="font-semibold text-accent">Invoice From</p>
             <CompanySelectButton onCompanySelect={handleCompanySelection} />
           </div>
-          <div className="grid gap-4">
-            <FormField control={form.control} name="companyName" render={({ field }) => (<FormItem> <FormLabel>Name</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" /></FormControl><FormMessage /></FormItem>)} />
 
-            <FormField control={form.control} name="companyEmail" render={({ field }) => (<FormItem><FormLabel>Email</FormLabel><FormControl><Input {...field} autoComplete="off" className="lowercase" /></FormControl><FormMessage /></FormItem>)} />
+          {isEditing && (
+            <div className="grid gap-4">
+              <FormField control={form.control} name="companyName" render={({ field }) => (<FormItem> <FormLabel>Name</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" /></FormControl><FormMessage /></FormItem>)} />
 
-            <FormField control={form.control} name="companyTelephone" render={({ field }) => (<FormItem><FormLabel>Telephone</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" onChange={handleNumberChange('companyTelephone')} value={field.value} inputMode="numeric" /></FormControl><FormMessage /></FormItem>)} />
+              <FormField control={form.control} name="companyEmail" render={({ field }) => (<FormItem><FormLabel>Email</FormLabel><FormControl><Input {...field} autoComplete="off" className="lowercase" /></FormControl><FormMessage /></FormItem>)} />
 
-            <FormField control={form.control} name="companyTagline" render={({ field }) => <FormItem><FormLabel>Tagline</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" /></FormControl><FormMessage /></FormItem>} />
+              <FormField control={form.control} name="companyTelephone" render={({ field }) => (<FormItem><FormLabel>Telephone</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" onChange={handleNumberChange('companyTelephone')} value={field.value} inputMode="numeric" /></FormControl><FormMessage /></FormItem>)} />
 
-            <FormField control={form.control} name="companyAddress" render={({ field }) => <FormItem><FormLabel>Address</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" /></FormControl><FormMessage /></FormItem>} />
+              <FormField control={form.control} name="companyTagline" render={({ field }) => <FormItem><FormLabel>Tagline</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" /></FormControl><FormMessage /></FormItem>} />
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-              <FormField control={form.control} name="companyPersonName" render={({ field }) => (<FormItem><FormLabel>Contact Person</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" /></FormControl><FormMessage /></FormItem>)} />
+              <FormField control={form.control} name="companyAddress" render={({ field }) => <FormItem><FormLabel>Address</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" /></FormControl><FormMessage /></FormItem>} />
 
-              <FormField control={form.control} name="companyGSTNumber" render={({ field }) => <FormItem><FormLabel>GST Number</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" maxLength={15} /></FormControl><FormMessage /></FormItem>} />
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                <FormField control={form.control} name="companyPersonName" render={({ field }) => (<FormItem><FormLabel>Contact Person</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" /></FormControl><FormMessage /></FormItem>)} />
 
-              <FormField control={form.control} name="companyCountry" render={({ field }) => <FormItem><FormLabel>Country</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" /></FormControl><FormMessage /></FormItem>} />
+                <FormField control={form.control} name="companyGSTNumber" render={({ field }) => <FormItem><FormLabel>GST Number</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" maxLength={15} /></FormControl><FormMessage /></FormItem>} />
 
-              <FormField control={form.control} name="companyState" render={({ field }) => <FormItem><FormLabel>State</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" /></FormControl><FormMessage /></FormItem>} />
+                <FormField control={form.control} name="companyCountry" render={({ field }) => <FormItem><FormLabel>Country</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" /></FormControl><FormMessage /></FormItem>} />
 
-              <FormField control={form.control} name="companyCity" render={({ field }) => <FormItem><FormLabel>City</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" /></FormControl><FormMessage /></FormItem>} />
+                <FormField control={form.control} name="companyState" render={({ field }) => <FormItem><FormLabel>State</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" /></FormControl><FormMessage /></FormItem>} />
 
-              <FormField control={form.control} name="companyPostCode" render={({ field }) => <FormItem className="max-sm:col-span-2"><FormLabel>Post Code</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" onChange={handleNumberChange('companyPostCode')} value={field.value} inputMode="numeric" /></FormControl><FormMessage /></FormItem>} />
+                <FormField control={form.control} name="companyCity" render={({ field }) => <FormItem><FormLabel>City</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" /></FormControl><FormMessage /></FormItem>} />
+
+                <FormField control={form.control} name="companyPostCode" render={({ field }) => <FormItem className="max-sm:col-span-2"><FormLabel>Post Code</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" onChange={handleNumberChange('companyPostCode')} value={field.value} inputMode="numeric" /></FormControl><FormMessage /></FormItem>} />
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         <div className="space-y-4">
@@ -264,25 +286,28 @@ export function InvoiceForm({
             <p className="font-semibold text-accent">Invoice To</p>
             <ClientSelectButton onClientSelect={handleClientSelection} />
           </div>
-          <div className="grid gap-4">
-            <FormField control={form.control} name="clientName" render={({ field }) => (<FormItem><FormLabel>Client'Name</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" /></FormControl><FormMessage /></FormItem>)} />
 
-            <FormField control={form.control} name="clientEmail" render={({ field }) => (<FormItem><FormLabel>Client's Email</FormLabel><FormControl><Input {...field} autoComplete="off" className="lowercase" /></FormControl><FormMessage /></FormItem>)} />
+          {isEditing && (
+            <div className="grid gap-4">
+              <FormField control={form.control} name="clientName" render={({ field }) => (<FormItem><FormLabel>Client'Name</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" /></FormControl><FormMessage /></FormItem>)} />
 
-            <FormField control={form.control} name="clientGSTNumber" render={({ field }) => (<FormItem><FormLabel>Client GST Number</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" maxLength={15} /></FormControl><FormMessage /></FormItem>)} />
+              <FormField control={form.control} name="clientEmail" render={({ field }) => (<FormItem><FormLabel>Client's Email</FormLabel><FormControl><Input {...field} autoComplete="off" className="lowercase" /></FormControl><FormMessage /></FormItem>)} />
 
-            <FormField control={form.control} name="clientAddress" render={({ field }) => (<FormItem><FormLabel>Street Address</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" /></FormControl><FormMessage /></FormItem>)} />
+              <FormField control={form.control} name="clientGSTNumber" render={({ field }) => (<FormItem><FormLabel>Client GST Number</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" maxLength={15} /></FormControl><FormMessage /></FormItem>)} />
 
-            <FormField control={form.control} name="clientTelephone" render={({ field }) => (<FormItem><FormLabel>Client Telephone</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" onChange={handleNumberChange('clientTelephone')} value={field.value} inputMode="numeric" /></FormControl><FormMessage /></FormItem>)} />
+              <FormField control={form.control} name="clientAddress" render={({ field }) => (<FormItem><FormLabel>Street Address</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" /></FormControl><FormMessage /></FormItem>)} />
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-              <FormField control={form.control} name="clientCountry" render={({ field }) => (<FormItem><FormLabel>Country</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" /></FormControl><FormMessage /></FormItem>)} />
+              <FormField control={form.control} name="clientTelephone" render={({ field }) => (<FormItem><FormLabel>Client Telephone</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" onChange={handleNumberChange('clientTelephone')} value={field.value} inputMode="numeric" /></FormControl><FormMessage /></FormItem>)} />
 
-              <FormField control={form.control} name="clientCity" render={({ field }) => (<FormItem><FormLabel>City</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" /></FormControl><FormMessage /></FormItem>)} />
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                <FormField control={form.control} name="clientCountry" render={({ field }) => (<FormItem><FormLabel>Country</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" /></FormControl><FormMessage /></FormItem>)} />
 
-              <FormField control={form.control} name="clientPostCode" render={({ field }) => (<FormItem className="max-sm:col-span-2"><FormLabel>Post code</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" onChange={handleNumberChange('clientPostCode')} value={field.value} inputMode="numeric" /></FormControl><FormMessage /></FormItem>)} />
+                <FormField control={form.control} name="clientCity" render={({ field }) => (<FormItem><FormLabel>City</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" /></FormControl><FormMessage /></FormItem>)} />
+
+                <FormField control={form.control} name="clientPostCode" render={({ field }) => (<FormItem className="max-sm:col-span-2"><FormLabel>Post code</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" onChange={handleNumberChange('clientPostCode')} value={field.value} inputMode="numeric" /></FormControl><FormMessage /></FormItem>)} />
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         <div className="space-y-4">
@@ -290,15 +315,18 @@ export function InvoiceForm({
             <p className="font-semibold text-accent">Bank Details</p>
             <BankSelectButton onBankSelect={handleBankSelection} />
           </div>
-          <div className="grid gap-4">
-            <FormField control={form.control} name="bankName" render={({ field }) => (<FormItem><FormLabel>Bank Name</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" /></FormControl><FormMessage /></FormItem>)} />
 
-            <FormField control={form.control} name="bankAccountNumber" render={({ field }) => (<FormItem><FormLabel>Account Number</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" onChange={handleNumberChange('bankAccountNumber')} value={field.value} inputMode="numeric" /></FormControl><FormMessage /></FormItem>)} />
+          {isEditing && (
+            <div className="grid gap-4">
+              <FormField control={form.control} name="bankName" render={({ field }) => (<FormItem><FormLabel>Bank Name</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" /></FormControl><FormMessage /></FormItem>)} />
 
-            <FormField control={form.control} name="bankIfscCode" render={({ field }) => (<FormItem><FormLabel>IFSC Code</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" /></FormControl><FormMessage /></FormItem>)} />
+              <FormField control={form.control} name="bankAccountNumber" render={({ field }) => (<FormItem><FormLabel>Account Number</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" onChange={handleNumberChange('bankAccountNumber')} value={field.value} inputMode="numeric" /></FormControl><FormMessage /></FormItem>)} />
 
-            <FormField control={form.control} name="bankBranchName" render={({ field }) => (<FormItem><FormLabel>Branch Name</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" /></FormControl><FormMessage /></FormItem>)} />
-          </div>
+              <FormField control={form.control} name="bankIfscCode" render={({ field }) => (<FormItem><FormLabel>IFSC Code</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" /></FormControl><FormMessage /></FormItem>)} />
+
+              <FormField control={form.control} name="bankBranchName" render={({ field }) => (<FormItem><FormLabel>Branch Name</FormLabel><FormControl><Input {...field} autoComplete="off" className="uppercase" /></FormControl><FormMessage /></FormItem>)} />
+            </div>
+          )}
         </div>
 
         <div className="grid sm:grid-cols-2 gap-4">

@@ -9,6 +9,7 @@ import { useTheme } from '../../contexts/ThemeContext';
 import { PaginationState } from '../../pages/Clientes/schema';
 import { Input } from '../ui/Input';
 import { Skeleton } from '../Skeleton';
+import { useNavigate } from 'react-router-dom';
 
 interface ClientPopupProps {
     onSelect: (client: Client) => void;
@@ -27,6 +28,7 @@ const ClientPopup: React.FC<ClientPopupProps> = ({ onSelect, onClose }) => {
     const { currentUser } = useAuth();
     const { theme } = useTheme();
     const isDarkTheme = theme === "dark";
+    const navigate = useNavigate();
 
     const [pagination, setPagination] = useState<PaginationState>({
         pageIndex: 0,
@@ -142,14 +144,32 @@ const ClientPopup: React.FC<ClientPopupProps> = ({ onSelect, onClose }) => {
         );
     };
 
+    const handleNavigate = (event: React.MouseEvent) => {
+        event.stopPropagation();
+        navigate('/client/new');
+    };
+
     return (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-900 bg-opacity-50">
             <div className={`container max-w-full md:max-w-4xl bg-${isDarkTheme ? 'black text-white' : 'white text-black'} rounded-lg shadow-lg overflow-y-auto p-4 md:p-6`}>
                 <div className="flex flex-col md:flex-row justify-between items-center p-2">
                     <p className="text-lg font-semibold">Select Client</p>
-                    <Button type="button" onClick={handleClose} className="mt-2 md:mt-0">
-                        Close
-                    </Button>
+                    <div className="flex space-x-2 gap-5">
+                        <Button
+                            type="button"
+                            className="py-1 px-2 text-sm"
+                            onClick={handleNavigate}
+                        >
+                            Add New
+                        </Button>
+                        <Button
+                            type="button"
+                            className="py-1 px-2 text-sm"
+                            onClick={handleClose}
+                        >
+                            Close
+                        </Button>
+                    </div>
                 </div>
 
                 <div className="my-2 flex flex-col gap-4 md:flex-row md:gap-4">
@@ -191,7 +211,7 @@ const ClientPopup: React.FC<ClientPopupProps> = ({ onSelect, onClose }) => {
                                         onClick={() => handleClientSelection(client)}
                                         className={`cursor-pointer ${selectedClientId === client.id ? 'bg-blue-100' : ''}`}
                                     >
-                                        <TableCell>{highlightMatch(client.clientName, combinedFilter)}</TableCell>
+                                        <TableCell className='uppercase'>{highlightMatch(client.clientName, combinedFilter)}</TableCell>
                                         <TableCell>{highlightMatch(client.clientTelephone || '', combinedFilter)}</TableCell>
                                         <TableCell>{highlightMatch(client.clientEmail, combinedFilter)}</TableCell>
                                     </TableRow>
@@ -253,12 +273,12 @@ const ClientSelectButton: React.FC<ClientSelectButtonProps> = ({ onClientSelect 
 
     return (
         <>
-            <Button type="button" onClick={handleClick}>
-                Select Client
-            </Button>
+            <Button type="button" onClick={handleClick}>Select Client</Button>
 
             {showClientPopup && (
-                <ClientPopup onSelect={handleSelect} onClose={handleClose} />
+                <div>
+                    <ClientPopup onSelect={handleSelect} onClose={handleClose} />
+                </div>
             )}
         </>
     );

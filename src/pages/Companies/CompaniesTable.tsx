@@ -53,10 +53,9 @@ export function CompaniesTable({
                             >
                                 {visibleColumns.map((column) => (
                                     <TableCell key={column.id}>
-                                        {column.id === "name" && company.companyName}
-                                        {column.id === "email" && company.companyEmail}
+                                        {column.id === "name" && (company.companyName?.toUpperCase() || "")}
+                                        {column.id === "email" && (company.companyEmail?.toLowerCase() || "")}
                                         {column.id === "telephone" && company.companyTelephone}
-                                        {/* {column.id === "category" && company.companyCategory} */}
                                     </TableCell>
                                 ))}
                                 <TableCell>

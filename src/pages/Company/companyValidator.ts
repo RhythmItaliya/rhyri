@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const companyValidator = z.object({
   companyName: z.string().min(1, { message: "Company name is required" }),
-  companyEmail: z.string().email({ message: "Invalid email address" }).optional(),
+  companyEmail: z.string().email({ message: "Invalid email address" }),
   companyTelephone: z.string().min(1, { message: "Telephone number is required" }),
   companyAddress: z.string().min(1, { message: "Address is required" }),
   companyTagline: z.string().min(1, { message: "Tagline is required" }),

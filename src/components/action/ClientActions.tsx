@@ -45,6 +45,11 @@ export function ClientActions({
     }
   };
 
+  const handleViewAll = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    navigate(`/client/invoice/${clientId}`);
+  };
+
   return (
     <>
       <DropdownMenu>
@@ -61,6 +66,12 @@ export function ClientActions({
           )}
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={handleEdit}>Edit</DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem
+            onClick={handleViewAll}
+          >
+            View All Invoices
+          </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem
             onClick={handleDelete}

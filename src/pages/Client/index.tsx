@@ -58,6 +58,8 @@ export function ClientPage() {
                                 <div className="space-y-1">
                                     <p className="font-medium">{client.clientName}</p>
                                     <p className="text-sm text-muted">{client.clientEmail}</p>
+                                    <p className="text-sm text-muted">{client.id} id</p>
+                                    <p className="text-sm text-muted">{client.uid} create uid</p>
                                 </div>
 
                                 <div className="space-y-1">

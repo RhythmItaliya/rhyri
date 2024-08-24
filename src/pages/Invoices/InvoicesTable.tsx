@@ -73,7 +73,7 @@ export function InvoicesTable({
                   <TableCell key={column.id}>
                     {column.id === "invoice" && invoice.id}
                     {column.id === "date" && formatFirestoreTimestamp(invoice.date)}
-                    {column.id === "client" && invoice.client}
+                    {column.id === "client" && (invoice.client?.toUpperCase() || "")}
                     {column.id === "status" && (<InvoiceStatusBadge status={invoice.status} />)}
                     {column.id === "amount" && formatCurrency(invoice.amount)}
                   </TableCell>
@@ -90,10 +90,11 @@ export function InvoicesTable({
 
                 <TableCell>
                   <InvoiceActions
-                    isDrafted={invoice.status === "drafted"}
                     isInvoicePage={false}
-                    isMarkedAsPaid={invoice.status === "pending"}
                     invoiceId={invoice.id}
+                    isMarkedAsPaid={invoice.status === "paid"}
+                    isDrafted={invoice.status === "drafted"}
+                    isPending={invoice.status === "pending"}
                   />
                 </TableCell>
               </TableRow>

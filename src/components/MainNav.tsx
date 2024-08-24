@@ -1,5 +1,5 @@
 import * as React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 import { ThemeToggler } from "./ThemeToggler";
 import { Icons } from "./Icons";
@@ -34,11 +34,17 @@ const mainNavItems = [
 ];
 
 export function MainNav() {
+  const navigate = useNavigate();
+
+  const handleLogoClick = () => {
+    navigate('/dashboard');
+  };
+
   return (
     <header className="site-header">
       <nav className="max-width flex-between">
         <div className="flex items-center gap-4">
-          <Icons.logo className="w-8 h-8" aria-hidden="true" />
+          <Icons.logo className="w-8 h-8 cursor-pointer" aria-hidden="true" onClick={handleLogoClick} />
 
           {mainNavItems.map((item) => (
             <NavLink

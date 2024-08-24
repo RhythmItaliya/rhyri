@@ -21,6 +21,7 @@ export const invoiceValidator = z.object({
   clientPostCode: z.string().optional(),
   clientGSTNumber: z.string().optional(),
   clientTelephone: z.string().optional(),
+  clientUid: z.string().optional(),
 
   invoiceDate: z.date({ required_error: "An invoice date is required" }),
   paymentTerms: z.string().min(1, { message: "required" }),
@@ -58,6 +59,7 @@ export const invoiceValidator = z.object({
   bankAccountNumber: z.string().min(1, { message: "Account number is required" }),
   bankBranchName: z.string().min(1, { message: "IFSC code is required" }),
   bankIfscCode: z.string().min(1, { message: "Branch name is required" }),
-})
+
+});
 
 export type InvoiceInputs = z.infer<typeof invoiceValidator>

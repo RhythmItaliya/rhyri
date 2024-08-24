@@ -9,6 +9,7 @@ import { useTheme } from '../../contexts/ThemeContext';
 import { Input } from '../../components/ui/Input';
 import { Skeleton } from '../../components/Skeleton';
 import { PaginationState } from '../../pages/Companies/schema';
+import { useNavigate } from 'react-router-dom';
 
 interface CompanyPopupProps {
     onSelect: (company: Company) => void;
@@ -23,6 +24,8 @@ const CompanyPopup: React.FC<CompanyPopupProps> = ({ onSelect, onClose }) => {
     const [allCompanies, setAllCompanies] = useState<Company[]>([]);
 
     const [combinedFilter, setCombinedFilter] = useState<string>('');
+
+    const navigate = useNavigate();
 
     const { currentUser } = useAuth();
     const { theme } = useTheme();
@@ -142,14 +145,32 @@ const CompanyPopup: React.FC<CompanyPopupProps> = ({ onSelect, onClose }) => {
         );
     };
 
+    const handleNavigate = (event: React.MouseEvent) => {
+        event.stopPropagation();
+        navigate('/company/new');
+    };
+
     return (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-900 bg-opacity-50">
             <div className={`container max-w-full md:max-w-4xl bg-${isDarkTheme ? 'black text-white' : 'white text-black'} rounded-lg shadow-lg overflow-y-auto p-4 md:p-6`}>
                 <div className="flex flex-col md:flex-row justify-between items-center p-2">
                     <p className="text-lg font-semibold">Select Company</p>
-                    <Button type="button" onClick={handleClose} className="mt-2 md:mt-0">
-                        Close
-                    </Button>
+                    <div className="flex space-x-2 gap-5">
+                        <Button
+                            type="button"
+                            className="py-1 px-2 text-sm"
+                            onClick={handleNavigate}
+                        >
+                            Add New
+                        </Button>
+                        <Button
+                            type="button"
+                            className="py-1 px-2 text-sm"
+                            onClick={handleClose}
+                        >
+                            Close
+                        </Button>
+                    </div>
                 </div>
 
                 <div className="my-2 flex flex-col gap-4 md:flex-row md:gap-4">
@@ -190,7 +211,7 @@ const CompanyPopup: React.FC<CompanyPopupProps> = ({ onSelect, onClose }) => {
                                         onClick={() => handleCompanySelection(company)}
                                         className={`cursor-pointer ${selectedCompanyId === company.id ? 'bg-blue-100' : ''}`}
                                     >
-                                        <TableCell>{highlightMatch(company.companyName, combinedFilter)}</TableCell>
+                                        <TableCell className='uppercase'>{highlightMatch(company.companyName, combinedFilter)}</TableCell>
                                         <TableCell>{highlightMatch(company.companyEmail || '', combinedFilter)}</TableCell>
                                     </TableRow>
                                 ))

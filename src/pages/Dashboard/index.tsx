@@ -15,9 +15,13 @@ import { catchError, formatCurrency } from "../../lib/utils"
 
 import { fetchUserInvoicesStats } from "./fetchUserInvoicesStats"
 import { useQuery } from "@tanstack/react-query"
+import { useTheme } from "../../contexts/ThemeContext"
 
 export function DashboardPage() {
   const { currentUser } = useAuth()
+
+  const { theme } = useTheme();
+  const isDarkTheme = theme === "dark";
 
   if (!currentUser) return null
 
@@ -48,7 +52,7 @@ export function DashboardPage() {
                 Total Invoices
               </CardTitle>
               <Icons.invoices
-                className="h-4 w-4 text-muted"
+                className="h-5 w-5"
                 aria-hidden="true"
               />
             </CardHeader>
@@ -68,7 +72,13 @@ export function DashboardPage() {
               <CardTitle className="text-muted font-medium text-sm">
                 Total Invoice Amount
               </CardTitle>
-              <Icons.amount className="h-4 w-4 text-muted" aria-hidden="true" />
+              <div>
+                {isDarkTheme ? (
+                  <Icons.amountDark className="h-4 w-4" aria-hidden="true" />
+                ) : (
+                  <Icons.amountLight className="h-4 w-4" aria-hidden="true" />
+                )}
+              </div>
             </CardHeader>
             <CardContent>
               {isLoading ? (
@@ -88,7 +98,13 @@ export function DashboardPage() {
               <CardTitle className="text-muted font-medium text-sm">
                 Average Invoice Amount
               </CardTitle>
-              <Icons.amount className="h-4 w-4 text-muted" aria-hidden="true" />
+              <div>
+                {isDarkTheme ? (
+                  <Icons.amountDark className="h-4 w-4" aria-hidden="true" />
+                ) : (
+                  <Icons.amountLight className="h-4 w-4" aria-hidden="true" />
+                )}
+              </div>
             </CardHeader>
             <CardContent>
               {isLoading ? (
