@@ -15,8 +15,8 @@ export const invoiceValidator = z.object({
 
   clientName: z.string().min(1, { message: "required" }),
   clientEmail: z.string().optional(),
-  clientAddress: z.string().min(1, { message: "required" }),
-  clientCity: z.string().min(1, { message: "required" }),
+  clientAddress: z.string().optional(),
+  clientCity: z.string().optional(),
   clientCountry: z.string().optional(),
   clientPostCode: z.string().optional(),
   clientGSTNumber: z.string().optional(),
