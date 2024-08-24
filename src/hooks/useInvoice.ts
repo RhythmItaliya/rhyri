@@ -105,54 +105,43 @@ export const useInvoice = () => {
     },
   })
 
-
   const downloadInvoiceMutation = useMutation({
     mutationFn: async ({ invoiceId, uid, onProgress }: { invoiceId: string; uid: string; onProgress: (progress: string) => void }) => {
       try {
         if (!uid || !invoiceId) {
           throw new Error('Invalid UID or invoice ID');
         }
+        onProgress('Starting download process...');
+
         onProgress('Verifying details...');
+        await new Promise(resolve => setTimeout(resolve, 500));
 
         onProgress('Fetching invoice data...');
         const fetchData = await fetchInvoice(invoiceId, uid);
         if (!fetchData) throw new Error('No data fetched for the provided invoice ID');
 
         onProgress('Preparing data...');
-
-        const invoiceDate = fetchData.invoiceDate
-          ? fetchData.invoiceDate.toDate().toISOString()
-          : new Date().toISOString();
-
-        const rawData = { ...fetchData, invoiceDate };
+        const rawData = { ...fetchData };
         const transformedData = transformInvoiceData(rawData as any);
 
         if (!transformedData || typeof transformedData !== 'object') throw new Error('Invalid transformed data');
 
         onProgress('Rendering HTML...');
-
         const html = renderToHtml({ transformedData });
         if (!html || typeof html !== 'string') throw new Error('Invalid HTML content');
 
         onProgress('Generating PDF...');
-
         const pdfUrl = await pdfGenerate(html);
         if (!pdfUrl) throw new Error('PDF URL was not generated');
 
-        onProgress('Downloading PDF...');
-
+        onProgress('Fetching PDF...');
         const response = await axios.get(pdfUrl, {
-          responseType: 'blob',
-          onDownloadProgress: () => { }
+          responseType: 'blob'
         });
 
-        const blob = new Blob([response.data], { type: 'application/pdf' });
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.setAttribute('download', 'invoice.pdf');
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        const filename = createFilename(transformedData);
+        onProgress('Downloading PDF...');
+        downloadBlob(response.data, filename);
 
         onProgress('Download complete');
       } catch (error) {
@@ -165,6 +154,24 @@ export const useInvoice = () => {
       catchError(error);
     },
   });
+
+  function createFilename(transformedData: any) {
+    const clientName = transformedData.customer.clientName || 'invoice';
+    const invoiceCustomNumber = transformedData.invoice.invoiceCustomNumber || '';
+    const sanitizedClientName = clientName.replace(/[<>:"\/\\|?*]+/g, '').toUpperCase();
+    const sanitizedInvoiceNumber = invoiceCustomNumber.replace(/[<>:"\/\\|?*]+/g, '');
+    return sanitizedClientName + (sanitizedInvoiceNumber ? `_${sanitizedInvoiceNumber.toUpperCase()}` : '') + '.pdf';
+  }
+
+  function downloadBlob(blobData: any, filename: string) {
+    const blob = new Blob([blobData], { type: 'application/pdf' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.setAttribute('download', filename);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
 
   return {
     markInvoiceAsPaidMutation,
