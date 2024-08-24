@@ -65,6 +65,7 @@ export const fetchAllClientInvoices = async (
                 client: data.clientName,
                 status: data.invoiceStatus,
                 amount: data.amount,
+                invoiceCustomNumber: data.invoiceCustomNumber
             }
         })
 

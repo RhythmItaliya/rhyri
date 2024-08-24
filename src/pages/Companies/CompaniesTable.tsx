@@ -53,9 +53,9 @@ export function CompaniesTable({
                             >
                                 {visibleColumns.map((column) => (
                                     <TableCell key={column.id}>
-                                        {column.id === "name" && (company.companyName?.toUpperCase() || "")}
-                                        {column.id === "email" && (company.companyEmail?.toLowerCase() || "")}
-                                        {column.id === "telephone" && company.companyTelephone}
+                                        {column.id === "name" && (company.companyName ? company.companyName.toUpperCase() : " - ")}
+                                        {column.id === "email" && (company.companyEmail ? company.companyEmail.toLowerCase() : " - ")}
+                                        {column.id === "telephone" && (company.companyTelephone || " - ")}
                                     </TableCell>
                                 ))}
                                 <TableCell>

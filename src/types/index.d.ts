@@ -63,6 +63,7 @@ export interface Invoice {
   bankBranchName?: string;
   bankIfscCode?: string;
 
+  finalAmount?:number;
 }
 
 export type ClientCategory = "regular" | "premium" | "vip"

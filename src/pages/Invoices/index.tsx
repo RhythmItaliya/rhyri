@@ -36,19 +36,25 @@ export function InvoicesPage() {
   const [columns, setColumns] = React.useState<ColumnDef[]>([
     {
       id: "invoice",
-      header: <div className="w-[100px]">Invoice</div>,
+      header: "Invoice id",
+      isVisible: true,
+      canHide: true,
+    },
+    {
+      id: 'invoiceCustomNumber',
+      header: "Number",
       isVisible: true,
       canHide: true,
     },
     {
       id: "date",
-      header: <div className="w-[120px]">Date</div>,
+      header: "Date",
       isVisible: true,
       canHide: true,
     },
     {
       id: "client",
-      header: <div className="w-[130px]">Client</div>,
+      header: "Client",
       isVisible: true,
       canHide: true,
     },

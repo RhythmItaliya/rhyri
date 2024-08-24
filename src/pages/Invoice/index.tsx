@@ -80,73 +80,70 @@ export function InvoicePage() {
           <Card>
             <CardContent className="space-y-8 p-8">
               <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-2">
-                <p className="text-gray-600">{invoice.uid}</p>
-                <p className="text-gray-600">{invoice.clientUid}</p>
-                <p className="text-gray-600">{invoice.id}</p>
 
                 <div className="space-y-1">
-                  <p className="font-semibold text-sm text-gray-800">Invoice ID:</p>
-                  <p className="text-gray-600">{invoice.id}</p>
+                  <p className="font-semibold">Invoice ID:</p>
+                  <p className="text-sm">{invoice.id || " - "}</p>
                 </div>
                 <div className="space-y-1">
-                  <p className="font-semibold text-sm text-gray-800">Invoice Number:</p>
-                  <p className="text-gray-600">{invoice.invoiceCustomNumber}</p>
+                  <p className="font-semibold">Invoice Number:</p>
+                  <p className="text-sm">{invoice.invoiceCustomNumber || " - "}</p>
                 </div>
               </div>
 
               <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-2">
                 <div className="space-y-1">
-                  <p className="font-semibold text-sm text-gray-800">Invoice Date:</p>
-                  <p className="text-gray-600">{formatFirestoreTimestamp(invoice.invoiceDate)}</p>
+                  <p className="font-semibold">Invoice Date:</p>
+                  <p className="text-sm">{invoice.invoiceDate ? formatFirestoreTimestamp(invoice.invoiceDate) : " - "}</p>
                 </div>
                 <div className="space-y-1">
-                  <p className="font-semibold text-sm text-gray-800">Due Date:</p>
-                  <p className="text-gray-600">{formatFirestoreTimestamp(invoice.dueDate)}</p>
-                </div>
-              </div>
-
-              <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-2">
-                <div className="space-y-1">
-                  <p className="font-semibold text-sm text-gray-800">Company Details:</p>
-                  <p className="text-gray-600">{invoice.companyName}</p>
-                  <p className="text-gray-600">{invoice.companyTelephone}</p>
-                  <p className="text-gray-600">{invoice.companyEmail}</p>
-                  <p className="text-gray-600">{invoice.companyCity}</p>
-                  <p className="text-gray-600">{invoice.companyPostCode}</p>
-                  <p className="text-gray-600">{invoice.companyState}</p>
-                  <p className="text-gray-600">{invoice.companyCountry}</p>
-                  <p className="text-gray-600">{invoice.companyAddress}</p>
-                </div>
-
-                <div className="space-y-1">
-                  <p className="font-semibold text-sm text-gray-800">Client Details:</p>
-                  <p className="text-gray-600">{invoice.clientName}</p>
-                  <p className="text-gray-600">{invoice.clientEmail}</p>
-                  <p className="text-gray-600">{invoice.clientCity}</p>
-                  <p className="text-gray-600">{invoice.clientPostCode}</p>
-                  <p className="text-gray-600">{invoice.clientCountry}</p>
-                  <p className="text-gray-600">{invoice.clientAddress}</p>
-                  <p className="text-gray-600">{invoice.clientGSTNumber}</p>
+                  <p className="font-semibold">Due Date:</p>
+                  <p className="text-sm">{invoice.dueDate ? formatFirestoreTimestamp(invoice.dueDate) : " - "}</p>
                 </div>
               </div>
 
               <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-2">
                 <div className="space-y-1">
-                  <p className="font-semibold text-sm text-gray-800">Bank Details:</p>
-                  <p className="text-gray-600">Bank Name:<span className="uppercase">{invoice.bankName}</span></p>
-                  <p className="text-gray-600">Account Number: <span className="uppercase">{invoice.bankAccountNumber}</span></p>
-                  <p className="text-gray-600">Branch Name: <span className="uppercase">{invoice.bankBranchName}</span></p>
-                  <p className="text-gray-600">IFSC Code: <span className="uppercase">{invoice.bankIfscCode}</span></p>
+                  <p className="font-semibold">Company Details:</p>
+                  <p className="text-sm">{invoice.companyName?.toUpperCase() || " - "}</p>
+                  <p className="text-sm">{invoice.companyTelephone?.toUpperCase() || " - "}</p>
+                  <p className="text-sm">{invoice.companyEmail?.toLowerCase() || " - "}</p>
+                  <p className="text-sm">{invoice.companyCity?.toUpperCase() || " - "}</p>
+                  <p className="text-sm">{invoice.companyPostCode?.toUpperCase() || " - "}</p>
+                  <p className="text-sm">{invoice.companyState?.toUpperCase() || " - "}</p>
+                  <p className="text-sm">{invoice.companyCountry?.toUpperCase() || " - "}</p>
+                  <p className="text-sm">{invoice.companyAddress?.toUpperCase() || " - "}</p>
+                </div>
+
+                <div className="space-y-1">
+                  <p className="font-semibold">Client Details:</p>
+                  <p className="text-sm">{invoice.clientName?.toUpperCase() || " - "}</p>
+                  <p className="text-sm">{invoice.clientEmail?.toLowerCase() || " - "}</p>
+                  <p className="text-sm">{invoice.clientCity?.toUpperCase() || " - "}</p>
+                  <p className="text-sm">{invoice.clientPostCode?.toUpperCase() || " - "}</p>
+                  <p className="text-sm">{invoice.clientCountry?.toUpperCase() || " - "}</p>
+                  <p className="text-sm">{invoice.clientAddress?.toUpperCase() || " - "}</p>
+                  <p className="text-sm">{invoice.clientGSTNumber?.toUpperCase() || " - "}</p>
+                </div>
+              </div>
+
+              <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-2">
+                <div className="space-y-1">
+                  <p className="font-semibold">Bank Details:</p>
+                  <p className="text-sm">Bank Name: <span className="uppercase">{invoice.bankName?.toUpperCase() || " - "}</span></p>
+                  <p className="text-sm">Account Number: <span className="uppercase">{invoice.bankAccountNumber?.toUpperCase() || " - "}</span></p>
+                  <p className="text-sm">Branch Name: <span className="uppercase">{invoice.bankBranchName?.toUpperCase() || " - "}</span></p>
+                  <p className="text-sm">IFSC Code: <span className="uppercase">{invoice.bankIfscCode?.toUpperCase() || " - "}</span></p>
                 </div>
 
                 <div className="space-y-1">
                   <div className="mb-5">
-                    <p className="font-semibold text-sm text-gray-800">Company GST:</p>
-                    <p className="text-gray-600 uppercase">{invoice.companyGSTNumber}</p>
+                    <p className="font-semibold">Company GST:</p>
+                    <p className="text-sm uppercase">{invoice.companyGSTNumber?.toUpperCase() || " - "}</p>
                   </div>
                   <div>
-                    <p className="font-semibold text-sm text-gray-800">Client GST:</p>
-                    <p className="text-gray-600 uppercase">{invoice.clientGSTNumber}</p>
+                    <p className="font-semibold">Client GST:</p>
+                    <p className="text-sm uppercase">{invoice.clientGSTNumber?.toUpperCase() || " - "}</p>
                   </div>
                 </div>
               </div>

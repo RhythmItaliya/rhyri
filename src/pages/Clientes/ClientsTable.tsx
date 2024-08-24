@@ -53,10 +53,10 @@ export function ClientsTable({
               >
                 {visibleColumns.map((column) => (
                   <TableCell key={column.id}>
-                    {column.id === "name" && (client.clientName?.toUpperCase() || "")}
-                    {column.id === "email" && (client.clientEmail?.toLowerCase() || "")}
-                    {column.id === "telephone" && client.clientTelephone}
-                    {column.id === "category" && client.clientCategory}
+                    {column.id === "name" && (client.clientName ? client.clientName.toUpperCase() : " - ")}
+                    {column.id === "email" && (client.clientEmail ? client.clientEmail.toLowerCase() : " - ")}
+                    {column.id === "telephone" && (client.clientTelephone ? client.clientTelephone.toUpperCase() : " - ")}
+                    {column.id === "category" && (client.clientCategory ? client.clientCategory.toUpperCase() : " - ")}
                   </TableCell>
                 ))}
                 <TableCell>

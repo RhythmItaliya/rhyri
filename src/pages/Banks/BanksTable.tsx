@@ -53,9 +53,9 @@ export function BanksTable({
               >
                 {visibleColumns.map((column) => (
                   <TableCell key={column.id}>
-                    {column.id === "bankName" && (bank.bankName?.toUpperCase() || "")}
-                    {column.id === "bankAccountNumber" && bank.bankAccountNumber}
-                    {column.id === "bankIfscCode" && bank.bankIfscCode?.toUpperCase() || ""}
+                    {column.id === "bankName" && (bank.bankName?.toUpperCase() || " - ")}
+                    {column.id === "bankAccountNumber" && (bank.bankAccountNumber || " - ")}
+                    {column.id === "bankIfscCode" && (bank.bankIfscCode?.toUpperCase() || " - ")}
                   </TableCell>
                 ))}
                 <TableCell>

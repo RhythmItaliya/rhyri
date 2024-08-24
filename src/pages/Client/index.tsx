@@ -56,35 +56,45 @@ export function ClientPage() {
                         <CardContent className="space-y-8 p-8">
                             <div className="flex items-start flex-col sm:flex-row gap-4 justify-between">
                                 <div className="space-y-1">
-                                    <p className="font-medium">{client.clientName}</p>
-                                    <p className="text-sm text-muted">{client.clientEmail}</p>
-                                    <p className="text-sm text-muted">{client.id} id</p>
-                                    <p className="text-sm text-muted">{client.uid} create uid</p>
+                                    <p className="text-sm font-semibold">Name</p>
+                                    <p className="font-sm uppercase">{client.clientName || ' - '}</p>
+
+                                    <p className="text-sm font-semibold">Email</p>
+                                    <p className="text-sm lowercase">{client.clientEmail || ' - '}</p>
                                 </div>
 
                                 <div className="space-y-1">
-                                    <p className="text-sm text-muted">{client.clientTelephone}</p>
-                                    <p className="text-sm text-muted">{client.clientAddress}</p>
-                                    <p className="text-sm text-muted">{client.clientCountry}</p>
-                                    <p className="text-sm text-muted">{client.clientCity}</p>
-                                    <p className="text-sm text-muted">{client.clientPostCode}</p>
+                                    <p className="text-sm font-semibold">Telephone</p>
+                                    <p className="text-sm uppercase">{client.clientTelephone || ' - '}</p>
+
+                                    <p className="text-sm font-semibold">Address</p>
+                                    <p className="text-sm uppercase">{client.clientAddress || ' - '}</p>
+
+                                    <p className="text-sm font-semibold">Country</p>
+                                    <p className="text-sm uppercase">{client.clientCountry || ' - '}</p>
+
+                                    <p className="text-sm font-semibold">City</p>
+                                    <p className="text-sm uppercase">{client.clientCity || ' - '}</p>
+
+                                    <p className="text-sm font-semibold">Post Code</p>
+                                    <p className="text-sm uppercase">{client.clientPostCode || ' - '}</p>
                                 </div>
                             </div>
 
                             <div className="grid gap-4 grid-cols-3">
                                 <div className="space-y-1">
-                                    <p className="text-muted text-sm">State</p>
-                                    <p>{client.clientState}</p>
+                                    <p className=" text-sm">State</p>
+                                    <p className="uppercase">{client.clientState || ' - '}</p>
                                 </div>
 
                                 <div className="space-y-1">
-                                    <p className="text-muted text-sm">Category</p>
-                                    <p>{client.clientCategory}</p>
+                                    <p className=" text-sm">Category</p>
+                                    <p className="uppercase">{client.clientCategory || ' - '}</p>
                                 </div>
 
                                 <div className="space-y-1">
-                                    <p className="text-muted text-sm">GST Number</p>
-                                    <p className="uppercase">{client.clientGSTNumber}</p>
+                                    <p className=" text-sm">GST Number</p>
+                                    <p className="uppercase">{client.clientGSTNumber || ' - '}</p>
                                 </div>
                             </div>
 
@@ -99,39 +109,39 @@ export function ClientPage() {
                                     <TableBody>
                                         <TableRow>
                                             <TableCell>Client Name</TableCell>
-                                            <TableCell className="uppercase">{client.clientName}</TableCell>
+                                            <TableCell className="uppercase">{client.clientName || ' - '}</TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell>Email</TableCell>
-                                            <TableCell className="lowercase">{client.clientEmail}</TableCell>
+                                            <TableCell className="lowercase">{client.clientEmail || ' - '}</TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell>Telephone</TableCell>
-                                            <TableCell className="uppercase">{client.clientTelephone}</TableCell>
+                                            <TableCell className="uppercase">{client.clientTelephone || ' - '}</TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell>Address</TableCell>
-                                            <TableCell className="uppercase">{client.clientAddress}</TableCell>
+                                            <TableCell className="uppercase">{client.clientAddress || ' - '}</TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell>Country</TableCell>
-                                            <TableCell className="uppercase">{client.clientCountry}</TableCell>
+                                            <TableCell className="uppercase">{client.clientCountry || ' - '}</TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell>City</TableCell>
-                                            <TableCell className="uppercase">{client.clientCity}</TableCell>
+                                            <TableCell className="uppercase">{client.clientCity || ' - '}</TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell>Post Code</TableCell>
-                                            <TableCell className="uppercase">{client.clientPostCode}</TableCell>
+                                            <TableCell className="uppercase">{client.clientPostCode || ' - '}</TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell>State</TableCell>
-                                            <TableCell className="uppercase">{client.clientState}</TableCell>
+                                            <TableCell className="uppercase">{client.clientState || ' - '}</TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell>Category</TableCell>
-                                            <TableCell className="uppercase">{client.clientCategory}</TableCell>
+                                            <TableCell className="uppercase">{client.clientCategory || ' - '}</TableCell>
                                         </TableRow>
                                     </TableBody>
                                 </Table>

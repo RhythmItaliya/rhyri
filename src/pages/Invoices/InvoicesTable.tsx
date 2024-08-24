@@ -27,6 +27,7 @@ interface InvoicesTableProps {
     client: string
     status: InvoiceStatus
     amount: number
+    invoiceCustomNumber: string
   }[]
   isPending: boolean
   columns: ColumnDef[]
@@ -71,11 +72,12 @@ export function InvoicesTable({
               >
                 {visibleColumns.map((column) => (
                   <TableCell key={column.id}>
-                    {column.id === "invoice" && invoice.id}
-                    {column.id === "date" && formatFirestoreTimestamp(invoice.date)}
-                    {column.id === "client" && (invoice.client?.toUpperCase() || "")}
-                    {column.id === "status" && (<InvoiceStatusBadge status={invoice.status} />)}
-                    {column.id === "amount" && formatCurrency(invoice.amount)}
+                    {column.id === "invoice" && (invoice.id || " - ")}
+                    {column.id === "invoiceCustomNumber" && (invoice.invoiceCustomNumber || " - ")}
+                    {column.id === "date" && (invoice.date ? formatFirestoreTimestamp(invoice.date) : " - ")}
+                    {column.id === "client" && (invoice.client ? invoice.client.toUpperCase() : " - ")}
+                    {column.id === "status" && <InvoiceStatusBadge status={invoice.status} />}
+                    {column.id === "amount" && (invoice.amount ? formatCurrency(invoice.amount) : " - ")}
                   </TableCell>
                 ))}
 

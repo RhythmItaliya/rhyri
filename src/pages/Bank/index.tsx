@@ -56,29 +56,43 @@ export function BankPage() {
                         <CardContent className="space-y-8 p-8">
                             <div className="flex items-start flex-col sm:flex-row gap-4 justify-between">
                                 <div className="space-y-1">
-                                    <p className="font-medium">{bank.bankName}</p>
-                                    <p className="text-sm text-muted">{bank.bankAccountNumber}</p>
+                                    <p className="font-semibold text-sm ">Bank Name</p>
+                                    <p className="font-medium uppercase">{bank.bankName || ' - '}</p>
+
+                                    <p className="font-semibold text-sm ">Account Number</p>
+                                    <p className="text-sm uppercase ">{bank.bankAccountNumber || ' - '}</p>
                                 </div>
 
                                 <div className="space-y-1">
-                                    <p className="text-sm text-muted">{bank.bankBranchName}</p>
-                                    <p className="text-sm text-muted">{bank.bankIfscCode}</p>
-                                    <p className="text-sm text-muted">{bank.bankAddress}</p>
-                                    <p className="text-sm text-muted">{bank.bankCountry}</p>
-                                    <p className="text-sm text-muted">{bank.bankCity}</p>
-                                    <p className="text-sm text-muted">{bank.bankPostCode}</p>
+                                    <p className="font-semibold text-sm ">Branch Name</p>
+                                    <p className="text-sm uppercase ">{bank.bankBranchName || ' - '}</p>
+
+                                    <p className="font-semibold text-sm ">IFSC Code</p>
+                                    <p className="text-sm uppercase ">{bank.bankIfscCode || ' - '}</p>
+
+                                    <p className="font-semibold text-sm ">Address</p>
+                                    <p className="text-sm uppercase">{bank.bankAddress || ' - '}</p>
+
+                                    <p className="font-semibold text-sm ">Country</p>
+                                    <p className="text-sm uppercase">{bank.bankCountry || ' - '}</p>
+
+                                    <p className="font-semibold text-sm ">City</p>
+                                    <p className="text-sm uppercase ">{bank.bankCity || ' - '}</p>
+
+                                    <p className="font-semibold text-sm ">Post Code</p>
+                                    <p className="text-sm  uppercase">{bank.bankPostCode || ' - '}</p>
                                 </div>
                             </div>
 
                             <div className="grid gap-4 grid-cols-2">
                                 <div className="space-y-1">
-                                    <p className="text-muted text-sm">State</p>
-                                    <p>{bank.bankState}</p>
+                                    <p className=" text-sm">State</p>
+                                    <p className="uppercase">{bank.bankState || ' - '}</p>
                                 </div>
 
                                 <div className="space-y-1">
-                                    <p className="text-muted text-sm">Account Type</p>
-                                    <p>{bank.bankCategory}</p>
+                                    <p className=" text-sm">Account Type</p>
+                                    <p className="uppercase">{bank.bankCategory || ' - '}</p>
                                 </div>
                             </div>
 
@@ -93,43 +107,43 @@ export function BankPage() {
                                     <TableBody>
                                         <TableRow>
                                             <TableCell>Bank Name</TableCell>
-                                            <TableCell className="uppercase">{bank.bankName}</TableCell>
+                                            <TableCell className="uppercase">{bank.bankName || ' - '}</TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell>Account Number</TableCell>
-                                            <TableCell className="uppercase">{bank.bankAccountNumber}</TableCell>
+                                            <TableCell className="uppercase">{bank.bankAccountNumber || ' - '}</TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell>Branch Name</TableCell>
-                                            <TableCell className="uppercase">{bank.bankBranchName}</TableCell>
+                                            <TableCell className="uppercase">{bank.bankBranchName || ' - '}</TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell>IFSC Code</TableCell>
-                                            <TableCell className="uppercase">{bank.bankIfscCode}</TableCell>
+                                            <TableCell className="uppercase">{bank.bankIfscCode || ' - '}</TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell>Address</TableCell>
-                                            <TableCell className="uppercase">{bank.bankAddress}</TableCell>
+                                            <TableCell className="uppercase">{bank.bankAddress || ' - '}</TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell>Country</TableCell>
-                                            <TableCell className="uppercase">{bank.bankCountry}</TableCell>
+                                            <TableCell className="uppercase">{bank.bankCountry || ' - '}</TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell>City</TableCell>
-                                            <TableCell className="uppercase">{bank.bankCity}</TableCell>
+                                            <TableCell className="uppercase">{bank.bankCity || ' - '}</TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell>Post Code</TableCell>
-                                            <TableCell className="uppercase">{bank.bankPostCode}</TableCell>
+                                            <TableCell className="uppercase">{bank.bankPostCode || ' - '}</TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell>State</TableCell>
-                                            <TableCell className="uppercase">{bank.bankState}</TableCell>
+                                            <TableCell className="uppercase">{bank.bankState || ' - '}</TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell>Account Type</TableCell>
-                                            <TableCell className="uppercase">{bank.bankCategory}</TableCell>
+                                            <TableCell className="uppercase">{bank.bankCategory || ' - '}</TableCell>
                                         </TableRow>
                                     </TableBody>
                                 </Table>
