@@ -39,7 +39,7 @@ import { Timestamp } from "@firebase/firestore"
 import ClientSelectButton from "../../components/popup/ClientPopup"
 import CompanySelectButton from "../../components/popup/CompanyPopup"
 import BankSelectButton from "../../components/popup/BankPopup"
-import { useLocation } from "react-router-dom"
+// import { useLocation } from "react-router-dom"
 
 const Total = ({
   control,
@@ -125,8 +125,8 @@ export function InvoiceForm({
   })
 
   const [showFinalAmount, setShowFinalAmount] = useState(false);
-  const location = useLocation();
-  const isEditing = location.pathname.includes('edit');
+  // const location = useLocation();
+  // const isEditing = location.pathname.includes('edit');
   const [companySelected, setCompanySelected] = useState(false);
   const [clientSelected, setClientSelected] = useState(false);
   const [bankSelected, setBankSelected] = useState(false);
