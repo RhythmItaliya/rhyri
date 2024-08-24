@@ -42,7 +42,7 @@ export function ClientPage() {
                 <div className="space-y-4 w-full max-w-5xl mx-auto">
                     <Card>
                         <CardContent className="flex-between pt-4">
-                            <div className="text-lg font-semibold">{client.clientName}</div>
+                            <div className="text-lg font-semibold uppercase">{client.clientName}</div>
                             <div className="flex items-center space-x-4">
                                 <ClientActions
                                     clientId={client.id}

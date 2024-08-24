@@ -1,5 +1,5 @@
 {
-  "name": "invoice-app",
+  "name": "rhyri",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -43,7 +43,6 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@types/node": "^22.2.0",
     "@types/number-to-words": "^1.2.3",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
@@ -54,7 +53,6 @@
     "eslint": "^8.45.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
-    "typescript": "^5.0.2",
     "vite": "^4.5.3"
   }
 }

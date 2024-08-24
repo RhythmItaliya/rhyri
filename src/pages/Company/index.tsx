@@ -42,7 +42,7 @@ export function CompanyPage() {
         <div className="space-y-4 w-full max-w-5xl mx-auto">
           <Card>
             <CardContent className="flex-between pt-4">
-              <div className="text-lg font-semibold">{company.companyName}</div>
+              <div className="text-lg font-semibold uppercase">{company.companyName}</div>
               <div className="flex items-center space-x-4">
                 <CompanyActions
                   companyId={company.id}
@@ -56,15 +56,15 @@ export function CompanyPage() {
             <CardContent className="space-y-8 p-8">
               <div className="flex items-start flex-col sm:flex-row gap-4 justify-between">
                 <div className="space-y-2">
-                  <p className="font-semibold text-sm ">Name</p>
+                  <p className="font-semibold text-sm">Name</p>
                   <p className="font-sm uppercase">{company.companyName || ' - '}</p>
 
-                  <p className="font-semibold text-sm ">Email</p>
+                  <p className="font-semibold text-sm">Email</p>
                   <p className="text-sm ">{company.companyEmail || ' - '}</p>
                 </div>
 
                 <div className="space-y-2">
-                  <p className="font-semibold text-sm ">Telephone</p>
+                  <p className="font-semibold text-sm">Telephone</p>
                   <p className="text-sm uppercase">{company.companyTelephone || ' - '}</p>
 
                   <p className="font-semibold text-sm ">Address</p>
@@ -83,12 +83,12 @@ export function CompanyPage() {
 
               <div className="grid gap-4 grid-cols-2">
                 <div className="space-y-1">
-                  <p className=" text-sm">State</p>
+                  <p className="text-sm">State</p>
                   <p className="uppercase">{company.companyState || ' - '}</p>
                 </div>
 
                 <div className="space-y-1">
-                  <p className=" text-sm">GST Number</p>
+                  <p className="text-sm">GST Number</p>
                   <p className="uppercase">{company.companyGSTNumber || ' - '}</p>
                 </div>
               </div>
