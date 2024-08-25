@@ -1,4 +1,7 @@
-// src/installPrompt.ts
+// src/installPrompt.js
+
+console.log('installPrompt.js loaded');
+
 let deferredPrompt;
 
 window.addEventListener('beforeinstallprompt', (e) => {
