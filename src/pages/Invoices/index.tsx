@@ -133,7 +133,7 @@ export function InvoicesPage() {
   return (
     <>
       <div className="space-y-8">
-        <div className="flex-between">
+        <div className="flex-between px-4 md:px-0">
           <PageHeader>
             <PageHeaderHeading>Invoices</PageHeaderHeading>
           </PageHeader>
@@ -147,7 +147,7 @@ export function InvoicesPage() {
         </div>
 
         <div className="space-y-6">
-          <div className="flex-between">
+          <div className="flex-between px-4 md:px-0">
             <InvoicesTableFilter
               statusFilterValue={pagination.statusFilterValue || ""}
               handleStatusFiltering={handleStatusFiltering}

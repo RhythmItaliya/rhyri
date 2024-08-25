@@ -41,7 +41,7 @@ export function DashboardPage() {
   return (
     <>
       <PageHeader>
-        <PageHeaderHeading>Dashboard</PageHeaderHeading>
+        <PageHeaderHeading className="px-4 md:px-0">Dashboard</PageHeaderHeading>
       </PageHeader>
 
       <div className="grid gap-4 py-6">

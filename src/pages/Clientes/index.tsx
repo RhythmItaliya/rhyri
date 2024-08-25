@@ -110,7 +110,7 @@ export function ClientsPage() {
 
   return (
     <div className="space-y-8">
-      <div className="flex-between">
+      <div className="flex-between px-4 md:px-0">
         <PageHeader>
           <PageHeaderHeading>Clients</PageHeaderHeading>
         </PageHeader>
@@ -124,7 +124,7 @@ export function ClientsPage() {
       </div>
 
       <div className="space-y-6">
-        <div className="flex-between">
+        <div className="flex-between px-4 md:px-0">
           <ClientsTableFilter
             categoryFilterValue={pagination.categoryFilterValue || ""}
             handleCategoryFiltering={handleCategoryFiltering}
