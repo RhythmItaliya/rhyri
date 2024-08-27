@@ -1,6 +1,6 @@
 // serviceWorker.js
 
-console.log('serviceWorker.js loaded');
+console.log('serviceWorker loaded');
 
 const CACHE_NAME = 'rhyri-v1';
 const urlsToCache = [

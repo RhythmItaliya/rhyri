@@ -1,6 +1,6 @@
 // src/installPrompt.js
 
-console.log('installPrompt.js loaded');
+console.log('installPrompt Loaded');
 
 let deferredPrompt;
 
