@@ -1,6 +1,5 @@
 export function UserSkeleton() {
   return (
-
     <>
       <div className="w-full max-w-6xl mx-auto p-8 space-y-8">
         <div className="animate-pulse">
