@@ -182,11 +182,11 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
                         <tbody>
                             {items.map((item, index) => (
                                 <tr key={index}>
-                                    <td style={{ padding: '4px', textAlign: 'center' }}>{index + 1}</td>
-                                    <td style={{ padding: '4px 20px', textAlign: 'start', textTransform: 'uppercase' }}>{item.name}</td>
-                                    <td style={{ padding: '4px', textAlign: 'center' }}>{item.qty}</td>
-                                    <td style={{ padding: '4px', textAlign: 'center' }}>{formatCurrency(item.rate)}</td>
-                                    <td style={{ padding: '4px', textAlign: 'center' }}>{formatCurrency(item.total)}</td>
+                                    <td style={{ padding: '4px', textAlign: 'center', fontSize: '14px' }}>{index + 1}</td>
+                                    <td style={{ padding: '4px 20px', textAlign: 'start', textTransform: 'uppercase', fontSize: '14px' }}>{item.name}</td>
+                                    <td style={{ padding: '4px', textAlign: 'center', fontSize: '14px' }}>{item.qty}</td>
+                                    <td style={{ padding: '4px', textAlign: 'center', fontSize: '14px' }}>{formatCurrency(item.rate)}</td>
+                                    <td style={{ padding: '4px', textAlign: 'center', fontSize: '14px' }}>{formatCurrency(item.total)}</td>
                                 </tr>
                             ))}
                         </tbody>
@@ -209,9 +209,14 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
                     </thead>
                     <tbody>
                         <tr>
-                            <td style={{ padding: '8px', textAlign: 'center', fontWeight: '600', borderRight: '1px solid black' }} colSpan={2}>{fieldNames.total}</td>
+                            {/* <td style={{ padding: '8px', textAlign: 'center', fontWeight: '600', borderRight: '1px solid black' }} colSpan={2}>{fieldNames.total}</td>
                             <td style={{ padding: '8px', textAlign: 'center', fontWeight: '600' }}>{totals.totalQty}</td>
                             <td style={{ padding: '8px', textAlign: 'center', fontWeight: '600' }}>{formatCurrency(totals.totalItems)}</td>
+                            <td style={{ padding: '8px', textAlign: 'center', fontWeight: '600' }}>{formatCurrency(totals.totalAmount)}</td> */}
+
+                            <td style={{ padding: '8px', textAlign: 'center', fontWeight: '600' }} colSpan={2}>{fieldNames.total}</td>
+                            <td style={{ padding: '8px', textAlign: 'center', fontWeight: '600' }}></td>
+                            <td style={{ padding: '8px', textAlign: 'center', fontWeight: '600' }}></td>
                             <td style={{ padding: '8px', textAlign: 'center', fontWeight: '600' }}>{formatCurrency(totals.totalAmount)}</td>
                         </tr>
                     </tbody>
