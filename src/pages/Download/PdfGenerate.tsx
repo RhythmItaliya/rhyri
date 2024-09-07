@@ -2,9 +2,7 @@ import axios from 'axios';
 
 type OuterHTML = string;
 
-const PDFCROWD_API_URL = import.meta.env.VITE_PDFCROWD_API_URL;
-const PDFCROWD_USERNAME = import.meta.env.VITE_PDFCROWD_USERNAME;
-const PDFCROWD_API_KEY = import.meta.env.VITE_PDFCROWD_API_KEY;
+const PDF_API_URL = import.meta.env.VITE_PDF_API_URL;
 
 export async function pdfGenerate(data: OuterHTML): Promise<string | undefined> {
   if (typeof data !== 'string' || data.trim().length === 0) {
@@ -34,8 +32,6 @@ export async function pdfGenerate(data: OuterHTML): Promise<string | undefined> 
         }
         .invoice-content {
           width: 100%;
-          height: auto;
-          min-height: 297mm;
           box-sizing: border-box;
           border: 1px solid black;
         }
@@ -50,20 +46,15 @@ export async function pdfGenerate(data: OuterHTML): Promise<string | undefined> 
   `;
 
   try {
-    const formData = new FormData();
-    formData.append('text', html);
-    formData.append('page_size', 'A4');
-
-    const response = await axios.post(PDFCROWD_API_URL, formData, {
-      auth: {
-        username: PDFCROWD_USERNAME,
-        password: PDFCROWD_API_KEY,
-      },
-      responseType: 'blob',
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
+    const response = await axios.post(PDF_API_URL,
+      { html: html },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        responseType: 'blob',
+      }
+    );
 
     if (response.status !== 200) {
       throw new Error(`Server returned status code ${response.status}`);

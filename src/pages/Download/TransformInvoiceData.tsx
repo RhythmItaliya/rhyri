@@ -20,7 +20,7 @@ const transformItems = (itemList?: Item[]): Item[] => {
 };
 
 const formatDate = (date: string | Date | Timestamp | undefined): string => {
-    if (!date) return 'N/A';
+    if (!date) return ' - ';
 
     let d: Date;
 
@@ -29,10 +29,10 @@ const formatDate = (date: string | Date | Timestamp | undefined): string => {
     } else if (typeof date === 'string' || date instanceof Date) {
         d = new Date(date);
     } else {
-        return 'N/A';
+        return ' - ';
     }
 
-    if (isNaN(d.getTime())) return 'N/A';
+    if (isNaN(d.getTime())) return ' - ';
 
     const day = String(d.getDate()).padStart(2, '0');
     const month = String(d.getMonth() + 1).padStart(2, '0');
@@ -79,30 +79,30 @@ export const transformInvoiceData = (data: InvoiceData): TransformedData => {
 
     const transformedData: TransformedData = {
         company: {
-            companyName: data.companyName || "N/A",
-            companyEmail: data.companyEmail || "N/A",
-            companyTelephone: data.companyTelephone || "N/A",
-            companyAddress: data.companyAddress || "N/A",
-            companyCity: data.companyCity || "N/A",
-            companyPostCode: data.companyPostCode || "N/A",
-            companyCountry: data.companyCountry || "N/A",
-            companyTagline: data.companyTagline || "N/A",
-            companyState: data.companyState || "N/A",
-            companyGSTNumber: data.companyGSTNumber || "N/A",
-            companyPersonName: data.companyPersonName || "N/A",
+            companyName: data.companyName || " - ",
+            companyEmail: data.companyEmail || " - ",
+            companyTelephone: data.companyTelephone || " - ",
+            companyAddress: data.companyAddress || " - ",
+            companyCity: data.companyCity || " - ",
+            companyPostCode: data.companyPostCode || " - ",
+            companyCountry: data.companyCountry || " - ",
+            companyTagline: data.companyTagline || " - ",
+            companyState: data.companyState || " - ",
+            companyGSTNumber: data.companyGSTNumber || " - ",
+            companyPersonName: data.companyPersonName || " - ",
         },
         invoice: {
-            invoiceNumber: data.id || 'N/A',
-            challanNumber: data.challanNumber || "N/A",
+            invoiceNumber: data.id || ' - ',
+            challanNumber: data.challanNumber || " - ",
             creationDate: formatDate(data.invoiceDate),
             dueDate: formatDate(data.dueDate),
-            invoiceCustomNumber: data.invoiceCustomNumber || 'N/A',
+            invoiceCustomNumber: data.invoiceCustomNumber || ' - ',
         },
         customer: {
-            clientName: data.clientName || 'N/A',
-            clientGSTNumber: data.clientGSTNumber || "N/A",
-            clientTelephone: data.clientTelephone || 'N/A',
-            clientEmail: data.clientEmail || 'N/A',
+            clientName: data.clientName || ' - ',
+            clientGSTNumber: data.clientGSTNumber || " - ",
+            clientTelephone: data.clientTelephone || ' - ',
+            clientEmail: data.clientEmail || ' - ',
         },
         items: transformedItems,
         totals: {
@@ -125,16 +125,14 @@ export const transformInvoiceData = (data: InvoiceData): TransformedData => {
             otherTaxType: otherTaxType
         },
         bankDetails: {
-            bankName: data.bankName || "N/A",
-            bankAccountNumber: data.bankAccountNumber || "N/A",
-            bankBranchName: data.bankBranchName || "N/A",
-            bankIfscCode: data.bankIfscCode || "N/A",
+            bankName: data.bankName || " - ",
+            bankAccountNumber: data.bankAccountNumber || " - ",
+            bankBranchName: data.bankBranchName || " - ",
+            bankIfscCode: data.bankIfscCode || " - ",
         },
         totalInWords: amountInWords,
         termsAndConditions: [
-            "Payment is due within 7 days",
-            "Failure to pay will result in the application being rejected.",
-            "Interest of 30% per annum will be charged after the due date.",
+            "Payment due in 7 days; late payment may result in rejection and 30% annual interest.",
             "Disputes will be settled in Surat Court only.",
             "Goods and items personally selected will not be taken back."
         ]

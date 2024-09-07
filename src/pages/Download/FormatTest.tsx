@@ -43,15 +43,15 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
                 <div className="contact-info w-1/2 flex justify-end text-end pr-2 p-1 text-xs uppercase">
                     <div className="flex flex-col w-full">
                         <div className="flex justify-between mb-1">
-                            <span className="text-gray-600">{fieldNames.contactName}:</span>
+                            <span className="text-gray-600">{fieldNames.contactName}</span>
                             <span className="font-semibold">{company.companyPersonName}</span>
                         </div>
                         <div className="flex justify-between mb-1">
-                            <span className="text-gray-600">{fieldNames.contactTel}:</span>
+                            <span className="text-gray-600">{fieldNames.contactTel}</span>
                             <span className="font-semibold">{company.companyTelephone}</span>
                         </div>
                         <div className="flex justify-between">
-                            <span className="text-gray-600">{fieldNames.contactEmail}:</span>
+                            <span className="text-gray-600">{fieldNames.contactEmail}</span>
                             <span className="font-semibold lowercase">{company.companyEmail}</span>
                         </div>
                     </div>
@@ -155,25 +155,25 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
 
             {/* Data Section */}
             <div className='border-b border-black'>
-                <div style={{ position: 'relative', overflow: 'auto', height: '550px' }}>
+                <div style={{ position: 'relative', overflow: 'auto', height: '400px' }}>
                     <table style={{ width: '100%', fontSize: '12px', color: 'black', position: 'relative' }}>
                         <thead>
                             <tr className='border-b border-black'>
                                 <th style={{ textAlign: 'center', padding: 0, width: '50px' }}>{fieldNames.srNo}</th>
                                 <th style={{ textAlign: 'center', paddingTop: '8px', paddingBottom: '8px', padding: 0, position: 'relative', width: '400px' }}>
-                                    <div style={{ position: 'absolute', left: 0, top: 0, height: '550px', borderLeft: '1px solid black' }}></div>
+                                    <div style={{ position: 'absolute', left: 0, top: 0, height: '400px', borderLeft: '1px solid black' }}></div>
                                     {fieldNames.productName}
                                 </th>
                                 <th style={{ textAlign: 'center', paddingTop: '8px', paddingBottom: '8px', padding: 0, position: 'relative', width: '120px' }}>
-                                    <div style={{ position: 'absolute', left: 0, top: 0, height: '550px', borderLeft: '1px solid black' }}></div>
+                                    <div style={{ position: 'absolute', left: 0, top: 0, height: '400px', borderLeft: '1px solid black' }}></div>
                                     {fieldNames.qty}
                                 </th>
                                 <th style={{ textAlign: 'center', paddingTop: '8px', paddingBottom: '8px', padding: 0, position: 'relative', width: '120px' }}>
-                                    <div style={{ position: 'absolute', left: 0, top: 0, height: '550px', borderLeft: '1px solid black' }}></div>
+                                    <div style={{ position: 'absolute', left: 0, top: 0, height: '400px', borderLeft: '1px solid black' }}></div>
                                     {fieldNames.rate}
                                 </th>
                                 <th style={{ textAlign: 'center', paddingTop: '8px', paddingBottom: '8px', padding: 0, position: 'relative', width: '120px' }}>
-                                    <div style={{ position: 'absolute', left: 0, top: 0, height: '550px', borderLeft: '1px solid black' }}></div>
+                                    <div style={{ position: 'absolute', left: 0, top: 0, height: '400px', borderLeft: '1px solid black' }}></div>
                                     {fieldNames.total}
                                 </th>
                             </tr>
@@ -209,11 +209,6 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
                     </thead>
                     <tbody>
                         <tr>
-                            {/* <td style={{ padding: '8px', textAlign: 'center', fontWeight: '600', borderRight: '1px solid black' }} colSpan={2}>{fieldNames.total}</td>
-                            <td style={{ padding: '8px', textAlign: 'center', fontWeight: '600' }}>{totals.totalQty}</td>
-                            <td style={{ padding: '8px', textAlign: 'center', fontWeight: '600' }}>{formatCurrency(totals.totalItems)}</td>
-                            <td style={{ padding: '8px', textAlign: 'center', fontWeight: '600' }}>{formatCurrency(totals.totalAmount)}</td> */}
-
                             <td style={{ padding: '8px', textAlign: 'center', fontWeight: '600' }} colSpan={2}>{fieldNames.total}</td>
                             <td style={{ padding: '8px', textAlign: 'center', fontWeight: '600' }}></td>
                             <td style={{ padding: '8px', textAlign: 'center', fontWeight: '600' }}></td>
@@ -223,34 +218,47 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
                 </table>
             </div>
 
-            {/* Bank Details Section */}
+            {/* End Details Section */}
             <div className="flex">
                 <div className="flex-1">
                     <div className="border-b border-black">
-                        <p className="text-xs text-gray-600 mb-1 text-center border-b border-black p-2">{fieldNames.totalInWords}</p>
+                        <p className="text-xs text-gray-600 mb-1 text-center border-b border-black">{fieldNames.totalInWords}</p>
                         <p className="text-xs font-semibold text-gray-800 min-h-[5rem] p-1 uppercase text-start">{totalInWords}</p>
                     </div>
 
                     <div>
-                        <p className="text-xs text-gray-600 text-center border-b border-black p-2">{fieldNames.bankDetails}</p>
+                        <p className="text-xs text-gray-600 text-center border-b border-black">{fieldNames.bankDetails}</p>
                         <div className="flex flex-col p-2 text-xs text-gray-800 uppercase">
                             <div className="flex justify-between mb-1">
-                                <span className="text-gray-600 uppercase">{fieldNames.bankName}:</span>
+                                <span className="text-gray-600 uppercase">{fieldNames.bankName}</span>
                                 <span className="font-semibold">{bankDetails.bankName}</span>
                             </div>
                             <div className="flex justify-between mb-1">
-                                <span className="text-gray-600 uppercase">{fieldNames.accountNumber}:</span>
+                                <span className="text-gray-600 uppercase">{fieldNames.accountNumber}</span>
                                 <span className="font-semibold">{bankDetails.bankAccountNumber}</span>
                             </div>
-                            <div className="flex justify-between">
-                                <span className="text-gray-600 uppercase">{fieldNames.ifscCode}:</span>
+                            <div className="flex justify-between mb-1">
+                                <span className="text-gray-600 uppercase">{fieldNames.ifscCode}</span>
                                 <span className="font-semibold">{bankDetails.bankIfscCode}</span>
                             </div>
                             <div className="flex justify-between mb-1">
-                                <span className="text-gray-600 uppercase">{fieldNames.branchName}:</span>
+                                <span className="text-gray-600 uppercase">{fieldNames.branchName}</span>
                                 <span className="font-semibold">{bankDetails.bankBranchName}</span>
                             </div>
                         </div>
+                    </div>
+
+                    <div className="flex-1 border-t border-black w-full">
+                        <div className="border-b border-black">
+                            <p className="text-xs text-gray-600 text-center">{fieldNames.termsAndConditions}</p>
+                        </div>
+                        <ul className="list-disc list-inside text-xs text-gray-800 p-2 space-y-1">
+                            {termsAndConditions.map((term, index) => (
+                                <li key={index}>
+                                    {term}
+                                </li>
+                            ))}
+                        </ul>
                     </div>
                 </div>
 
@@ -259,30 +267,30 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
                     <table className="w-full border-collapse">
                         <tbody>
                             <tr className="text-xs">
-                                <td className="py-2 px-4 border-r border-black font-semibold text-left uppercase">
+                                <td className="py-1 px-4 border-r border-black font-semibold text-left uppercase">
                                     {fieldNames.discount} ({totals.discountPercent}{totals.discountType === "percentage" ? "%" : "₹"})
                                 </td>
-                                <td className="py-2 px-4 font-bold text-right">
+                                <td className="py-1 px-4 font-bold text-right">
                                     {formatCurrency(totals.discountApplied)}
                                 </td>
                             </tr>
                             <tr className="text-xs">
-                                <td className="py-2 px-4 border-r border-black font-semibold text-left uppercase">{fieldNames.totalBeforeTax}</td>
-                                <td className="py-2 px-4 font-bold text-right">{formatCurrency(totals.totalBeforeTax)}</td>
+                                <td className="py-1 px-4 border-r border-black font-semibold text-left uppercase">{fieldNames.totalBeforeTax}</td>
+                                <td className="py-1 px-4 font-bold text-right">{formatCurrency(totals.totalBeforeTax)}</td>
                             </tr>
                             <tr className="text-xs">
-                                <td className="py-2 px-4 border-r border-black font-semibold text-left uppercase">{fieldNames.gst} ({totals.gstPercent}%)</td>
-                                <td className="py-2 px-4 font-bold text-right">{totals.gstAmount}</td>
+                                <td className="py-1 px-4 border-r border-black font-semibold text-left uppercase">{fieldNames.gst} ({totals.gstPercent}%)</td>
+                                <td className="py-1 px-4 font-bold text-right">{totals.gstAmount}</td>
                             </tr>
                             <tr className="text-xs">
-                                <td className="py-2 px-4 border-r border-black font-semibold text-left uppercase">{fieldNames.sgst} ({totals.sgstPercent}%)</td>
-                                <td className="py-2 px-4 font-bold text-right">{totals.sgstAmount}</td>
+                                <td className="py-1 px-4 border-r border-black font-semibold text-left uppercase">{fieldNames.sgst} ({totals.sgstPercent}%)</td>
+                                <td className="py-1 px-4 font-bold text-right">{totals.sgstAmount}</td>
                             </tr>
                             <tr className="text-xs">
-                                <td className="py-2 px-4 border-r border-black font-semibold text-left uppercase">
+                                <td className="py-1 px-4 border-r border-black font-semibold text-left uppercase">
                                     {fieldNames.otherTax} ({totals.otherTaxPercent}{totals.otherTaxType === "percentage" ? "%" : "₹"})
                                 </td>
-                                <td className="py-2 px-4 font-bold text-right">
+                                <td className="py-1 px-4 font-bold text-right">
                                     {formatCurrency(totals.otherTaxAmount)}
                                 </td>
                             </tr>
@@ -291,34 +299,13 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
                                 <td className="px-4 border-t border-black font-bold text-right">{formatCurrency(totals.finalAmount)}</td>
                             </tr>
                             <tr className="text-lg border-t border-black">
-                                <td className="py-2 px-4 border-r border-black font-bold text-center uppercase text-blue-600">{fieldNames.total}</td>
-                                <td className="py-2 px-4 font-bold text-right">{formatCurrency(totals.roundedAmount)}</td>
+                                <td className="py-1 px-4 border-r border-black font-bold text-center uppercase text-blue-600">{fieldNames.total}</td>
+                                <td className="py-1 px-4 font-bold text-right">{formatCurrency(totals.roundedAmount)}</td>
                             </tr>
                         </tbody>
                     </table>
-                </div>
-            </div>
 
-            {/* Empty space */}
-            <div className="border-b border-black h-[0px]"></div>
-
-            {/* End Section*/}
-            <div className="flex border-b border-black">
-                <div className="flex-1 border-r border-black w-full">
-                    <div className="border-b border-black">
-                        <p className="text-xs text-gray-600 text-center p-1">{fieldNames.termsAndConditions}</p>
-                    </div>
-                    <ul className="list-disc list-inside text-xs text-gray-800 p-2 space-y-1">
-                        {termsAndConditions.map((term, index) => (
-                            <li key={index}>
-                                {term}
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-
-                <div className="flex-1 w-full">
-                    <div>
+                    <div className='border-t border-black'>
                         <div className="flex flex-col items-center">
                             <p className="text-xs text-gray-600 p-1">{fieldNames.candidateStatement}</p>
                             <p className="text-xl font-bold text-gray-800 uppercase">{company.companyName}</p>
@@ -326,7 +313,7 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
 
                         <div className="flex flex-col items-center">
                             <div className="border-t border-black w-full"></div>
-                            <p className="text-xs text-gray-600 mt-12 py-2">{fieldNames.authorisedSignature}</p>
+                            <p className="text-xs text-gray-600 mt-10">{fieldNames.authorisedSignature}</p>
                         </div>
                     </div>
                 </div>
