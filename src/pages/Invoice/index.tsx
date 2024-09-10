@@ -19,7 +19,7 @@ import { fetchInvoice } from "./fetchInvoice"
 import { catchError, formatFirestoreTimestamp } from "../../lib/utils"
 
 import Decimal from 'decimal.js';
-import { UserSkeleton } from "../UserSkeleton"
+import { UserSkeleton } from "../../components/UserSkeleton"
 
 export function InvoicePage() {
   const { id } = useParams();

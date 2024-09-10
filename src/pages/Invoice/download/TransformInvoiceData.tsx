@@ -1,5 +1,5 @@
 import { Timestamp } from '@firebase/firestore';
-import { InvoiceData, TransformedData, Item } from '../../types/invoiceTypes';
+import { InvoiceData, TransformedData, Item } from '../../../types/invoiceTypes';
 import Decimal from 'decimal.js';
 import { toWords } from 'number-to-words';
 

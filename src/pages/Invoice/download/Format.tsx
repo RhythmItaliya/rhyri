@@ -1,6 +1,6 @@
 import React from 'react';
-import { FormatTestProps } from '../../types/invoiceTypes';
-import { formatCurrency } from '../../lib/utils';
+import { FormatTestProps } from '../../../types/invoiceTypes';
+import { formatCurrency } from '../../../lib/utils';
 
 const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
     const {

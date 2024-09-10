@@ -71,7 +71,7 @@ export function InvoicesTable({
                 onClick={() => navigate(`/invoice/${invoice.id}`)}
               >
                 {visibleColumns.map((column) => (
-                  <TableCell key={column.id}>
+                  <TableCell key={column.id} className="uppercase">
                     {column.id === "invoice" && (invoice.id || " - ")}
                     {column.id === "invoiceCustomNumber" && (invoice.invoiceCustomNumber || " - ")}
                     {column.id === "date" && (invoice.date ? formatFirestoreTimestamp(invoice.date) : " - ")}

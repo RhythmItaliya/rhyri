@@ -103,7 +103,7 @@ export function InvoiceActions({
           <DropdownMenuItem onClick={handleDownload}>Download</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-      <ProgressPopup progress={progress} onClose={() => { }} />
+      <ProgressPopup progress={progress} />
     </>
   );
 }

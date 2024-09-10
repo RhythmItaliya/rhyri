@@ -168,7 +168,7 @@ export function ClientAllInvoice() {
                     />
                 </div>
             </div>
-            <ProgressPopup progress={progress} onClose={() => { }} />
+            <ProgressPopup progress={progress} />
         </>
     )
 }

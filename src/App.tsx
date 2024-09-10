@@ -6,7 +6,7 @@ import { HomePage } from "./pages/Home"
 import { SignInPage } from "./pages/SignIn"
 import { ClientLayout } from "./pages/Client/ClientLayout"
 import { CompanyLayout } from "./pages/Company/CompanyLayout"
-import NotFoundPage from "./pages/NotFoundPage"
+import NotFoundPage from "./components/NotFoundPage"
 import { BankLayout } from "./pages/Bank/BankLayout"
 
 // Pages

@@ -1,7 +1,7 @@
 import ReactDOMServer from 'react-dom/server';
-import FormatTest from '../pages/Download/FormatTest';
+import FormatTest from '../pages/Invoice/download/Format';
 import { TransformedData } from '../types/invoiceTypes';
-import fieldNames from '../pages/Download/fieldNames.json';
+import fieldNames from '../pages/Invoice/download/fieldNames.json';
 
 interface RenderToHtmlProps {
   transformedData: TransformedData;

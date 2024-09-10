@@ -13,7 +13,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchBank } from "./fetchBank";
 import { catchError } from "../../lib/utils";
 import { BankActions } from "../../components/action/BankActions";
-import { UserSkeleton } from "../UserSkeleton";
+import { UserSkeleton } from "../../components/UserSkeleton";
 
 export function BankPage() {
     const { id } = useParams();

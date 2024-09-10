@@ -5,8 +5,8 @@ import { db } from "../lib/firebase"
 import { catchError } from "../lib/utils"
 
 import { fetchInvoice } from '../pages/Invoice/fetchInvoice';
-import { transformInvoiceData } from '../pages/Download/TransformInvoiceData';
-import { pdfGenerate } from '../pages/Download/PdfGenerate';
+import { transformInvoiceData } from '../pages/Invoice/download/TransformInvoiceData';
+import { pdfGenerate } from '../pages/Invoice/download/PdfGenerate';
 import { renderToHtml } from "../lib/renderToHtml"
 import axios from 'axios';
 

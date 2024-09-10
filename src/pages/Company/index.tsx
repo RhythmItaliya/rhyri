@@ -13,7 +13,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchCompany } from "./fetchCompany";
 import { catchError } from "../../lib/utils";
 import { CompanyActions } from "../../components/action/CompanyActions";
-import { UserSkeleton } from "../UserSkeleton";
+import { UserSkeleton } from "../../components/UserSkeleton";
 
 export function CompanyPage() {
   const { id } = useParams();

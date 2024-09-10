@@ -42,7 +42,7 @@ export function InvoicesPage() {
     },
     {
       id: 'invoiceCustomNumber',
-      header: "Number",
+      header: "Invoice No",
       isVisible: true,
       canHide: true,
     },
@@ -173,7 +173,7 @@ export function InvoicesPage() {
           />
         </div>
       </div>
-      <ProgressPopup progress={progress} onClose={() => { }} />
+      <ProgressPopup progress={progress} />
     </>
   )
 }

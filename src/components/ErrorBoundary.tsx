@@ -36,8 +36,8 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
     if (this.state.hasError) {
       return (
         <div className='text-center'>
-          <h1>Something went wrong.</h1>
-          {this.state.error && (
+          <p className='text-red-500'>Something went wrong.</p>
+          {/* {this.state.error && (
             <details style={{ whiteSpace: 'pre-wrap' }}>
               <summary>Error Details</summary>
               <p><strong>Error:</strong> {this.state.error.message}</p>
@@ -46,7 +46,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
               <p><strong>Error Info:</strong></p>
               <pre>{JSON.stringify(this.state.errorInfo, null, 2)}</pre>
             </details>
-          )}
+          )} */}
         </div>
       );
     }

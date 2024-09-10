@@ -13,7 +13,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchClient } from "./fetchClient";
 import { catchError } from "../../lib/utils";
 import { ClientActions } from "../../components/action/ClientActions";
-import { UserSkeleton } from "../UserSkeleton";
+import { UserSkeleton } from "../../components/UserSkeleton";
 
 export function ClientPage() {
     const { id } = useParams();
