@@ -1,12 +1,12 @@
-// serviceWorker.js
-
 console.log('serviceWorker loaded');
 
-const CACHE_NAME = 'rhyri-v1';
+const CACHE_NAME = `rhyri-cache-${Date.now()}`;
 const urlsToCache = [
   '/',
   '/index.html',
   '/manifest.json',
+  '/src/main.tsx',
+  '/src/installPrompt.js',
 ];
 
 self.addEventListener('install', (event) => {
@@ -20,7 +20,12 @@ self.addEventListener('install', (event) => {
 self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.match(event.request).then((response) => {
-      return response || fetch(event.request);
+      if (response) {
+        return response;
+      }
+      return fetch(event.request);
+    }).catch(() => {
+      return caches.match('/');
     })
   );
 });
