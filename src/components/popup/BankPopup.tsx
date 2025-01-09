@@ -33,7 +33,7 @@ const BankPopup: React.FC<BankPopupProps> = ({ onSelect, onClose }) => {
 
     const [pagination, setPagination] = useState<PaginationState>({
         pageIndex: 0,
-        pageSize: 5,
+        pageSize: 10,
         pageAction: null,
         lastIndex: null,
         firstIndex: null,
@@ -117,7 +117,7 @@ const BankPopup: React.FC<BankPopupProps> = ({ onSelect, onClose }) => {
         setSelectedBankId(null);
         setPagination({
             pageIndex: 0,
-            pageSize: 5,
+            pageSize: 10,
             pageAction: null,
             lastIndex: null,
             firstIndex: null,

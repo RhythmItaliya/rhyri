@@ -18,7 +18,7 @@ export const fetchRecentInvoices = async (uid: string) => {
       invoicesRef,
       where("uid", "==", uid),
       orderBy("invoiceDate", "desc"),
-      limit(5)
+      limit(10)
     )
     const querySnapshot = await getDocs(userInvoicesQuery)
 

@@ -21,7 +21,7 @@ export function CompaniesPage() {
 
   const [pagination, setPagination] = React.useState<PaginationState>({
     pageIndex: 0,
-    pageSize: 5,
+    pageSize: 10,
     pageAction: null,
     firstIndex: null,
     lastIndex: null,

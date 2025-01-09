@@ -33,7 +33,7 @@ const CompanyPopup: React.FC<CompanyPopupProps> = ({ onSelect, onClose }) => {
 
     const [pagination, setPagination] = useState<PaginationState>({
         pageIndex: 0,
-        pageSize: 5,
+        pageSize: 10,
         pageAction: null,
         lastIndex: null,
         firstIndex: null,
@@ -117,7 +117,7 @@ const CompanyPopup: React.FC<CompanyPopupProps> = ({ onSelect, onClose }) => {
         setSelectedCompanyId(null);
         setPagination({
             pageIndex: 0,
-            pageSize: 5,
+            pageSize: 10,
             pageAction: null,
             lastIndex: null,
             firstIndex: null,

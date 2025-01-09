@@ -21,7 +21,7 @@ export function ClientsPage() {
 
   const [pagination, setPagination] = React.useState<PaginationState>({
     pageIndex: 0,
-    pageSize: 5,
+    pageSize: 15,
     pageAction: null,
     firstIndex: null,
     lastIndex: null,

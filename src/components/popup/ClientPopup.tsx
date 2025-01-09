@@ -32,7 +32,7 @@ const ClientPopup: React.FC<ClientPopupProps> = ({ onSelect, onClose }) => {
 
     const [pagination, setPagination] = useState<PaginationState>({
         pageIndex: 0,
-        pageSize: 5,
+        pageSize: 15,
         pageAction: null,
         lastIndex: null,
         firstIndex: null,
@@ -116,7 +116,7 @@ const ClientPopup: React.FC<ClientPopupProps> = ({ onSelect, onClose }) => {
         setSelectedClientId(null);
         setPagination({
             pageIndex: 0,
-            pageSize: 5,
+            pageSize: 15,
             pageAction: null,
             lastIndex: null,
             firstIndex: null,
