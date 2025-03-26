@@ -21,11 +21,10 @@ export default defineConfig({
             return id.toString().split("node_modules/")[1].split("/")[0].toString()
           }
         },
-        chunkFileNames: "assets/[name]-[hash]-[timestamp].js",
-        entryFileNames: "assets/[name]-[hash]-[timestamp].js",
-        assetFileNames: "assets/[name]-[hash]-[timestamp].[ext]",
+        chunkFileNames: "assets/[name]-[hash].js",
+        entryFileNames: "assets/[name]-[hash].js",
+        assetFileNames: "assets/[name]-[hash].[ext]",
       },
     },
   },
 })
-
