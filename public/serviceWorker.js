@@ -1,47 +1,68 @@
-console.log('serviceWorker loaded');
+// Service Worker version - change this number when you deploy a new version
+const CACHE_VERSION = "v1.0.1"
+const CACHE_NAME = `rhyri-cache-${CACHE_VERSION}`
 
-const CACHE_NAME = `rhyri-cache-${Date.now()}`;
-const urlsToCache = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/src/main.tsx',
-  '/src/installPrompt.js',
-];
-
-self.addEventListener('install', (event) => {
+// Install event - cache important files
+self.addEventListener("install", (event) => {
+  console.log("Service Worker installing.")
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(urlsToCache);
-    })
-  );
-});
+      return cache.addAll(["/", "/index.html", "/manifest.json"])
+    }),
+  )
+  // Force the waiting service worker to become the active service worker
+  self.skipWaiting()
+})
 
-self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    caches.match(event.request).then((response) => {
-      if (response) {
-        return response;
-      }
-      return fetch(event.request);
-    }).catch(() => {
-      return caches.match('/');
-    })
-  );
-});
-
-self.addEventListener('activate', (event) => {
-  const cacheWhitelist = [CACHE_NAME];
-
+// Activate event - clean up old caches
+self.addEventListener("activate", (event) => {
+  console.log("Service Worker activating.")
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cacheName) => {
-          if (cacheWhitelist.indexOf(cacheName) === -1) {
-            return caches.delete(cacheName);
+          if (cacheName !== CACHE_NAME) {
+            console.log("Service Worker: clearing old cache", cacheName)
+            return caches.delete(cacheName)
           }
-        })
-      );
-    })
-  );
-});
+        }),
+      )
+    }),
+  )
+  // Ensure the service worker takes control immediately
+  return self.clients.claim()
+})
+
+// Fetch event - network first, then cache
+self.addEventListener("fetch", (event) => {
+  // Skip cross-origin requests
+  if (!event.request.url.startsWith(self.location.origin)) {
+    return
+  }
+
+  event.respondWith(
+    fetch(event.request)
+      .then((response) => {
+        // If we got a valid response, clone it and store it in the cache
+        if (response && response.status === 200 && response.type === "basic") {
+          const responseToCache = response.clone()
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, responseToCache)
+          })
+        }
+        return response
+      })
+      .catch(() => {
+        // If network request fails, try to get it from the cache
+        return caches.match(event.request)
+      }),
+  )
+})
+
+// Listen for messages from the client
+self.addEventListener("message", (event) => {
+  if (event.data && event.data.type === "SKIP_WAITING") {
+    self.skipWaiting()
+  }
+})
+
