@@ -1,13 +1,16 @@
 // Service Worker version - change this number when you deploy a new version
-const CACHE_VERSION = "v1.0.1"
+const CACHE_VERSION = "v1.0.2"
 const CACHE_NAME = `rhyri-cache-${CACHE_VERSION}`
+
+// Files to cache
+const STATIC_ASSETS = ["/", "/index.html", "/manifest.json"]
 
 // Install event - cache important files
 self.addEventListener("install", (event) => {
   console.log("Service Worker installing.")
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(["/", "/index.html", "/manifest.json"])
+      return cache.addAll(STATIC_ASSETS)
     }),
   )
   // Force the waiting service worker to become the active service worker
@@ -35,8 +38,13 @@ self.addEventListener("activate", (event) => {
 
 // Fetch event - network first, then cache
 self.addEventListener("fetch", (event) => {
-  // Skip cross-origin requests
-  if (!event.request.url.startsWith(self.location.origin)) {
+  // Skip cross-origin requests and non-GET requests
+  if (!event.request.url.startsWith(self.location.origin) || event.request.method !== "GET") {
+    return
+  }
+
+  // Skip requests for module scripts - let the browser handle them directly
+  if (event.request.destination === "script" && event.request.mode === "cors") {
     return
   }
 
