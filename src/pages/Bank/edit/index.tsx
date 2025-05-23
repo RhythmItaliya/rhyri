@@ -20,7 +20,7 @@ export function EditBankPage() {
 
     const {
         data: bank,
-        error,
+        error,  
         isLoading,
     } = useQuery({
         queryKey: ["bank", currentUser.uid, id],
