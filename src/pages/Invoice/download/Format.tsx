@@ -15,7 +15,7 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
   } = data;
 
   return (
-    <div className="invoice-content border border-black">
+    <div className="invoice-content border border-black flex flex-col min-h-[1100px] relative">
       {/* Title */}
       <h1 className="text-4xl p-2 font-extrabold uppercase text-blue-600 border-b border-black text-center">
         {company.companyName}
@@ -193,9 +193,16 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
       </div>
 
       {/* Data Section */}
-      <div className="border-b border-black">
+      <div className="border-b border-black flex-grow relative">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-0 bottom-0 border-r border-black" style={{ left: "50px" }}></div>
+          <div className="absolute top-0 bottom-0 border-r border-black" style={{ left: "450px" }}></div>
+          <div className="absolute top-0 bottom-0 border-r border-black" style={{ left: "550px" }}></div>
+          <div className="absolute top-0 bottom-0 border-r border-black" style={{ left: "670px" }}></div>
+          <div className="absolute top-0 bottom-0 border-r border-black" style={{ left: "790px" }}></div>
+        </div>
         <div
-          style={{ position: "relative", overflow: "auto", minHeight: "100px" }}
+          style={{ position: "relative" }}
         >
           <table
             style={{
@@ -218,7 +225,6 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
                     paddingLeft: "4px",
                     position: "relative",
                     width: "400px",
-                    borderLeft: "1px solid black",
                   }}
                 >
                   {fieldNames.productName}
@@ -231,7 +237,6 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
                     padding: 0,
                     position: "relative",
                     width: "100px",
-                    borderLeft: "1px solid black",
                   }}
                 >
                   {fieldNames.challanNo}
@@ -244,7 +249,6 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
                     padding: 0,
                     position: "relative",
                     width: "120px",
-                    borderLeft: "1px solid black",
                   }}
                 >
                   {fieldNames.qty}
@@ -257,7 +261,6 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
                     padding: 0,
                     position: "relative",
                     width: "120px",
-                    borderLeft: "1px solid black",
                   }}
                 >
                   {fieldNames.rate}
@@ -270,7 +273,6 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
                     padding: 0,
                     position: "relative",
                     width: "120px",
-                    borderLeft: "1px solid black",
                   }}
                 >
                   {fieldNames.total}
@@ -295,7 +297,6 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
                       padding: "4px",
                       textAlign: "left",
                       fontSize: "14px",
-                      borderLeft: "1px solid black",
                     }}
                   >
                     {item.name || ""}
@@ -305,7 +306,6 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
                       padding: "4px",
                       textAlign: "center",
                       fontSize: "14px",
-                      borderLeft: "1px solid black",
                     }}
                   >
                     {item.challanNumber || "-"}
@@ -315,7 +315,6 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
                       padding: "4px",
                       textAlign: "center",
                       fontSize: "14px",
-                      borderLeft: "1px solid black",
                     }}
                   >
                     {item.qty}
@@ -325,20 +324,18 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
                       padding: "4px",
                       textAlign: "center",
                       fontSize: "14px",
-                      borderLeft: "1px solid black",
                     }}
                   >
-                    {formatCurrency(item.rate)}
+                    {item.rate.toFixed(2)}
                   </td>
                   <td
                     style={{
                       padding: "4px",
                       textAlign: "center",
                       fontSize: "14px",
-                      borderLeft: "1px solid black",
                     }}
                   >
-                    {formatCurrency(item.total)}
+                    {item.total.toFixed(2)}
                   </td>
                 </tr>
               ))}
