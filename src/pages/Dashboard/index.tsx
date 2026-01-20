@@ -1,29 +1,29 @@
-import { PageHeader, PageHeaderHeading } from "../../components/PageHeader"
-import { Skeleton } from "../../components/Skeleton"
+import { PageHeader, PageHeaderHeading } from "../../components/PageHeader";
+import { Skeleton } from "../../components/Skeleton";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "../../components/ui/Card"
-import { RecentInvoices } from "./RecentInvoices"
-import { InvoiceChart } from "./InvoiceChart"
-import { Icons } from "../../components/Icons"
+} from "../../components/ui/Card";
+import { RecentInvoices } from "./RecentInvoices";
+import { InvoiceChart } from "./InvoiceChart";
+import { Icons } from "../../components/Icons";
 
-import { useAuth } from "../../contexts/AuthContext"
-import { catchError, formatCurrency } from "../../lib/utils"
+import { useAuth } from "../../contexts/AuthContext";
+import { catchError, formatCurrency } from "../../lib/utils";
 
-import { fetchUserInvoicesStats } from "./fetchUserInvoicesStats"
-import { useQuery } from "@tanstack/react-query"
-import { useTheme } from "../../contexts/ThemeContext"
+import { fetchUserInvoicesStats } from "./fetchUserInvoicesStats";
+import { useQuery } from "@tanstack/react-query";
+import { useTheme } from "../../contexts/ThemeContext";
 
 export function DashboardPage() {
-  const { currentUser } = useAuth()
+  const { currentUser } = useAuth();
 
   const { theme } = useTheme();
   const isDarkTheme = theme === "dark";
 
-  if (!currentUser) return null
+  if (!currentUser) return null;
 
   const {
     data: invoiceStats,
@@ -32,16 +32,18 @@ export function DashboardPage() {
   } = useQuery({
     queryKey: ["dashboard", currentUser.uid],
     queryFn: () => fetchUserInvoicesStats(currentUser.uid),
-  })
+  });
 
   if (error) {
-    catchError(error)
+    catchError(error);
   }
 
   return (
     <>
       <PageHeader>
-        <PageHeaderHeading className="px-4 md:px-0">Dashboard</PageHeaderHeading>
+        <PageHeaderHeading className="px-4 md:px-0">
+          Dashboard
+        </PageHeaderHeading>
       </PageHeader>
 
       <div className="grid gap-4 py-6">
@@ -51,10 +53,7 @@ export function DashboardPage() {
               <CardTitle className="text-muted font-medium text-sm">
                 Total Invoices
               </CardTitle>
-              <Icons.invoices
-                className="h-5 w-5"
-                aria-hidden="true"
-              />
+              <Icons.invoices className="h-5 w-5" aria-hidden="true" />
             </CardHeader>
             <CardContent>
               {isLoading ? (
@@ -145,5 +144,5 @@ export function DashboardPage() {
         </div>
       </div>
     </>
-  )
+  );
 }

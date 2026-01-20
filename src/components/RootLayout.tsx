@@ -1,10 +1,10 @@
-import * as React from "react"
-import { Outlet } from "react-router-dom"
+import * as React from "react";
+import { Outlet } from "react-router-dom";
 
-import { MainNav } from "./MainNav"
-import { Icons } from "./Icons"
+import { MainNav } from "./MainNav";
+import { Icons } from "./Icons";
 
-import { ProtectedRoute } from "./ProtectedRoute"
+import { ProtectedRoute } from "./ProtectedRoute";
 
 export function RootLayout() {
   return (
@@ -24,5 +24,5 @@ export function RootLayout() {
         </main>
       </div>
     </ProtectedRoute>
-  )
+  );
 }

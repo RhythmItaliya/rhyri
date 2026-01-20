@@ -5,18 +5,18 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "../../components/ui/DropdownMenu"
-import { Button } from "../../components/ui/Button"
-import { ChevronDownIcon } from "@radix-ui/react-icons"
+} from "../../components/ui/DropdownMenu";
+import { Button } from "../../components/ui/Button";
+import { ChevronDownIcon } from "@radix-ui/react-icons";
 
-import { InvoiceStatus } from "../../types"
+import { InvoiceStatus } from "../../types";
 
 interface InvoicesTableFilterProps {
-  statusFilterValue: string
-  handleStatusFiltering: (status: InvoiceStatus) => void
+  statusFilterValue: string;
+  handleStatusFiltering: (status: InvoiceStatus) => void;
 }
 
-const statuses = ["pending", "paid", "drafted"]
+const statuses = ["pending", "paid", "drafted"];
 
 export function InvoicesTableFilter({
   statusFilterValue,
@@ -50,5 +50,5 @@ export function InvoicesTableFilter({
         ))}
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }

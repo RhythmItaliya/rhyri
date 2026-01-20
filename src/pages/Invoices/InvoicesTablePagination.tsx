@@ -1,10 +1,10 @@
-import { Button } from "../../components/ui/Button"
+import { Button } from "../../components/ui/Button";
 
 interface InvoicesTablePaginationProps {
-  handleGetNextPage: () => void
-  handleGetPrevPage: () => void
-  hasPrevPage: boolean
-  hasNextPage: boolean
+  handleGetNextPage: () => void;
+  handleGetPrevPage: () => void;
+  hasPrevPage: boolean;
+  hasNextPage: boolean;
 }
 
 export function InvoicesTablePagination({
@@ -34,5 +34,5 @@ export function InvoicesTablePagination({
         Next
       </Button>
     </div>
-  )
+  );
 }

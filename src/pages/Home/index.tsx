@@ -1,14 +1,13 @@
-import { AuthNav } from "./AuthNav"
+import { AuthNav } from "./AuthNav";
 // import { Icons } from "../../components/Icons"
-import { buttonVariants } from "../../components/ui/Button"
-import { Link } from "react-router-dom"
+import { buttonVariants } from "../../components/ui/Button";
+import { Link } from "react-router-dom";
 // import { cn } from "../../lib/utils"
-import { UnderTheHood } from "./UnderTheHood"
-import { WhyRhyri } from "./WhyRhyri"
-import { useTheme } from "../../contexts/ThemeContext"
+import { UnderTheHood } from "./UnderTheHood";
+import { WhyRhyri } from "./WhyRhyri";
+import { useTheme } from "../../contexts/ThemeContext";
 
 export function HomePage() {
-
   const { theme } = useTheme();
   const isDarkTheme = theme === "dark";
 
@@ -27,10 +26,7 @@ export function HomePage() {
         </section>
 
         <div className="flex items-center justify-center gap-4">
-          <Link
-            to="/sign-in"
-            className={buttonVariants({ variant: "accent" })}
-          >
+          <Link to="/sign-in" className={buttonVariants({ variant: "accent" })}>
             Get started
           </Link>
           {/* <Link
@@ -62,5 +58,5 @@ export function HomePage() {
         </footer>
       </main>
     </>
-  )
+  );
 }

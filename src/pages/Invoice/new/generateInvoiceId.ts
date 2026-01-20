@@ -1,7 +1,7 @@
-import { nanoid } from "nanoid"
+import { nanoid } from "nanoid";
 
 export const generateInvoiceId = () => {
-  const currentYear = new Date().getFullYear()
-  const randomChars = nanoid(4)
-  return `INV${currentYear}-${randomChars}`
-}
+  const currentYear = new Date().getFullYear();
+  const randomChars = nanoid(4);
+  return `INV${currentYear}-${randomChars}`;
+};

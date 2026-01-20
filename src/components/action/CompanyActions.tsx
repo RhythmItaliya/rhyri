@@ -54,7 +54,9 @@ export function CompanyActions({
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuLabel className="font-semibold">Actions</DropdownMenuLabel>
+          <DropdownMenuLabel className="font-semibold">
+            Actions
+          </DropdownMenuLabel>
           <DropdownMenuSeparator />
           {!isCompanyPage && (
             <DropdownMenuItem onClick={handleView}>View</DropdownMenuItem>

@@ -19,11 +19,7 @@ interface BanksTableProps {
   columns: ColumnDef[];
 }
 
-export function BanksTable({
-  isPending,
-  banks,
-  columns,
-}: BanksTableProps) {
+export function BanksTable({ isPending, banks, columns }: BanksTableProps) {
   const navigate = useNavigate();
   const visibleColumns = columns.filter((column) => column.isVisible);
 
@@ -53,16 +49,16 @@ export function BanksTable({
               >
                 {visibleColumns.map((column) => (
                   <TableCell key={column.id}>
-                    {column.id === "bankName" && (bank.bankName?.toUpperCase() || " - ")}
-                    {column.id === "bankAccountNumber" && (bank.bankAccountNumber || " - ")}
-                    {column.id === "bankIfscCode" && (bank.bankIfscCode?.toUpperCase() || " - ")}
+                    {column.id === "bankName" &&
+                      (bank.bankName?.toUpperCase() || " - ")}
+                    {column.id === "bankAccountNumber" &&
+                      (bank.bankAccountNumber || " - ")}
+                    {column.id === "bankIfscCode" &&
+                      (bank.bankIfscCode?.toUpperCase() || " - ")}
                   </TableCell>
                 ))}
                 <TableCell>
-                  <BankActions
-                    bankId={bank.id}
-                    isBankPage={false}
-                  />
+                  <BankActions bankId={bank.id} isBankPage={false} />
                 </TableCell>
               </TableRow>
             ))

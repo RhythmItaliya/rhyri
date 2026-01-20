@@ -1,9 +1,9 @@
-import { ResponsiveContainer, BarChart, XAxis, YAxis, Bar } from "recharts"
+import { ResponsiveContainer, BarChart, XAxis, YAxis, Bar } from "recharts";
 
 interface InvoiceChartProps {
-  paidInvoicesCount: number
-  pendingInvoicesCount: number
-  draftedInvoicesCount: number
+  paidInvoicesCount: number;
+  pendingInvoicesCount: number;
+  draftedInvoicesCount: number;
 }
 
 export function InvoiceChart({
@@ -15,7 +15,7 @@ export function InvoiceChart({
     { label: "pending", value: pendingInvoicesCount },
     { label: "paid", value: paidInvoicesCount },
     { label: "drafted", value: draftedInvoicesCount },
-  ]
+  ];
 
   return (
     <ResponsiveContainer width="100%" height={350}>
@@ -36,5 +36,5 @@ export function InvoiceChart({
         <Bar dataKey="value" fill="hsl(var(--accent))" radius={[4, 4, 0, 0]} />
       </BarChart>
     </ResponsiveContainer>
-  )
+  );
 }

@@ -1,12 +1,14 @@
-import axios from 'axios';
+import axios from "axios";
 
 type OuterHTML = string;
 
 const PDF_API_URL = import.meta.env.VITE_PDF_API_URL;
 
-export async function pdfGenerate(data: OuterHTML): Promise<string | undefined> {
-  if (typeof data !== 'string' || data.trim().length === 0) {
-    throw new Error('Invalid HTML data provided.');
+export async function pdfGenerate(
+  data: OuterHTML,
+): Promise<string | undefined> {
+  if (typeof data !== "string" || data.trim().length === 0) {
+    throw new Error("Invalid HTML data provided.");
   }
 
   const html = `
@@ -46,14 +48,15 @@ export async function pdfGenerate(data: OuterHTML): Promise<string | undefined> 
   `;
 
   try {
-    const response = await axios.post(PDF_API_URL,
+    const response = await axios.post(
+      PDF_API_URL,
       { html: html },
       {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        responseType: 'blob',
-      }
+        responseType: "blob",
+      },
     );
 
     if (response.status !== 200) {
@@ -65,7 +68,7 @@ export async function pdfGenerate(data: OuterHTML): Promise<string | undefined> 
 
     return url;
   } catch (error) {
-    console.error('Error during PDF generation:', error);
-    throw new Error('Failed to generate PDF. Please try again later.');
+    console.error("Error during PDF generation:", error);
+    throw new Error("Failed to generate PDF. Please try again later.");
   }
 }

@@ -5,7 +5,7 @@ import { FirebaseError } from "firebase/app";
 
 export const fetchClient = async (
   clientId: string,
-  uid: string
+  uid: string,
 ): Promise<Client | undefined> => {
   try {
     const clientRef = doc(db, "clients", clientId);

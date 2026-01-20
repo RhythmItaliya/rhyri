@@ -1,4 +1,4 @@
-import React, { Component, ReactNode } from 'react';
+import React, { Component, ReactNode } from "react";
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -28,15 +28,15 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
     // Update state with error details
     this.setState({
       error,
-      errorInfo
+      errorInfo,
     });
   }
 
   render() {
     if (this.state.hasError) {
       return (
-        <div className='text-center'>
-          <p className='text-red-500'>Something went wrong.</p>
+        <div className="text-center">
+          <p className="text-red-500">Something went wrong.</p>
           {/* {this.state.error && (
             <details style={{ whiteSpace: 'pre-wrap' }}>
               <summary>Error Details</summary>

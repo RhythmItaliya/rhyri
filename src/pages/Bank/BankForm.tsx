@@ -9,7 +9,13 @@ import {
 } from "../../components/ui/Form";
 import { Button } from "../../components/ui/Button";
 import { Input } from "../../components/ui/Input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../components/ui/Select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../../components/ui/Select";
 import { Bank } from "../../types";
 import { bankValidator, BankInputs } from "./bankValidator";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -21,11 +27,7 @@ interface BankFormProps {
   bank?: Bank;
 }
 
-export function BankForm({
-  onSubmit,
-  isPending,
-  bank,
-}: BankFormProps) {
+export function BankForm({ onSubmit, isPending, bank }: BankFormProps) {
   const form = useForm<BankInputs>({
     resolver: zodResolver(bankValidator),
     defaultValues: {
@@ -49,15 +51,17 @@ export function BankForm({
       const formData = form.getValues();
       onSubmit(formData);
     } else {
-      console.log('Form validation failed');
+      console.log("Form validation failed");
     }
   };
 
-  const handleNumberChange = (fieldName: keyof BankInputs) => (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
-    const formattedValue = value.replace(/[^0-9]/g, '');
-    form.setValue(fieldName, formattedValue);
-  };
+  const handleNumberChange =
+    (fieldName: keyof BankInputs) =>
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const { value } = event.target;
+      const formattedValue = value.replace(/[^0-9]/g, "");
+      form.setValue(fieldName, formattedValue);
+    };
 
   return (
     <Form {...form}>
@@ -65,95 +69,173 @@ export function BankForm({
         <div className="space-y-4">
           <p className="font-semibold text-accent">Bank Details</p>
           <div className="grid gap-4">
-            <FormField control={form.control} name="bankName" render={({ field }) => (
-              <FormItem>
-                <FormLabel>Bank Name</FormLabel>
-                <FormControl>
-                  <Input {...field} autoComplete="off" className="uppercase" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )} />
+            <FormField
+              control={form.control}
+              name="bankName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Bank Name</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      autoComplete="off"
+                      className="uppercase"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-            <FormField control={form.control} name="bankAccountNumber" render={({ field }) => (
-              <FormItem>
-                <FormLabel>Account Number</FormLabel>
-                <FormControl>
-                  <Input {...field} autoComplete="off" className="uppercase" onChange={handleNumberChange('bankAccountNumber')} value={field.value} inputMode="numeric" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )} />
+            <FormField
+              control={form.control}
+              name="bankAccountNumber"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Account Number</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      autoComplete="off"
+                      className="uppercase"
+                      onChange={handleNumberChange("bankAccountNumber")}
+                      value={field.value}
+                      inputMode="numeric"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-            <FormField control={form.control} name="bankBranchName" render={({ field }) => (
-              <FormItem>
-                <FormLabel>Branch Name</FormLabel>
-                <FormControl>
-                  <Input {...field} autoComplete="off" className="uppercase" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )} />
+            <FormField
+              control={form.control}
+              name="bankBranchName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Branch Name</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      autoComplete="off"
+                      className="uppercase"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-            <FormField control={form.control} name="bankIfscCode" render={({ field }) => (
-              <FormItem>
-                <FormLabel>IFSC Code</FormLabel>
-                <FormControl>
-                  <Input {...field} autoComplete="off" className="uppercase" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )} />
+            <FormField
+              control={form.control}
+              name="bankIfscCode"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>IFSC Code</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      autoComplete="off"
+                      className="uppercase"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-            <FormField control={form.control} name="bankAddress" render={({ field }) => (
-              <FormItem>
-                <FormLabel>Full Address</FormLabel>
-                <FormControl>
-                  <Input {...field} autoComplete="off" className="uppercase" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )} />
+            <FormField
+              control={form.control}
+              name="bankAddress"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Full Address</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      autoComplete="off"
+                      className="uppercase"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-            <FormField control={form.control} name="bankCity" render={({ field }) => (
-              <FormItem>
-                <FormLabel>City</FormLabel>
-                <FormControl>
-                  <Input {...field} autoComplete="off" className="uppercase" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )} />
+            <FormField
+              control={form.control}
+              name="bankCity"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>City</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      autoComplete="off"
+                      className="uppercase"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-            <FormField control={form.control} name="bankState" render={({ field }) => (
-              <FormItem>
-                <FormLabel>State</FormLabel>
-                <FormControl>
-                  <Input {...field} autoComplete="off" className="uppercase" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )} />
+            <FormField
+              control={form.control}
+              name="bankState"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>State</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      autoComplete="off"
+                      className="uppercase"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-            <FormField control={form.control} name="bankPostCode" render={({ field }) => (
-              <FormItem>
-                <FormLabel>Post Code</FormLabel>
-                <FormControl>
-                  <Input {...field} autoComplete="off" className="uppercase" onChange={handleNumberChange('bankPostCode')} value={field.value} inputMode="numeric" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )} />
+            <FormField
+              control={form.control}
+              name="bankPostCode"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Post Code</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      autoComplete="off"
+                      className="uppercase"
+                      onChange={handleNumberChange("bankPostCode")}
+                      value={field.value}
+                      inputMode="numeric"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-            <FormField control={form.control} name="bankCountry" render={({ field }) => (
-              <FormItem>
-                <FormLabel>Country</FormLabel>
-                <FormControl>
-                  <Input {...field} autoComplete="off" className="uppercase" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )} />
+            <FormField
+              control={form.control}
+              name="bankCountry"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Country</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      autoComplete="off"
+                      className="uppercase"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
             <FormField
               control={form.control}
@@ -162,10 +244,7 @@ export function BankForm({
                 <FormItem>
                   <FormLabel>Account Type</FormLabel>
                   <FormControl>
-                    <Select
-                      value={field.value}
-                      onValueChange={field.onChange}
-                    >
+                    <Select value={field.value} onValueChange={field.onChange}>
                       <SelectTrigger>
                         <SelectValue placeholder="Select account type" />
                       </SelectTrigger>
@@ -192,7 +271,10 @@ export function BankForm({
             onClick={handleClick}
           >
             {isPending && (
-              <Icons.spinner className="h-4 w-4 animate-spin mr-2" aria-hidden="true" />
+              <Icons.spinner
+                className="h-4 w-4 animate-spin mr-2"
+                aria-hidden="true"
+              />
             )}
             Save Changes
           </Button>

@@ -23,14 +23,14 @@ export const useClient = () => {
       return await queryClient.invalidateQueries({
         predicate: (query) =>
           query.queryKey[0] === "client" || query.queryKey[0] === "clients",
-      })
+      });
     },
     onError(error) {
-      catchError(error)
+      catchError(error);
     },
   });
 
   return {
-    deleteClientMutation
-  }
-}
+    deleteClientMutation,
+  };
+};

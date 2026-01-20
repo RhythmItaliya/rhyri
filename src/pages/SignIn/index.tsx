@@ -1,14 +1,14 @@
-import { Navigate } from "react-router-dom"
-import { GoBack } from "../../components/GoBack"
-import { Icons } from "../../components/Icons"
-import { useAuth } from "../../contexts/AuthContext"
-import { OAuthSignIn } from "./OAuthSignIn"
+import { Navigate } from "react-router-dom";
+import { GoBack } from "../../components/GoBack";
+import { Icons } from "../../components/Icons";
+import { useAuth } from "../../contexts/AuthContext";
+import { OAuthSignIn } from "./OAuthSignIn";
 
 export function SignInPage() {
-  const { currentUser } = useAuth()
+  const { currentUser } = useAuth();
 
   if (currentUser) {
-    return <Navigate to="/dashboard" />
+    return <Navigate to="/dashboard" />;
   }
 
   return (
@@ -22,5 +22,5 @@ export function SignInPage() {
         <OAuthSignIn />
       </section>
     </main>
-  )
+  );
 }

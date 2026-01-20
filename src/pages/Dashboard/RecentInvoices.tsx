@@ -1,16 +1,16 @@
-import { useQuery } from "@tanstack/react-query"
-import { fetchRecentInvoices } from "./fetchRecentInvoices"
+import { useQuery } from "@tanstack/react-query";
+import { fetchRecentInvoices } from "./fetchRecentInvoices";
 
-import { Link } from "react-router-dom"
-import { Skeleton } from "../../components/Skeleton"
+import { Link } from "react-router-dom";
+import { Skeleton } from "../../components/Skeleton";
 
-import { useAuth } from "../../contexts/AuthContext"
-import { formatCurrency, formatFirestoreTimestamp } from "../../lib/utils"
+import { useAuth } from "../../contexts/AuthContext";
+import { formatCurrency, formatFirestoreTimestamp } from "../../lib/utils";
 
 export function RecentInvoices() {
-  const { currentUser } = useAuth()
+  const { currentUser } = useAuth();
 
-  if (!currentUser) return null
+  if (!currentUser) return null;
 
   const {
     data: invoices,
@@ -19,7 +19,7 @@ export function RecentInvoices() {
   } = useQuery({
     queryKey: ["recent-invoices", currentUser.uid],
     queryFn: () => fetchRecentInvoices(currentUser.uid),
-  })
+  });
 
   return (
     <div>
@@ -53,7 +53,7 @@ export function RecentInvoices() {
         </div>
       )}
     </div>
-  )
+  );
 }
 
 const Loading = () => {
@@ -69,5 +69,5 @@ const Loading = () => {
         </div>
       ))}
     </div>
-  )
-}
+  );
+};

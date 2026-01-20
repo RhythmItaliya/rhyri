@@ -59,12 +59,12 @@ export function InvoiceActions({
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuLabel className="font-semibold">Actions</DropdownMenuLabel>
+          <DropdownMenuLabel className="font-semibold">
+            Actions
+          </DropdownMenuLabel>
           <DropdownMenuSeparator />
           {!isInvoicePage && (
-            <DropdownMenuItem onClick={handleView}>
-              View
-            </DropdownMenuItem>
+            <DropdownMenuItem onClick={handleView}>View</DropdownMenuItem>
           )}
           <DropdownMenuItem onClick={handleEdit}>Edit</DropdownMenuItem>
           <DropdownMenuSeparator />

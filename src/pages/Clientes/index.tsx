@@ -26,7 +26,7 @@ export function ClientsPage() {
     firstIndex: null,
     lastIndex: null,
     categoryFilterValue: undefined,
-    startAfterDoc: null
+    startAfterDoc: null,
   });
 
   const [columns, setColumns] = React.useState<ColumnDef[]>([
@@ -100,11 +100,11 @@ export function ClientsPage() {
       prevState.map((column) =>
         column.id === columnId && column.canHide
           ? {
-            ...column,
-            isVisible: !column.isVisible,
-          }
-          : { ...column }
-      )
+              ...column,
+              isVisible: !column.isVisible,
+            }
+          : { ...column },
+      ),
     );
   };
 

@@ -1,5 +1,5 @@
-import { Icons } from "../../components/Icons"
-import { Card, CardContent } from "../../components/ui/Card"
+import { Icons } from "../../components/Icons";
+import { Card, CardContent } from "../../components/ui/Card";
 
 export function WhyRhyri() {
   return (
@@ -66,5 +66,5 @@ export function WhyRhyri() {
         </Card>
       </div>
     </section>
-  )
+  );
 }

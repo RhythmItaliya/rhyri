@@ -16,10 +16,7 @@ interface ClientActionsProps {
   clientId: string;
 }
 
-export function ClientActions({
-  isClientPage,
-  clientId,
-}: ClientActionsProps) {
+export function ClientActions({ isClientPage, clientId }: ClientActionsProps) {
   const navigate = useNavigate();
   const { deleteClientMutation } = useClient();
 
@@ -59,7 +56,9 @@ export function ClientActions({
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuLabel className="font-semibold">Actions</DropdownMenuLabel>
+          <DropdownMenuLabel className="font-semibold">
+            Actions
+          </DropdownMenuLabel>
           <DropdownMenuSeparator />
           {!isClientPage && (
             <DropdownMenuItem onClick={handleView}>View</DropdownMenuItem>
@@ -67,9 +66,7 @@ export function ClientActions({
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={handleEdit}>Edit</DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem
-            onClick={handleViewAll}
-          >
+          <DropdownMenuItem onClick={handleViewAll}>
             View All Invoices
           </DropdownMenuItem>
           <DropdownMenuSeparator />

@@ -44,7 +44,7 @@ export function BanksTableViewOptions({
             >
               {column.id}
             </DropdownMenuCheckboxItem>
-          ) : null
+          ) : null,
         )}
       </DropdownMenuContent>
     </DropdownMenu>

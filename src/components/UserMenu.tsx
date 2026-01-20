@@ -1,4 +1,4 @@
-import { useAuth } from "../contexts/AuthContext"
+import { useAuth } from "../contexts/AuthContext";
 
 import {
   DropdownMenu,
@@ -7,23 +7,23 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
   DropdownMenuLabel,
-} from "./ui/DropdownMenu"
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/Avatar"
-import { Button } from "./ui/Button"
-import { catchError } from "../lib/utils"
+} from "./ui/DropdownMenu";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/Avatar";
+import { Button } from "./ui/Button";
+import { catchError } from "../lib/utils";
 
 export function UserMenu() {
-  const { currentUser, signOutCurrentUser } = useAuth()
+  const { currentUser, signOutCurrentUser } = useAuth();
 
-  const initial = currentUser?.displayName?.charAt(0) || "P"
+  const initial = currentUser?.displayName?.charAt(0) || "P";
 
   const handleSignOut = async () => {
     try {
-      await signOutCurrentUser()
+      await signOutCurrentUser();
     } catch (error) {
-      catchError(error)
+      catchError(error);
     }
-  }
+  };
 
   return (
     <DropdownMenu>
@@ -52,5 +52,5 @@ export function UserMenu() {
         <DropdownMenuItem onSelect={handleSignOut}>Sign out</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }

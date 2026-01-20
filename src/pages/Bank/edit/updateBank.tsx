@@ -3,10 +3,7 @@ import { db } from "../../../lib/firebase";
 import { FirebaseError } from "firebase/app";
 import { BankInputs } from "../bankValidator";
 
-export async function updateBank(
-  values: BankInputs,
-  bankId: string
-) {
+export async function updateBank(values: BankInputs, bankId: string) {
   try {
     const bankRef = doc(db, "banks", bankId);
 

@@ -1,10 +1,10 @@
-import { useTheme } from "../contexts/ThemeContext"
-import { Button } from "./ui/Button"
-import { SunIcon, MoonIcon } from "@radix-ui/react-icons"
+import { useTheme } from "../contexts/ThemeContext";
+import { Button } from "./ui/Button";
+import { SunIcon, MoonIcon } from "@radix-ui/react-icons";
 
 export function ThemeToggler() {
-  const { theme, toggleTheme } = useTheme()
-  const isDarkTheme = theme === "dark"
+  const { theme, toggleTheme } = useTheme();
+  const isDarkTheme = theme === "dark";
 
   return (
     <Button variant="ghost" sizes="icon" onClick={toggleTheme}>
@@ -15,5 +15,5 @@ export function ThemeToggler() {
       )}
       <span className="sr-only">Toggle theme</span>
     </Button>
-  )
+  );
 }

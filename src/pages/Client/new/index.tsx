@@ -16,7 +16,7 @@ export function CreateClientPage() {
   const navigate = useNavigate();
 
   if (!currentUser) {
-    console.error('No authenticated user found');
+    console.error("No authenticated user found");
     return null;
   }
 

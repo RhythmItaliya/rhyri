@@ -1,8 +1,11 @@
-import { z } from "zod"
+import { z } from "zod";
 
 export const invoiceValidator = z.object({
   companyName: z.string().min(1, { message: "required" }),
-  companyEmail: z.string().email({ message: "Invalid email address" }).optional(),
+  companyEmail: z
+    .string()
+    .email({ message: "Invalid email address" })
+    .optional(),
   companyTelephone: z.string().min(1, { message: "required" }),
   companyTagline: z.string().min(1, { message: "required" }),
   companyAddress: z.string().min(1, { message: "required" }),
@@ -23,10 +26,9 @@ export const invoiceValidator = z.object({
   clientTelephone: z.string().optional(),
   clientUid: z.string().optional(),
 
-  invoiceDate: z.date({ required_error: "An invoice date is required" }),
+  invoiceDate: z.date({ message: "An invoice date is required" }),
   paymentTerms: z.string().min(1, { message: "required" }),
-  dueDate: z.date({ required_error: "An due date is required" }),
-  challanNumber: z.string().min(1, { message: "required" }),
+  dueDate: z.date({ message: "A due date is required" }),
 
   // serviceDescription: z.string().min(1, { message: "required" }),
 
@@ -36,30 +38,38 @@ export const invoiceValidator = z.object({
         item: z.string().min(1, { message: "required" }),
         quantity: z.coerce.number().min(1, { message: "invalid" }),
         price: z.coerce.number().min(1, { message: "invalid" }),
-      })
+        challanNumber: z.string().optional(),
+      }),
     )
     .min(1, {
       message: "At least one item is required.",
     }),
 
   invoiceCustomNumber: z.string().min(1, { message: "required" }),
-  rateTotal: z.coerce.number().min(0, { message: "Invalid Rate Total" }).default(0),
-  qtyTotal: z.coerce.number().min(0, { message: "Invalid Qty tax" }).default(0),
+  rateTotal: z.coerce.number().min(0, { message: "Invalid Rate Total" }),
+  qtyTotal: z.coerce.number().min(0, { message: "Invalid Qty tax" }),
 
   discountType: z.enum(["percentage", "fixed"]),
-  discountPercentage: z.coerce.number().min(0, { message: "Invalid discount percentage" }).default(0),
-  discountAmount: z.coerce.number().min(0, { message: "Invalid discount amount" }).default(0),
-  gst: z.coerce.number().min(0, { message: "Invalid GST" }).default(0),
-  sgst: z.coerce.number().min(0, { message: "Invalid SGST" }).default(0),
+  discountPercentage: z.coerce
+    .number()
+    .min(0, { message: "Invalid discount percentage" }),
+  discountAmount: z.coerce
+    .number()
+    .min(0, { message: "Invalid discount amount" }),
+  gst: z.coerce.number().min(0, { message: "Invalid GST" }),
+  sgst: z.coerce.number().min(0, { message: "Invalid SGST" }),
   otherTaxType: z.enum(["percentage", "fixed"]),
-  otherTaxPercentage: z.coerce.number().min(0, { message: "Invalid discount percentage" }).default(0),
-  otherTaxAmount: z.coerce.number().min(0, { message: "Invalid other tax" }).default(0),
+  otherTaxPercentage: z.coerce
+    .number()
+    .min(0, { message: "Invalid discount percentage" }),
+  otherTaxAmount: z.coerce.number().min(0, { message: "Invalid other tax" }),
 
   bankName: z.string().min(1, { message: "Bank name is required" }),
-  bankAccountNumber: z.string().min(1, { message: "Account number is required" }),
+  bankAccountNumber: z
+    .string()
+    .min(1, { message: "Account number is required" }),
   bankBranchName: z.string().min(1, { message: "IFSC code is required" }),
   bankIfscCode: z.string().min(1, { message: "Branch name is required" }),
-
 });
 
-export type InvoiceInputs = z.infer<typeof invoiceValidator>
+export type InvoiceInputs = z.infer<typeof invoiceValidator>;

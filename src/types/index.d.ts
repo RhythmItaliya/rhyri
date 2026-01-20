@@ -1,19 +1,19 @@
-import { Timestamp } from "firebase/firestore"
+import { Timestamp } from "firebase/firestore";
 
 interface ItemList {
-  item: string
-  quantity: number
-  price: number
+  item: string;
+  quantity: number;
+  price: number;
 }
 
-export type InvoiceStatus = "pending" | "paid" | "drafted"
+export type InvoiceStatus = "pending" | "paid" | "drafted";
 
 export interface Invoice {
-  id: string
-  uid: string
-  invoiceDate: Timestamp
-  paymentTerms: string
-  invoiceStatus: InvoiceStatus
+  id: string;
+  uid: string;
+  invoiceDate: Timestamp;
+  paymentTerms: string;
+  invoiceStatus: InvoiceStatus;
 
   companyName: string;
   companyEmail: string;
@@ -27,12 +27,12 @@ export interface Invoice {
   companyGSTNumber: string;
   companyPersonName: string;
 
-  clientName: string
-  clientEmail: string
-  clientAddress: string
-  clientCity: string
-  clientPostCode: string
-  clientCountry: string
+  clientName: string;
+  clientEmail: string;
+  clientAddress: string;
+  clientCity: string;
+  clientPostCode: string;
+  clientCountry: string;
   clientGSTNumber?: string;
   clientTelephone?: string;
   clientUid?: string;
@@ -43,8 +43,8 @@ export interface Invoice {
   rateTotal: number;
   qtyTotal: number;
 
-  serviceDescription: string
-  itemList: ItemList[]
+  serviceDescription: string;
+  itemList: ItemList[];
 
   amount: number;
 
@@ -63,10 +63,10 @@ export interface Invoice {
   bankBranchName?: string;
   bankIfscCode?: string;
 
-  finalAmount?:number;
+  finalAmount?: number;
 }
 
-export type ClientCategory = "regular" | "premium" | "vip"
+export type ClientCategory = "regular" | "premium" | "vip";
 
 export interface Client {
   id: string;
@@ -85,7 +85,7 @@ export interface Client {
   clientUid?: string;
 }
 
-export type CompanyCategory = "startup" | "enterprise" | "smallBusiness"
+export type CompanyCategory = "startup" | "enterprise" | "smallBusiness";
 
 export interface Company {
   id: string;
@@ -110,7 +110,6 @@ export interface DownloadInvoiceParams {
   onProgress: (progress: string) => void;
   signal: AbortSignal | null;
 }
-
 
 export type BankCategory = "Savings" | "Current" | "Fixed";
 

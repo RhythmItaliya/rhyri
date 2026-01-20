@@ -1,10 +1,10 @@
-import * as React from "react"
-import { Outlet } from "react-router-dom"
+import * as React from "react";
+import { Outlet } from "react-router-dom";
 
-import { GoBack } from "../../components/GoBack"
-import { Icons } from "../../components/Icons"
+import { GoBack } from "../../components/GoBack";
+import { Icons } from "../../components/Icons";
 
-import { ProtectedRoute } from "../../components/ProtectedRoute"
+import { ProtectedRoute } from "../../components/ProtectedRoute";
 
 export function InvoiceLayout() {
   return (
@@ -24,5 +24,5 @@ export function InvoiceLayout() {
         </main>
       </div>
     </ProtectedRoute>
-  )
+  );
 }

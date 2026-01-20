@@ -53,17 +53,26 @@ export function ClientsTable({
               >
                 {visibleColumns.map((column) => (
                   <TableCell key={column.id}>
-                    {column.id === "name" && (client.clientName ? client.clientName.toUpperCase() : " - ")}
-                    {column.id === "email" && (client.clientEmail ? client.clientEmail.toLowerCase() : " - ")}
-                    {column.id === "telephone" && (client.clientTelephone ? client.clientTelephone.toUpperCase() : " - ")}
-                    {column.id === "category" && (client.clientCategory ? client.clientCategory.toUpperCase() : " - ")}
+                    {column.id === "name" &&
+                      (client.clientName
+                        ? client.clientName.toUpperCase()
+                        : " - ")}
+                    {column.id === "email" &&
+                      (client.clientEmail
+                        ? client.clientEmail.toLowerCase()
+                        : " - ")}
+                    {column.id === "telephone" &&
+                      (client.clientTelephone
+                        ? client.clientTelephone.toUpperCase()
+                        : " - ")}
+                    {column.id === "category" &&
+                      (client.clientCategory
+                        ? client.clientCategory.toUpperCase()
+                        : " - ")}
                   </TableCell>
                 ))}
                 <TableCell>
-                  <ClientActions
-                    clientId={client.id}
-                    isClientPage={false}
-                  />
+                  <ClientActions clientId={client.id} isClientPage={false} />
                 </TableCell>
               </TableRow>
             ))

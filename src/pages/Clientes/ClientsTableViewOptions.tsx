@@ -44,7 +44,7 @@ export function ClientsTableViewOptions({
             >
               {column.id}
             </DropdownMenuCheckboxItem>
-          ) : null
+          ) : null,
         )}
       </DropdownMenuContent>
     </DropdownMenu>

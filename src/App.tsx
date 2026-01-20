@@ -1,54 +1,116 @@
-import * as React from "react"
-import { Routes, Route } from "react-router-dom"
-import { InvoiceLayout } from "./pages/Invoice/InvoiceLayout"
-import { RootLayout } from "./components/RootLayout"
-import { HomePage } from "./pages/Home"
-import { SignInPage } from "./pages/SignIn"
-import { ClientLayout } from "./pages/Client/ClientLayout"
-import { CompanyLayout } from "./pages/Company/CompanyLayout"
-import NotFoundPage from "./components/NotFoundPage"
-import { BankLayout } from "./pages/Bank/BankLayout"
+import * as React from "react";
+import { Routes, Route } from "react-router-dom";
+import { InvoiceLayout } from "./pages/Invoice/InvoiceLayout";
+import { RootLayout } from "./components/RootLayout";
+import { HomePage } from "./pages/Home";
+import { SignInPage } from "./pages/SignIn";
+import { ClientLayout } from "./pages/Client/ClientLayout";
+import { CompanyLayout } from "./pages/Company/CompanyLayout";
+import NotFoundPage from "./components/NotFoundPage";
+import { BankLayout } from "./pages/Bank/BankLayout";
 
 // Pages
-const DashboardPage = React.lazy(() => import("./pages/Dashboard").then((module) => ({ default: module.DashboardPage })))
+const DashboardPage = React.lazy(() =>
+  import("./pages/Dashboard").then((module) => ({
+    default: module.DashboardPage,
+  })),
+);
 
-const InvoicesPage = React.lazy(() => import("./pages/Invoices").then((module) => ({ default: module.InvoicesPage })))
+const InvoicesPage = React.lazy(() =>
+  import("./pages/Invoices").then((module) => ({
+    default: module.InvoicesPage,
+  })),
+);
 
-const ClientsPage = React.lazy(() => import("./pages/Clientes").then((module) => ({ default: module.ClientsPage })))
+const ClientsPage = React.lazy(() =>
+  import("./pages/Clientes").then((module) => ({
+    default: module.ClientsPage,
+  })),
+);
 
-const CompaniesPage = React.lazy(() => import("./pages/Companies").then((module) => ({ default: module.CompaniesPage })))
+const CompaniesPage = React.lazy(() =>
+  import("./pages/Companies").then((module) => ({
+    default: module.CompaniesPage,
+  })),
+);
 
-const BanksPage = React.lazy(() => import('./pages/Banks').then((module) => ({ default: module.BanksPage })))
+const BanksPage = React.lazy(() =>
+  import("./pages/Banks").then((module) => ({ default: module.BanksPage })),
+);
 
 // Create Page
-const CreateInvoicePage = React.lazy(() => import("./pages/Invoice/new").then((module) => ({ default: module.CreateInvoicePage })))
+const CreateInvoicePage = React.lazy(() =>
+  import("./pages/Invoice/new").then((module) => ({
+    default: module.CreateInvoicePage,
+  })),
+);
 
-const CreateClientPage = React.lazy(() => import("./pages/Client/new").then((module) => ({ default: module.CreateClientPage })))
+const CreateClientPage = React.lazy(() =>
+  import("./pages/Client/new").then((module) => ({
+    default: module.CreateClientPage,
+  })),
+);
 
-const CreateCompanyPage = React.lazy(() => import("./pages/Company/new").then((module) => ({ default: module.CreateCompanyPage })))
+const CreateCompanyPage = React.lazy(() =>
+  import("./pages/Company/new").then((module) => ({
+    default: module.CreateCompanyPage,
+  })),
+);
 
-const CreateBankPage = React.lazy(() => import("./pages/Bank/new").then((module) => ({ default: module.CreateBankPage })))
+const CreateBankPage = React.lazy(() =>
+  import("./pages/Bank/new").then((module) => ({
+    default: module.CreateBankPage,
+  })),
+);
 
 // Page
-const InvoicePage = React.lazy(() => import("./pages/Invoice").then((module) => ({ default: module.InvoicePage })))
+const InvoicePage = React.lazy(() =>
+  import("./pages/Invoice").then((module) => ({ default: module.InvoicePage })),
+);
 
-const ClientPage = React.lazy(() => import("./pages/Client").then((module) => ({ default: module.ClientPage })))
+const ClientPage = React.lazy(() =>
+  import("./pages/Client").then((module) => ({ default: module.ClientPage })),
+);
 
-const CompanyPage = React.lazy(() => import("./pages/Company").then((module) => ({ default: module.CompanyPage })))
+const CompanyPage = React.lazy(() =>
+  import("./pages/Company").then((module) => ({ default: module.CompanyPage })),
+);
 
-const BankPage = React.lazy(() => import("./pages/Bank").then((module) => ({ default: module.BankPage })))
+const BankPage = React.lazy(() =>
+  import("./pages/Bank").then((module) => ({ default: module.BankPage })),
+);
 
 // Edit Page
-const EditInvoicePage = React.lazy(() => import("./pages/Invoice/edit").then((module) => ({ default: module.EditInvoicePage })))
+const EditInvoicePage = React.lazy(() =>
+  import("./pages/Invoice/edit").then((module) => ({
+    default: module.EditInvoicePage,
+  })),
+);
 
-const EditClientPage = React.lazy(() => import("./pages/Client/edit").then((module) => ({ default: module.EditClientPage })))
+const EditClientPage = React.lazy(() =>
+  import("./pages/Client/edit").then((module) => ({
+    default: module.EditClientPage,
+  })),
+);
 
-const EditCompanyPage = React.lazy(() => import("./pages/Company/edit").then((module) => ({ default: module.EditCompanyPage })))
+const EditCompanyPage = React.lazy(() =>
+  import("./pages/Company/edit").then((module) => ({
+    default: module.EditCompanyPage,
+  })),
+);
 
-const EditBankPage = React.lazy(() => import('./pages/Bank/edit').then((module) => ({ default: module.EditBankPage })))
+const EditBankPage = React.lazy(() =>
+  import("./pages/Bank/edit").then((module) => ({
+    default: module.EditBankPage,
+  })),
+);
 
 // Other
-const ClientAllInvoice = React.lazy(() => import("./pages/Client/all/index").then((module) => ({ default: module.ClientAllInvoice })))
+const ClientAllInvoice = React.lazy(() =>
+  import("./pages/Client/all/index").then((module) => ({
+    default: module.ClientAllInvoice,
+  })),
+);
 
 export default function App() {
   return (
@@ -91,5 +153,5 @@ export default function App() {
 
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
-  )
+  );
 }

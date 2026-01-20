@@ -1,8 +1,8 @@
-import * as React from "react"
-import { OAuthStrategy, useAuth } from "../../contexts/AuthContext"
-import { Button } from "../../components/ui/Button"
-import { Icons } from "../../components/Icons"
-import { catchError } from "../../lib/utils"
+import * as React from "react";
+import { OAuthStrategy, useAuth } from "../../contexts/AuthContext";
+import { Button } from "../../components/ui/Button";
+import { Icons } from "../../components/Icons";
+import { catchError } from "../../lib/utils";
 
 const oauthProviders = [
   {
@@ -16,30 +16,30 @@ const oauthProviders = [
   //   icon: "github",
   // },
 ] satisfies {
-  name: string
-  strategy: OAuthStrategy
-  icon: keyof typeof Icons
-}[]
+  name: string;
+  strategy: OAuthStrategy;
+  icon: keyof typeof Icons;
+}[];
 
 export function OAuthSignIn() {
-  const { signIn } = useAuth()
-  const [isLoading, setIsLoading] = React.useState<OAuthStrategy | null>(null)
+  const { signIn } = useAuth();
+  const [isLoading, setIsLoading] = React.useState<OAuthStrategy | null>(null);
 
   const oauthSignIn = async (strategy: OAuthStrategy) => {
     try {
-      setIsLoading(strategy)
+      setIsLoading(strategy);
 
-      await signIn(strategy)
+      await signIn(strategy);
     } catch (error) {
-      setIsLoading(null)
-      catchError(error)
+      setIsLoading(null);
+      catchError(error);
     }
-  }
+  };
 
   return (
     <div className="grid gap-4 w-full max-w-sm mx-auto">
       {oauthProviders.map((provider) => {
-        const Icon = Icons[provider.icon]
+        const Icon = Icons[provider.icon];
 
         return (
           <Button
@@ -58,8 +58,8 @@ export function OAuthSignIn() {
             )}
             Sign in with {provider.name}
           </Button>
-        )
+        );
       })}
     </div>
-  )
+  );
 }

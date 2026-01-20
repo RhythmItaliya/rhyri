@@ -9,7 +9,13 @@ import {
 } from "../../components/ui/Form";
 import { Button } from "../../components/ui/Button";
 import { Input } from "../../components/ui/Input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../components/ui/Select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../../components/ui/Select";
 import { Client } from "../../types";
 import { clientValidator, ClientInputs } from "./clientValidator";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -21,11 +27,7 @@ interface ClientFormProps {
   client?: Client;
 }
 
-export function ClientForm({
-  onSubmit,
-  isPending,
-  client,
-}: ClientFormProps) {
+export function ClientForm({ onSubmit, isPending, client }: ClientFormProps) {
   const form = useForm<ClientInputs>({
     resolver: zodResolver(clientValidator),
     defaultValues: {
@@ -49,15 +51,17 @@ export function ClientForm({
       const formData = form.getValues();
       onSubmit(formData);
     } else {
-      console.log('Form validation failed');
+      console.log("Form validation failed");
     }
   };
 
-  const handleNumberChange = (fieldName: keyof ClientInputs) => (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
-    const formattedValue = value.replace(/[^0-9]/g, '');
-    form.setValue(fieldName, formattedValue);
-  };
+  const handleNumberChange =
+    (fieldName: keyof ClientInputs) =>
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const { value } = event.target;
+      const formattedValue = value.replace(/[^0-9]/g, "");
+      form.setValue(fieldName, formattedValue);
+    };
 
   return (
     <Form {...form}>
@@ -65,100 +69,179 @@ export function ClientForm({
         <div className="space-y-4">
           <p className="font-semibold text-accent">Client Details</p>
           <div className="grid gap-4">
-            <FormField control={form.control} name="clientName" render={({ field }) => (
-              <FormItem>
-                <FormLabel>Client Name</FormLabel>
-                <FormControl>
-                  <Input {...field} autoComplete="off" className="uppercase" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )} />
+            <FormField
+              control={form.control}
+              name="clientName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Client Name</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      autoComplete="off"
+                      className="uppercase"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-            <FormField control={form.control} name="clientEmail" render={({ field }) => (
-              <FormItem>
-                <FormLabel>Client Email</FormLabel>
-                <FormControl>
-                  <Input {...field} autoComplete="off" className="lowercase" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )} />
+            <FormField
+              control={form.control}
+              name="clientEmail"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Client Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      autoComplete="off"
+                      className="lowercase"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-            <FormField control={form.control} name="clientTelephone" render={({ field }) => (
-              <FormItem>
-                <FormLabel>Client Telephone</FormLabel>
-                <FormControl>
-                  <Input {...field} autoComplete="off" className="uppercase" onChange={handleNumberChange('clientTelephone')} value={field.value} inputMode="numeric" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )} />
+            <FormField
+              control={form.control}
+              name="clientTelephone"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Client Telephone</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      autoComplete="off"
+                      className="uppercase"
+                      onChange={handleNumberChange("clientTelephone")}
+                      value={field.value}
+                      inputMode="numeric"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-            <FormField control={form.control} name="clientGSTNumber" render={({ field }) => (
-              <FormItem>
-                <FormLabel>Client GST Number</FormLabel>
-                <FormControl>
-                  <Input {...field} autoComplete="off" className="uppercase" maxLength={15} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )} />
+            <FormField
+              control={form.control}
+              name="clientGSTNumber"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Client GST Number</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      autoComplete="off"
+                      className="uppercase"
+                      maxLength={15}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
             {/* City */}
-            <FormField control={form.control} name="clientAddress" render={({ field }) => (
-              <FormItem>
-                <FormLabel>Full Address</FormLabel>
-                <FormControl>
-                  <Input {...field} autoComplete="off" className="uppercase" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )} />
+            <FormField
+              control={form.control}
+              name="clientAddress"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Full Address</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      autoComplete="off"
+                      className="uppercase"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
             {/* City */}
-            <FormField control={form.control} name="clientCity" render={({ field }) => (
-              <FormItem>
-                <FormLabel>Client City</FormLabel>
-                <FormControl>
-                  <Input {...field} autoComplete="off" className="uppercase" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )} />
+            <FormField
+              control={form.control}
+              name="clientCity"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Client City</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      autoComplete="off"
+                      className="uppercase"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
             {/* Street Address */}
-            <FormField control={form.control} name="clientState" render={({ field }) => (
-              <FormItem>
-                <FormLabel>Client State</FormLabel>
-                <FormControl>
-                  <Input {...field} autoComplete="off" className="uppercase" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )} />
+            <FormField
+              control={form.control}
+              name="clientState"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Client State</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      autoComplete="off"
+                      className="uppercase"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
             {/* Post Code */}
-            <FormField control={form.control} name="clientPostCode" render={({ field }) => (
-              <FormItem>
-                <FormLabel>Post Code</FormLabel>
-                <FormControl>
-                  <Input {...field} autoComplete="off" className="uppercase" onChange={handleNumberChange('clientPostCode')} value={field.value} inputMode="numeric" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )} />
+            <FormField
+              control={form.control}
+              name="clientPostCode"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Post Code</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      autoComplete="off"
+                      className="uppercase"
+                      onChange={handleNumberChange("clientPostCode")}
+                      value={field.value}
+                      inputMode="numeric"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
             {/* Country */}
-            <FormField control={form.control} name="clientCountry" render={({ field }) => (
-              <FormItem>
-                <FormLabel>Client Country</FormLabel>
-                <FormControl>
-                  <Input {...field} autoComplete="off" className="uppercase" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )} />
+            <FormField
+              control={form.control}
+              name="clientCountry"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Client Country</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      autoComplete="off"
+                      className="uppercase"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
             {/* Client Category */}
             <FormField
@@ -168,10 +251,7 @@ export function ClientForm({
                 <FormItem>
                   <FormLabel>Client Category</FormLabel>
                   <FormControl>
-                    <Select
-                      value={field.value}
-                      onValueChange={field.onChange}
-                    >
+                    <Select value={field.value} onValueChange={field.onChange}>
                       <SelectTrigger>
                         <SelectValue placeholder="Select category" />
                       </SelectTrigger>
@@ -198,11 +278,13 @@ export function ClientForm({
             onClick={handleClick}
           >
             {isPending && (
-              <Icons.spinner className="h-4 w-4 animate-spin mr-2" aria-hidden="true" />
+              <Icons.spinner
+                className="h-4 w-4 animate-spin mr-2"
+                aria-hidden="true"
+              />
             )}
             Save Changes
           </Button>
-
         </div>
       </form>
     </Form>

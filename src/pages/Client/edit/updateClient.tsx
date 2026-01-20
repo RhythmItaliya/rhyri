@@ -3,10 +3,7 @@ import { db } from "../../../lib/firebase";
 import { FirebaseError } from "firebase/app";
 import { ClientInputs } from "../clientValidator";
 
-export async function updateClient(
-  values: ClientInputs,
-  clientId: string
-) {
+export async function updateClient(values: ClientInputs, clientId: string) {
   try {
     const clientRef = doc(db, "clients", clientId);
 

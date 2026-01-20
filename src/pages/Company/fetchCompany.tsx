@@ -5,7 +5,7 @@ import { FirebaseError } from "firebase/app";
 
 export const fetchCompany = async (
   companyId: string,
-  uid: string
+  uid: string,
 ): Promise<Company | undefined> => {
   try {
     const companyRef = doc(db, "companies", companyId);

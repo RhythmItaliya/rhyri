@@ -1,8 +1,8 @@
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 
-import { buttonVariants } from "../../components/ui/Button"
-import { ThemeToggler } from "../../components/ThemeToggler"
-import { Icons } from "../../components/Icons"
+import { buttonVariants } from "../../components/ui/Button";
+import { ThemeToggler } from "../../components/ThemeToggler";
+import { Icons } from "../../components/Icons";
 
 export function AuthNav() {
   return (
@@ -21,5 +21,5 @@ export function AuthNav() {
         </div>
       </nav>
     </header>
-  )
+  );
 }

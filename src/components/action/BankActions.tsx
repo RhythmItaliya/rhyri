@@ -16,10 +16,7 @@ interface BankClientActionsProps {
   bankId: string;
 }
 
-export function BankActions({
-  isBankPage,
-  bankId,
-}: BankClientActionsProps) {
+export function BankActions({ isBankPage, bankId }: BankClientActionsProps) {
   const navigate = useNavigate();
   const { deleteBankMutation } = useBankClient();
 
@@ -54,7 +51,9 @@ export function BankActions({
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuLabel className="font-semibold">Actions</DropdownMenuLabel>
+          <DropdownMenuLabel className="font-semibold">
+            Actions
+          </DropdownMenuLabel>
           <DropdownMenuSeparator />
           {!isBankPage && (
             <DropdownMenuItem onClick={handleView}>View</DropdownMenuItem>

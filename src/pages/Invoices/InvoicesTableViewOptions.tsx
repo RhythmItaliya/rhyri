@@ -1,4 +1,4 @@
-import { Button } from "../../components/ui/Button"
+import { Button } from "../../components/ui/Button";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -6,15 +6,15 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "../../components/ui/DropdownMenu"
+} from "../../components/ui/DropdownMenu";
 
-import { MixerHorizontalIcon } from "@radix-ui/react-icons"
+import { MixerHorizontalIcon } from "@radix-ui/react-icons";
 
-import { ColumnDef } from "./schema"
+import { ColumnDef } from "./schema";
 
 interface InvoicesTableViewOptionsProps {
-  columns: ColumnDef[]
-  toggleColumnVisibility: (columnId: string) => void
+  columns: ColumnDef[];
+  toggleColumnVisibility: (columnId: string) => void;
 }
 
 export function InvoicesTableViewOptions({
@@ -44,9 +44,9 @@ export function InvoicesTableViewOptions({
             >
               {column.id}
             </DropdownMenuCheckboxItem>
-          ) : null
+          ) : null,
         )}
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }

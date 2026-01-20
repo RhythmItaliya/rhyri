@@ -8,7 +8,7 @@ import { Skeleton } from "./Skeleton";
 import { useTheme } from "../contexts/ThemeContext";
 
 const UserMenu = React.lazy(() =>
-  import("./UserMenu").then((module) => ({ default: module.UserMenu }))
+  import("./UserMenu").then((module) => ({ default: module.UserMenu })),
 );
 
 const mainNavItems = [
@@ -26,7 +26,7 @@ export function MainNav() {
   const isDarkTheme = theme === "dark";
 
   const handleLogoClick = () => {
-    navigate('/dashboard');
+    navigate("/dashboard");
   };
 
   const toggleMenu = () => {
@@ -42,16 +42,26 @@ export function MainNav() {
     <header className="site-header relative">
       <nav className="max-width flex-between">
         <div className="flex items-center gap-4">
-          <Icons.logo className="w-8 h-8 cursor-pointer" aria-hidden="true" onClick={handleLogoClick} />
+          <Icons.logo
+            className="w-8 h-8 cursor-pointer"
+            aria-hidden="true"
+            onClick={handleLogoClick}
+          />
 
           <div
             className="sm:hidden text-gray-600 focus:outline-none cursor-pointer transition-transform duration-300"
             onClick={toggleMenu}
           >
             {isMenuOpen ? (
-              isDarkTheme ? <Icons.closeDark className="w-6 h-6" aria-hidden="true" /> : <Icons.closeLight className="w-6 h-6" aria-hidden="true" />
+              isDarkTheme ? (
+                <Icons.closeDark className="w-6 h-6" aria-hidden="true" />
+              ) : (
+                <Icons.closeLight className="w-6 h-6" aria-hidden="true" />
+              )
+            ) : isDarkTheme ? (
+              <Icons.burgerDark className="w-6 h-6" aria-hidden="true" />
             ) : (
-              isDarkTheme ? <Icons.burgerDark className="w-6 h-6" aria-hidden="true" /> : <Icons.burgerLight className="w-6 h-6" aria-hidden="true" />
+              <Icons.burgerLight className="w-6 h-6" aria-hidden="true" />
             )}
           </div>
 
@@ -65,7 +75,7 @@ export function MainNav() {
                     "font-medium text-muted text-sm sm:text-base hover:text-foreground",
                     {
                       "text-foreground": isActive,
-                    }
+                    },
                   )
                 }
               >
@@ -86,23 +96,35 @@ export function MainNav() {
       </nav>
 
       <div
-        className={`fixed top-0 left-0 w-64 h-full white shadow-lg transform transition-transform duration-300 ease-in-out ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'
-          } sm:hidden z-50`}
+        className={`fixed top-0 left-0 w-64 h-full white shadow-lg transform transition-transform duration-300 ease-in-out ${
+          isMenuOpen ? "translate-x-0" : "-translate-x-full"
+        } sm:hidden z-50`}
         style={{
-          backgroundColor: theme === "dark" ? "hsl(var(--card))" : "hsl(var(--background))",
-          color: theme === "dark" ? "hsl(var(--card-foreground))" : "hsl(var(--foreground))",
+          backgroundColor:
+            theme === "dark" ? "hsl(var(--card))" : "hsl(var(--background))",
+          color:
+            theme === "dark"
+              ? "hsl(var(--card-foreground))"
+              : "hsl(var(--foreground))",
         }}
       >
         <div className="flex flex-col p-4">
-
-          <Icons.logo className="w-8 h-8 cursor-pointer absolute top-5 left-5" aria-hidden="true" onClick={handleLogoClick} />
+          <Icons.logo
+            className="w-8 h-8 cursor-pointer absolute top-5 left-5"
+            aria-hidden="true"
+            onClick={handleLogoClick}
+          />
 
           <button
             className="absolute top-5 right-5 p-2 text-gray-600"
             onClick={() => setIsMenuOpen(false)}
             aria-label="Close menu"
           >
-            {isDarkTheme ? <Icons.closeDark className="w-6 h-6" aria-hidden="true" /> : <Icons.closeLight className="w-6 h-6" aria-hidden="true" />}
+            {isDarkTheme ? (
+              <Icons.closeDark className="w-6 h-6" aria-hidden="true" />
+            ) : (
+              <Icons.closeLight className="w-6 h-6" aria-hidden="true" />
+            )}
           </button>
 
           <div className="mt-12"></div>
@@ -117,7 +139,7 @@ export function MainNav() {
                   "font-medium text-muted text-sm sm:text-base hover:text-foreground py-2 px-2",
                   {
                     "text-foreground": isActive,
-                  }
+                  },
                 )
               }
             >
@@ -129,8 +151,11 @@ export function MainNav() {
 
       {/* Overlay */}
       <div
-        className={`fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 transition-opacity duration-300 ease-in-out ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-          } sm:hidden z-40`}
+        className={`fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 transition-opacity duration-300 ease-in-out ${
+          isMenuOpen
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
+        } sm:hidden z-40`}
         onClick={() => setIsMenuOpen(false)}
       />
     </header>

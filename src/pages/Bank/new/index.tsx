@@ -12,30 +12,30 @@ import { catchError } from "../../../lib/utils";
 import { generateBankId } from "./generateBankId";
 
 export function CreateBankPage() {
-    const { currentUser } = useAuth();
-    const navigate = useNavigate();
+  const { currentUser } = useAuth();
+  const navigate = useNavigate();
 
-    if (!currentUser) {
-        console.error('No authenticated user found');
-        return null;
-    }
+  if (!currentUser) {
+    console.error("No authenticated user found");
+    return null;
+  }
 
-    const { mutate: createBank, isPending } = useMutation({
-        mutationFn: async (values: BankInputs) => {
-            const bankId = generateBankId();
+  const { mutate: createBank, isPending } = useMutation({
+    mutationFn: async (values: BankInputs) => {
+      const bankId = generateBankId();
 
-            await setDoc(doc(db, "banks", bankId), {
-                ...values,
-                uid: currentUser.uid,
-            });
-        },
-        onSuccess() {
-            navigate("/banks");
-        },
-        onError(error) {
-            catchError(error);
-        },
-    });
+      await setDoc(doc(db, "banks", bankId), {
+        ...values,
+        uid: currentUser.uid,
+      });
+    },
+    onSuccess() {
+      navigate("/banks");
+    },
+    onError(error) {
+      catchError(error);
+    },
+  });
 
-    return <BankForm onSubmit={createBank} isPending={isPending} />;
+  return <BankForm onSubmit={createBank} isPending={isPending} />;
 }
