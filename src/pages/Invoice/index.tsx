@@ -229,6 +229,7 @@ export function InvoicePage() {
                   <TableHeader>
                     <TableRow>
                       <TableHead>Item</TableHead>
+                      <TableHead>Challan No.</TableHead>
                       <TableHead>Qty.</TableHead>
                       <TableHead>Price</TableHead>
                       <TableHead>Discount</TableHead>
@@ -237,12 +238,12 @@ export function InvoicePage() {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {transformedItems.map(({ item, quantity, price }) => {
+                    {transformedItems.map(({ item, quantity, price, challanNumber }) => {
                       const itemDiscount =
                         discountType === "percentage"
                           ? new Decimal(price)
-                              .times(discountPercentage)
-                              .div(100)
+                            .times(discountPercentage)
+                            .div(100)
                           : discountAmount;
                       const itemTax = gst.plus(sgst).div(2);
                       const itemTotal = new Decimal(price)
@@ -253,6 +254,7 @@ export function InvoicePage() {
                       return (
                         <TableRow key={item}>
                           <TableCell>{item}</TableCell>
+                          <TableCell>{challanNumber || "-"}</TableCell>
                           <TableCell>{quantity}</TableCell>
                           <TableCell>₹{price.toString()}</TableCell>
                           <TableCell>
@@ -269,7 +271,7 @@ export function InvoicePage() {
                   </TableBody>
                   <TableFooter>
                     <TableRow>
-                      <TableCell colSpan={5} className="text-sm font-semibold">
+                      <TableCell colSpan={6} className="text-sm font-semibold">
                         TOTAL
                       </TableCell>
                       <TableCell className="text-left text-sm font-medium">

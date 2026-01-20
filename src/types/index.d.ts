@@ -4,6 +4,7 @@ interface ItemList {
   item: string;
   quantity: number;
   price: number;
+  challanNumber?: string;
 }
 
 export type InvoiceStatus = "pending" | "paid" | "drafted";
