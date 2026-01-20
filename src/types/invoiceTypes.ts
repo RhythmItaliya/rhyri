@@ -77,7 +77,7 @@ export interface Customer {
 
 export interface Invoice {
   invoiceNumber: string;
-  challanNumber: string;
+  challanNumber?: string;
   creationDate: string;
   dueDate: string;
   invoiceCustomNumber: string;

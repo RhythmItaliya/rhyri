@@ -115,7 +115,6 @@ export const transformInvoiceData = (data: InvoiceData): TransformedData => {
     },
     invoice: {
       invoiceNumber: data.id || " - ",
-      challanNumber: data.challanNumber || " - ",
       creationDate: formatDate(data.invoiceDate),
       dueDate: formatDate(data.dueDate),
       invoiceCustomNumber: data.invoiceCustomNumber || " - ",

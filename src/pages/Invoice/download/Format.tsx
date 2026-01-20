@@ -160,14 +160,6 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
               </tr>
               <tr>
                 <td className="text-gray-600 p-1 uppercase text-left pl-2">
-                  {fieldNames.challanNo}
-                </td>
-                <td className="uppercase font-semibold text-right pr-2">
-                  {invoice.challanNumber}
-                </td>
-              </tr>
-              <tr>
-                <td className="text-gray-600 p-1 uppercase text-left pl-2">
                   {fieldNames.invoiceCreateDate}
                 </td>
                 <td className="uppercase font-semibold text-right pr-2">
@@ -238,6 +230,27 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
                     }}
                   ></div>
                   {fieldNames.productName}
+                </th>
+                <th
+                  style={{
+                    textAlign: "center",
+                    paddingTop: "8px",
+                    paddingBottom: "8px",
+                    padding: 0,
+                    position: "relative",
+                    width: "100px",
+                  }}
+                >
+                  <div
+                    style={{
+                      position: "absolute",
+                      left: 0,
+                      top: 0,
+                      height: "400px",
+                      borderLeft: "1px solid black",
+                    }}
+                  ></div>
+                  {fieldNames.challanNo}
                 </th>
                 <th
                   style={{
@@ -324,7 +337,16 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
                       fontSize: "14px",
                     }}
                   >
-                    {item.challanNumber}
+                    {item.name || ""}
+                  </td>
+                  <td
+                    style={{
+                      padding: "4px",
+                      textAlign: "center",
+                      fontSize: "14px",
+                    }}
+                  >
+                    {item.challanNumber || "-"}
                   </td>
                   <td
                     style={{
@@ -375,6 +397,9 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
               <th style={{ padding: 0, width: "50px" }}></th>
               <th
                 style={{ padding: 0, position: "relative", width: "400px" }}
+              ></th>
+              <th
+                style={{ padding: 0, position: "relative", width: "100px" }}
               ></th>
               <th
                 style={{ padding: 0, position: "relative", width: "120px" }}

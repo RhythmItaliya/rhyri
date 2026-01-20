@@ -880,6 +880,7 @@ export function InvoiceForm({
                             {...field}
                             autoComplete="off"
                             className="uppercase"
+                            placeholder="Enter product name (required)"
                           />
                         </FormControl>
                         <FormMessage />
@@ -962,6 +963,7 @@ export function InvoiceForm({
           <TableHeader>
             <TableRow>
               <TableHead className="text-center">Item</TableHead>
+              <TableHead className="text-center">Challan No.</TableHead>
               <TableHead className="text-center">Quantity</TableHead>
               <TableHead className="text-center">Price</TableHead>
               <TableHead className="text-center">Amount</TableHead>
@@ -971,7 +973,7 @@ export function InvoiceForm({
             {itemListFieldArray.fields.length === 0 ? (
               <TableRow>
                 <TableCell
-                  colSpan={4}
+                  colSpan={5}
                   className="text-center text-gray-600 py-4"
                 >
                   No items available
@@ -980,13 +982,17 @@ export function InvoiceForm({
             ) : (
               itemListFieldArray.fields.map((field, index) => {
                 const item = form.watch(`itemList.${index}.item`);
+                const challanNumber = form.watch(`itemList.${index}.challanNumber`);
                 const quantity = form.watch(`itemList.${index}.quantity`) || 0;
                 const price = form.watch(`itemList.${index}.price`) || 0;
                 const amount = quantity * price;
                 return (
                   <TableRow key={field.id}>
                     <TableCell className="text-center">
-                      {item || "N/A"}
+                      {item || ""}
+                    </TableCell>
+                    <TableCell className="text-center">
+                      {challanNumber || "-"}
                     </TableCell>
                     <TableCell className="text-gray-600 text-center">
                       {quantity}
@@ -1006,6 +1012,7 @@ export function InvoiceForm({
             <TableFooter>
               <TableRow>
                 <TableCell className="text-center font-bold">Total</TableCell>
+                <TableCell></TableCell>
                 <TableCell className="text-gray-600 text-center font-bold">
                   {itemListFieldArray.fields.reduce((acc, _, index) => {
                     const quantity =
