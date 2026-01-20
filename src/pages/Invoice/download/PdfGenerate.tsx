@@ -17,7 +17,7 @@ export async function pdfGenerate(
     <head>
       <link rel="preconnect" href="https://fonts.googleapis.com">
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
       <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
       <style>
         @page {
@@ -25,7 +25,7 @@ export async function pdfGenerate(
           margin: 14px;
         }
         body {
-          font-family: "Poppins", sans-serif;
+          font-family: "Inter", sans-serif;
           margin: 0;
           padding: 0;
           width: 100%;
