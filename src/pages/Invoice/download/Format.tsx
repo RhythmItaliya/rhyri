@@ -15,7 +15,7 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
   } = data;
 
   return (
-    <div className="invoice-content border border-black flex flex-col min-h-[1100px] relative">
+    <div className="invoice-content border border-black">
       {/* Title */}
       <h1 className="text-4xl p-2 font-extrabold uppercase text-blue-600 border-b border-black text-center">
         {company.companyName}
@@ -193,16 +193,9 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
       </div>
 
       {/* Data Section */}
-      <div className="border-b border-black flex-grow relative">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 bottom-0 border-r border-black" style={{ left: "50px" }}></div>
-          <div className="absolute top-0 bottom-0 border-r border-black" style={{ left: "450px" }}></div>
-          <div className="absolute top-0 bottom-0 border-r border-black" style={{ left: "550px" }}></div>
-          <div className="absolute top-0 bottom-0 border-r border-black" style={{ left: "670px" }}></div>
-          <div className="absolute top-0 bottom-0 border-r border-black" style={{ left: "790px" }}></div>
-        </div>
+      <div className="border-b border-black">
         <div
-          style={{ position: "relative" }}
+          style={{ position: "relative", overflow: "auto", height: "400px" }}
         >
           <table
             style={{
@@ -219,14 +212,23 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
                 </th>
                 <th
                   style={{
-                    textAlign: "left",
+                    textAlign: "center",
                     paddingTop: "8px",
                     paddingBottom: "8px",
-                    paddingLeft: "4px",
+                    padding: 0,
                     position: "relative",
                     width: "400px",
                   }}
                 >
+                  <div
+                    style={{
+                      position: "absolute",
+                      left: 0,
+                      top: 0,
+                      height: "400px",
+                      borderLeft: "1px solid black",
+                    }}
+                  ></div>
                   {fieldNames.productName}
                 </th>
                 <th
@@ -239,6 +241,15 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
                     width: "100px",
                   }}
                 >
+                  <div
+                    style={{
+                      position: "absolute",
+                      left: 0,
+                      top: 0,
+                      height: "400px",
+                      borderLeft: "1px solid black",
+                    }}
+                  ></div>
                   {fieldNames.challanNo}
                 </th>
                 <th
@@ -251,6 +262,15 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
                     width: "120px",
                   }}
                 >
+                  <div
+                    style={{
+                      position: "absolute",
+                      left: 0,
+                      top: 0,
+                      height: "400px",
+                      borderLeft: "1px solid black",
+                    }}
+                  ></div>
                   {fieldNames.qty}
                 </th>
                 <th
@@ -263,6 +283,15 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
                     width: "120px",
                   }}
                 >
+                  <div
+                    style={{
+                      position: "absolute",
+                      left: 0,
+                      top: 0,
+                      height: "400px",
+                      borderLeft: "1px solid black",
+                    }}
+                  ></div>
                   {fieldNames.rate}
                 </th>
                 <th
@@ -275,6 +304,15 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
                     width: "120px",
                   }}
                 >
+                  <div
+                    style={{
+                      position: "absolute",
+                      left: 0,
+                      top: 0,
+                      height: "400px",
+                      borderLeft: "1px solid black",
+                    }}
+                  ></div>
                   {fieldNames.total}
                 </th>
               </tr>
@@ -295,7 +333,7 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
                   <td
                     style={{
                       padding: "4px",
-                      textAlign: "left",
+                      textAlign: "center",
                       fontSize: "14px",
                     }}
                   >
@@ -326,7 +364,7 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
                       fontSize: "14px",
                     }}
                   >
-                    {item.rate.toFixed(2)}
+                    {formatCurrency(item.rate)}
                   </td>
                   <td
                     style={{
@@ -335,7 +373,7 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
                       fontSize: "14px",
                     }}
                   >
-                    {item.total.toFixed(2)}
+                    {formatCurrency(item.total)}
                   </td>
                 </tr>
               ))}
