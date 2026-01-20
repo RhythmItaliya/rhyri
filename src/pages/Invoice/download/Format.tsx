@@ -285,7 +285,7 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
                     style={{
                       padding: "4px",
                       textAlign: "center",
-                      fontSize: "14px",
+                      fontSize: "12px",
                     }}
                   >
                     {index + 1}
@@ -294,7 +294,7 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
                     style={{
                       padding: "4px",
                       textAlign: "left",
-                      fontSize: "14px",
+                      fontSize: "12px",
                       borderLeft: "1px solid black",
                     }}
                   >
@@ -304,7 +304,7 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
                     style={{
                       padding: "4px",
                       textAlign: "center",
-                      fontSize: "14px",
+                      fontSize: "12px",
                       borderLeft: "1px solid black",
                     }}
                   >
@@ -314,7 +314,7 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
                     style={{
                       padding: "4px",
                       textAlign: "center",
-                      fontSize: "14px",
+                      fontSize: "12px",
                       borderLeft: "1px solid black",
                     }}
                   >
