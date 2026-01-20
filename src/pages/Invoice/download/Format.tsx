@@ -17,7 +17,7 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
   return (
     <div className="invoice-content border border-black">
       {/* Title */}
-      <h1 className="text-4xl p-2 font-extrabold uppercase text-black border-b border-black text-center">
+      <h1 className="text-4xl p-2 font-extrabold uppercase text-blue-600 border-b border-black text-center">
         {company.companyName}
       </h1>
 
@@ -73,7 +73,7 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
             </p>
           </div>
           <div className="flex-1 border-r border-black p-2">
-            <p className="text-sm font-bold text-black uppercase text-center">
+            <p className="text-sm font-bold text-blue-600 uppercase text-center">
               {fieldNames.invoiceTax}
             </p>
           </div>
