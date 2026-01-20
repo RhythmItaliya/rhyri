@@ -73,7 +73,7 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
             </p>
           </div>
           <div className="flex-1 border-r border-black p-2">
-            <p className="text-sm font-bold text-blue-600 uppercase text-center">
+            <p className="text-sm font-bold text-black uppercase text-center">
               {fieldNames.invoiceTax}
             </p>
           </div>
