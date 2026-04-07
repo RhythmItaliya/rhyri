@@ -1,110 +1,77 @@
-# [Rhyri](https://pay-up-roan.vercel.app)
+# [Rhyri](https://www.rhyri.com)
 
-An invoice app built with react and firebase
+Rhyri is a professional-grade invoice management platform designed for efficiency, clarity, and enterprise-ready administration. Built with a modern tech stack, it empowers businesses to generate, manage, and track high-quality invoices with absolute ease.
 
-## Tech Stack
+Designed and developed by [Rhythm Italiya](https://rhythmitaliya.com/).
 
-- **UI Library:** [React.js](https://react.dev)
-- **Styling:** [Tailwind CSS](https://tailwindcss.com)
-- **User & Data Management:** [Firebase](https://firebase.google.com)
-- **Asynchronous state:** [Tanstack Query](https://tanstack.com/query/v5)
-- **Headless Components:** [radix/ui](https://radix-ui.com/)
-- **Form Validation:** [react-hook-form](https://react-hook-form.com/)
-- **Chart Library:** [rechart](https://recharts.org/)
+---
 
-## Features to be implemented
+## Core Features
 
-- [x] Authentication with **firebase**
-- [x] dashboard
-- [x] Create, update, and delete Invoice
-- [x] Invoices filtering and search
-- [x] Pagination
-- [x] Theme toggling
+- **Professional PDF Generation:** Create high-fidelity, production-ready invoices in seconds.
+- **Enterprise-Ready Administration:** A robust admin panel (protected by VITE_ADMIN_EMAIL) for managing users and setting granular document restrictions.
+- **Advanced Global Restrictions:** Administrators can hide or disable invoices based on specific dates, ensuring strict data governance at both UI and database levels.
+- **Real-time Financial Dashboard:** Gain immediate insights into revenue, growth, and billing status through a synchronized Firestore-powered interface.
+- **PWA and Offline Readiness:** Full Progressive Web App support with optimized background caching for a seamless experience on any device.
+- **SEO Excellence:** Exhaustive SEO implementation including Schema.org JSON-LD, automated sitemaps, and optimized search crawler directives.
 
-## Running Locally
+## Getting Started
 
-1. Clone the repository
+### 1. Clone the repository
 
-   ```bash
-   git clone https://github.com/RhythmItaliya/invoice-firebase.git
-   ```
+```bash
+git clone https://github.com/RhythmItaliya/rhyri.git
+```
 
-2. Install dependencies using npm
+### 2. Install dependencies
 
-   ```bash
-   npm install
-   ```
+```bash
+npm i
+```
 
-3. Copy the `.env.example` to `.env.local` and update the variables. Here is a template for the `.env.local` file:
+### 3. Environment Configuration
 
-   ```plaintext
-   VITE_APP_FIREBASE_API_KEY=
-   VITE_APP_FIREBASE_AUTH_DOMAIN=
-   VITE_APP_FIREBASE_PROJECT_ID=
-   VITE_APP_FIREBASE_STORAGE_BUCKET=
-   VITE_APP_FIREBASE_MESSAGING_SENDER_ID=
-   VITE_APP_FIREBASE_APP_ID=
-   VITE_APP_FIREBASE_MEASUREMENT_ID=
-   ```
+Copy the example environment file and update it with your own credentials:
 
-4. Configure Firebase:
+```bash
+cp .env.example .env
+```
 
-   - Go to the [Firebase Console](https://firebase.google.com/).
-   - Click on "Go to Console" in the top-right corner.
-   - Click on "Add project" to create a new project.
-   - Follow the prompts to set up your project.
-   - After creating the project, click on "Web" (</>) to register your web app.
-   - Follow the prompts to register your app. You will receive a Firebase configuration snippet with keys and identifiers.
-   - Copy the configuration values and paste them into your `.env.local` file.
+Open .env and fill in the following variables:
 
-5. Set up Firebase Authentication:
+```env
+VITE_APP_FIREBASE_API_KEY=
+VITE_APP_FIREBASE_AUTH_DOMAIN=
+VITE_APP_FIREBASE_PROJECT_ID=
+VITE_APP_FIREBASE_STORAGE_BUCKET=
+VITE_APP_FIREBASE_MESSAGING_SENDER_ID=
+VITE_APP_FIREBASE_APP_ID=
+VITE_APP_FIREBASE_MEASUREMENT_ID=
 
-   - In the Firebase Console, navigate to "Authentication" in the left sidebar.
-   - Click on "Get Started."
-   - Enable the authentication methods you want to support (e.g., Email/Password, Google).
+VITE_PDF_API_URL=
+VITE_ADMIN_EMAIL=
+```
 
-6. Set up Firestore Database:
+### 4. Firebase Setup
 
-   - In the Firebase Console, navigate to "Firestore Database" in the left sidebar.
-   - Click on "Create database."
-   - Choose "Start in Test Mode" to allow read and write access (you will secure this later).
-   - Click "Next" and then "Done."
+To set up the backend for Rhyri:
 
-7. Configure Firestore Rules:
+1. Create a new project in the [Firebase Console](https://console.firebase.google.com/).
+2. Enable **Authentication** and activate the Google sign-in provider.
+3. Create a **Firestore Database** in production or test mode.
+4. (Optional) Set up **Firebase Hosting** for deployment.
+5. Copy your web app's configuration into the .env file as shown above.
 
-   - In the Firestore Database section, go to the "Rules" tab.
-   - Replace the existing rules with the following:
+### 5. Run the development server
 
-     ```plaintext
-     rules_version = '2';
-     
-     service cloud.firestore {
-       match /databases/{database}/documents {
-         match /{document=**} {
-           allow read, write: if true;
-         }
-       }
-     }
-     ```
-
-   - Click "Publish" to apply the rules.
-
-8. Create Firestore Indexes:
-
-   - In the Firestore Database section, go to the "Indexes" tab.
-   - Click "Add Index."
-   - Configure the index for the `invoices` collection with the following fields:
-     - **Field 1:** `uid` (Ascending)
-     - **Field 2:** `invoiceDate` (Descending)
-     - **Field 3:** `invoiceStatus` (Ascending)
-   - Enable the index and save.
-
-9. Start the development server
-
-    ```bash
-    npm run dev
-    ```
+```bash
+npm run dev
+```
 
 ## Deployment
 
-Follow the deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel) to set up the project and deploy it.
+Rhyri is optimized for deployment on Vercel. Simply connect your repository and the vercel.json provides pre-configured headers for optimal caching and SEO performance.
+
+---
+
+Made by [Rhythm Italiya](https://rhythmitaliya.com/)
