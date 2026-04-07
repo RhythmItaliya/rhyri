@@ -223,7 +223,7 @@ export function CompanyForm({
               name="companyTagline"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Company Tagline</FormLabel>
+                  <FormLabel>Company Tagline (Optional)</FormLabel>
                   <FormControl>
                     <Input
                       {...field}

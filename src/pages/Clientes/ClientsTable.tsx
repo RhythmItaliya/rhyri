@@ -10,19 +10,21 @@ import { Skeleton } from "../../components/Skeleton";
 import { useNavigate } from "react-router-dom";
 
 import { Client } from "../../types";
-import { ColumnDef } from "./schema";
+import { ColumnDef, PaginationState } from "./schema";
 import { ClientActions } from "../../components/action/ClientActions";
 
 interface ClientsTableProps {
   clients?: Client[];
   isPending: boolean;
   columns: ColumnDef[];
+  pagination: PaginationState;
 }
 
 export function ClientsTable({
   isPending,
   clients,
   columns,
+  pagination,
 }: ClientsTableProps) {
   const navigate = useNavigate();
   const visibleColumns = columns.filter((column) => column.isVisible);
@@ -45,7 +47,7 @@ export function ClientsTable({
               </TableCell>
             </TableRow>
           ) : clients?.length ? (
-            clients.map((client) => (
+            clients.map((client, index) => (
               <TableRow
                 key={client.id}
                 className="cursor-pointer"
@@ -53,6 +55,8 @@ export function ClientsTable({
               >
                 {visibleColumns.map((column) => (
                   <TableCell key={column.id}>
+                    {column.id === "sr. no." &&
+                      pagination.pageIndex * pagination.pageSize + index + 1}
                     {column.id === "name" &&
                       (client.clientName
                         ? client.clientName.toUpperCase()

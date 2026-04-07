@@ -6,32 +6,6 @@ import "./assets/globals.css";
 import { Providers } from "./components/Providers.tsx";
 import ErrorBoundary from "./components/ErrorBoundary.tsx";
 
-// Add a version number to your app
-const APP_VERSION = "1.0.0";
-
-// Store the version in localStorage to check for updates
-const storedVersion = localStorage.getItem("app_version");
-if (storedVersion !== APP_VERSION) {
-  // Clear any cached data
-  if (caches) {
-    // Delete all caches
-    caches.keys().then((cacheNames) => {
-      cacheNames.forEach((cacheName) => {
-        caches.delete(cacheName);
-      });
-    });
-  }
-
-  // Update the stored version
-  localStorage.setItem("app_version", APP_VERSION);
-
-  // Force reload the page to ensure we get fresh content
-  if (storedVersion) {
-    // Only reload if there was a previous version (not first visit)
-    window.location.reload();
-  }
-}
-
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <BrowserRouter>

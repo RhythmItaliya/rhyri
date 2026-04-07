@@ -31,6 +31,12 @@ export function ClientsPage() {
 
   const [columns, setColumns] = React.useState<ColumnDef[]>([
     {
+      id: "sr. no.",
+      header: <div className="w-[80px]">Sr. No.</div>,
+      isVisible: true,
+      canHide: false,
+    },
+    {
       id: "name",
       header: <div className="w-[150px]">Name</div>,
       isVisible: true,
@@ -139,6 +145,7 @@ export function ClientsPage() {
           isPending={isPending}
           clients={data?.userClients}
           columns={columns}
+          pagination={pagination}
         />
 
         <ClientsTablePagination

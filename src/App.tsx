@@ -8,6 +8,7 @@ import { ClientLayout } from "./pages/Client/ClientLayout";
 import { CompanyLayout } from "./pages/Company/CompanyLayout";
 import NotFoundPage from "./components/NotFoundPage";
 import { BankLayout } from "./pages/Bank/BankLayout";
+import AdminRoute from "./components/AdminRoute";
 
 // Pages
 const DashboardPage = React.lazy(() =>
@@ -36,6 +37,10 @@ const CompaniesPage = React.lazy(() =>
 
 const BanksPage = React.lazy(() =>
   import("./pages/Banks").then((module) => ({ default: module.BanksPage })),
+);
+
+const AdminPage = React.lazy(() =>
+  import("./pages/Admin").then((module) => ({ default: module.AdminPage })),
 );
 
 // Create Page
@@ -124,6 +129,12 @@ export default function App() {
         <Route path="/clients" element={<ClientsPage />} />
         <Route path="/companies" element={<CompaniesPage />} />
         <Route path="/banks" element={<BanksPage />} />
+      </Route>
+
+      <Route element={<AdminRoute />}>
+        <Route element={<RootLayout />}>
+          <Route path="/admin" element={<AdminPage />} />
+        </Route>
       </Route>
 
       <Route element={<InvoiceLayout />}>

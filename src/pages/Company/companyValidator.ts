@@ -7,7 +7,7 @@ export const companyValidator = z.object({
     .string()
     .min(1, { message: "Telephone number is required" }),
   companyAddress: z.string().min(1, { message: "Address is required" }),
-  companyTagline: z.string().min(1, { message: "Tagline is required" }),
+  companyTagline: z.string().optional(),
   companyState: z.string().min(1, { message: "State is required" }),
   companyCity: z.string().min(1, { message: "City is required" }),
   companyPostCode: z.string().min(1, { message: "Post code is required" }),

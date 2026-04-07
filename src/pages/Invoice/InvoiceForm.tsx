@@ -1,4 +1,5 @@
 import { useForm, useFieldArray, Control, useWatch } from "react-hook-form";
+import { toast } from "sonner";
 
 import {
   Form,
@@ -28,9 +29,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { CalendarIcon, TrashIcon } from "@radix-ui/react-icons";
 import { Icons } from "../../components/Icons";
-
+import { useAuth } from "../../contexts/AuthContext";
 import { cn, formatCurrency } from "../../lib/utils";
-import { addDays, format } from "date-fns";
+import { addDays, format, startOfDay } from "date-fns";
 import { Calendar } from "../../components/ui/Calendar";
 import { Bank, Client, Company, Invoice } from "../../types";
 import {
@@ -43,7 +44,7 @@ import {
   TableFooter,
 } from "../../components/ui/Table";
 import React, { useEffect, useState } from "react";
-import { Timestamp } from "@firebase/firestore";
+import { Timestamp } from "firebase/firestore";
 import ClientSelectButton from "../../components/popup/ClientPopup";
 import CompanySelectButton from "../../components/popup/CompanyPopup";
 import BankSelectButton from "../../components/popup/BankPopup";
@@ -75,12 +76,14 @@ interface InvoiceFormProps {
   onSubmit: (values: InvoiceInputs) => void;
   isPending: boolean;
   invoice?: Invoice;
+  defaultCustomNumber?: string;
 }
 
 export function InvoiceForm({
   onSubmit,
   isPending,
   invoice,
+  defaultCustomNumber,
 }: InvoiceFormProps) {
   const form = useForm<InvoiceInputs>({
     // @ts-expect-error - Known issue with react-hook-form v7 and zodResolver type inference
@@ -114,7 +117,8 @@ export function InvoiceForm({
       paymentTerms: invoice?.paymentTerms || "",
       // serviceDescription: invoice?.serviceDescription || "",
       itemList: invoice?.itemList || [],
-      invoiceCustomNumber: invoice?.invoiceCustomNumber || "",
+      invoiceCustomNumber:
+        invoice?.invoiceCustomNumber || defaultCustomNumber || "",
       dueDate: invoice?.invoiceDate ? invoice.invoiceDate.toDate() : new Date(),
       rateTotal: invoice?.rateTotal || 0,
       qtyTotal: invoice?.qtyTotal || 0,
@@ -143,11 +147,25 @@ export function InvoiceForm({
   });
 
   const location = useLocation();
+  const { restrictionDate } = useAuth();
   const isEditing = location.pathname.includes("edit");
   const [showFinalAmount, setShowFinalAmount] = useState(false);
   const [companySelected, setCompanySelected] = useState(false);
   const [clientSelected, setClientSelected] = useState(false);
   const [bankSelected, setBankSelected] = useState(false);
+  const [isInvoiceDateOpen, setIsInvoiceDateOpen] = useState(false);
+  const [isDueDateOpen, setIsDueDateOpen] = useState(false);
+
+  const watchedDateValue = form.watch("invoiceDate");
+  const currentInvoiceDate =
+    watchedDateValue instanceof Timestamp
+      ? watchedDateValue.toDate()
+      : watchedDateValue || new Date();
+
+  const restricted = !!(
+    restrictionDate &&
+    startOfDay(currentInvoiceDate) <= startOfDay(restrictionDate)
+  );
 
   useEffect(() => {
     if (isEditing) {
@@ -209,14 +227,14 @@ export function InvoiceForm({
         : new Date();
 
   useEffect(() => {
-    if (paymentTerms) {
+    if (watchedInvoiceDate && paymentTerms && paymentTerms !== "custom") {
       const days = parseInt(paymentTerms, 10);
       if (!isNaN(days)) {
         const dueDate = addDays(invoiceDate, days);
         setValue("dueDate", dueDate);
       }
     }
-  }, [paymentTerms, invoiceDate, setValue]);
+  }, [paymentTerms, watchedInvoiceDate, setValue]);
 
   const handleNumberChange =
     (fieldName: any) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -236,6 +254,16 @@ export function InvoiceForm({
     setValue("clientTelephone", client.clientTelephone || "");
     setValue("clientUid", client.id);
     setClientSelected(true);
+    form.clearErrors([
+      "clientName",
+      "clientEmail",
+      "clientAddress",
+      "clientCity",
+      "clientCountry",
+      "clientPostCode",
+      "clientGSTNumber",
+      "clientTelephone",
+    ]);
   };
 
   const handleCompanySelection = (company: Company) => {
@@ -251,6 +279,17 @@ export function InvoiceForm({
     setValue("companyGSTNumber", company.companyGSTNumber || "");
     setValue("companyPersonName", company.companyPersonName || "");
     setCompanySelected(true);
+    form.clearErrors([
+      "companyName",
+      "companyEmail",
+      "companyTelephone",
+      "companyAddress",
+      "companyState",
+      "companyCity",
+      "companyPersonName",
+      "companyCountry",
+      "companyTagline",
+    ]);
   };
 
   const handleBankSelection = (bank: Bank) => {
@@ -259,22 +298,36 @@ export function InvoiceForm({
     setValue("bankIfscCode", bank.bankIfscCode || "");
     setValue("bankBranchName", bank.bankBranchName || "");
     setBankSelected(true);
+    form.clearErrors([
+      "bankName",
+      "bankAccountNumber",
+      "bankIfscCode",
+      "bankBranchName",
+    ]);
   };
 
   const handleClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-
+    if (restricted) return;
     const isValid = await form.trigger();
 
     if (!clientSelected || !companySelected || !bankSelected) {
-      alert(
+      toast.error(
         "Please select a company, client, and bank details before submitting.",
       );
       return;
     }
 
     if (!isValid) {
-      console.log("Form validation failed");
+      const errorMessages = Object.values(form.formState.errors)
+        .map((error: any) => error.message)
+        .filter(Boolean);
+
+      if (errorMessages.length > 0) {
+        toast.error(`Validation Failed: ${errorMessages.join(", ")}`);
+      } else {
+        toast.error("Form validation failed. Please check all fields.");
+      }
       return;
     }
 
@@ -752,7 +805,10 @@ export function InvoiceForm({
             render={({ field }) => (
               <FormItem>
                 <p className="font-semibold text-accent">Invoice Date</p>
-                <Popover>
+                <Popover
+                  open={isInvoiceDateOpen}
+                  onOpenChange={setIsInvoiceDateOpen}
+                >
                   <PopoverTrigger asChild>
                     <FormControl>
                       <Button
@@ -770,10 +826,18 @@ export function InvoiceForm({
                     <Calendar
                       mode="single"
                       selected={field.value}
-                      onSelect={field.onChange}
-                      disabled={(date) =>
-                        date > new Date() || date < new Date("1900-01-01")
-                      }
+                      onSelect={(date) => {
+                        field.onChange(date);
+                        // If payment terms exist, re-calculate due date
+                        if (paymentTerms && paymentTerms !== "custom") {
+                          const days = parseInt(paymentTerms, 10);
+                          if (!isNaN(days) && date) {
+                            setValue("dueDate", addDays(date, days));
+                          }
+                        }
+                        setIsInvoiceDateOpen(false);
+                      }}
+                      disabled={(date) => date < new Date("1900-01-01")}
                       initialFocus
                     />
                   </PopoverContent>
@@ -805,6 +869,7 @@ export function InvoiceForm({
                     <SelectItem value="45">Net 45 days</SelectItem>
                     <SelectItem value="60">Net 60 days</SelectItem>
                     <SelectItem value="90">Net 90 days</SelectItem>
+                    <SelectItem value="custom">Custom</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -817,7 +882,7 @@ export function InvoiceForm({
             render={({ field }) => (
               <FormItem>
                 <p className="font-semibold text-accent">Due Date</p>
-                <Popover>
+                <Popover open={isDueDateOpen} onOpenChange={setIsDueDateOpen}>
                   <PopoverTrigger asChild>
                     <FormControl>
                       <Button
@@ -837,9 +902,36 @@ export function InvoiceForm({
                     <Calendar
                       mode="single"
                       selected={field.value}
-                      onSelect={field.onChange}
+                      onSelect={(date) => {
+                        field.onChange(date);
+                        if (date && invoiceDate) {
+                          // Manually setting Due Date makes terms "custom"
+                          // Unless it matches one of the standards
+                          const diffTime =
+                            date.getTime() - invoiceDate.getTime();
+                          const diffDays = Math.ceil(
+                            diffTime / (1000 * 60 * 60 * 24),
+                          );
+
+                          const standardTerms = [
+                            "1",
+                            "7",
+                            "14",
+                            "30",
+                            "45",
+                            "60",
+                            "90",
+                          ];
+                          if (standardTerms.includes(diffDays.toString())) {
+                            setValue("paymentTerms", diffDays.toString());
+                          } else {
+                            setValue("paymentTerms", "custom");
+                          }
+                        }
+                        setIsDueDateOpen(false);
+                      }}
                       disabled={(date) =>
-                        date > new Date() || date < new Date("1900-01-01")
+                        date < invoiceDate || date < new Date("1900-01-01")
                       }
                       initialFocus
                     />
@@ -962,6 +1054,7 @@ export function InvoiceForm({
         <Table className="border rounded-lg">
           <TableHeader>
             <TableRow>
+              <TableHead className="text-center w-[50px]">Sr.</TableHead>
               <TableHead className="text-center">Item</TableHead>
               <TableHead className="text-center">Challan No.</TableHead>
               <TableHead className="text-center">Quantity</TableHead>
@@ -973,7 +1066,7 @@ export function InvoiceForm({
             {itemListFieldArray.fields.length === 0 ? (
               <TableRow>
                 <TableCell
-                  colSpan={5}
+                  colSpan={6}
                   className="text-center text-gray-600 py-4"
                 >
                   No items available
@@ -982,17 +1075,22 @@ export function InvoiceForm({
             ) : (
               itemListFieldArray.fields.map((field, index) => {
                 const item = form.watch(`itemList.${index}.item`);
-                const challanNumber = form.watch(`itemList.${index}.challanNumber`);
+                const challanNumber = form.watch(
+                  `itemList.${index}.challanNumber`,
+                );
                 const quantity = form.watch(`itemList.${index}.quantity`) || 0;
                 const price = form.watch(`itemList.${index}.price`) || 0;
                 const amount = quantity * price;
                 return (
                   <TableRow key={field.id}>
-                    <TableCell className="text-center">
-                      {item || ""}
+                    <TableCell className="text-center font-medium">
+                      {index + 1}
                     </TableCell>
-                    <TableCell className="text-center">
-                      {challanNumber || "-"}
+                    <TableCell className="text-center uppercase font-bold">
+                      {(item || "").toUpperCase()}
+                    </TableCell>
+                    <TableCell className="text-center uppercase">
+                      {(challanNumber || "-").toUpperCase()}
                     </TableCell>
                     <TableCell className="text-gray-600 text-center">
                       {quantity}
@@ -1011,6 +1109,7 @@ export function InvoiceForm({
           {itemListFieldArray.fields.length > 0 && (
             <TableFooter>
               <TableRow>
+                <TableCell></TableCell>
                 <TableCell className="text-center font-bold">Total</TableCell>
                 <TableCell></TableCell>
                 <TableCell className="text-gray-600 text-center font-bold">
@@ -1326,17 +1425,21 @@ export function InvoiceForm({
             type="button"
             variant="accent"
             sizes="sm"
-            disabled={isPending}
+            disabled={isPending || restricted}
             onClick={handleClick}
+            className={cn(restricted && "opacity-50 cursor-not-allowed")}
           >
-            {" "}
             {isPending && (
               <Icons.spinner
                 className="h-4 w-4 animate-spin mr-2"
                 aria-hidden="true"
               />
             )}
-            Save Changes
+            {restricted
+              ? "Read-only mode"
+              : isEditing
+                ? "Update invoice"
+                : "Generate invoice"}
           </Button>
         </div>
       </form>

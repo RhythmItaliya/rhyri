@@ -1,9 +1,9 @@
 // Service Worker version - change this number when you deploy a new version
-const CACHE_VERSION = "v1.0.2"
+const CACHE_VERSION = "v1.1.2"
 const CACHE_NAME = `rhyri-cache-${CACHE_VERSION}`
 
 // Files to cache
-const STATIC_ASSETS = ["/", "/index.html", "/manifest.json"]
+const STATIC_ASSETS = ["/", "/manifest.json"]
 
 // Install event - cache important files
 self.addEventListener("install", (event) => {

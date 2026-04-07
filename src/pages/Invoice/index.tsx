@@ -238,36 +238,38 @@ export function InvoicePage() {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {transformedItems.map(({ item, quantity, price, challanNumber }) => {
-                      const itemDiscount =
-                        discountType === "percentage"
-                          ? new Decimal(price)
-                            .times(discountPercentage)
-                            .div(100)
-                          : discountAmount;
-                      const itemTax = gst.plus(sgst).div(2);
-                      const itemTotal = new Decimal(price)
-                        .times(quantity)
-                        .minus(itemDiscount)
-                        .plus(itemTax);
+                    {transformedItems.map(
+                      ({ item, quantity, price, challanNumber }) => {
+                        const itemDiscount =
+                          discountType === "percentage"
+                            ? new Decimal(price)
+                                .times(discountPercentage)
+                                .div(100)
+                            : discountAmount;
+                        const itemTax = gst.plus(sgst).div(2);
+                        const itemTotal = new Decimal(price)
+                          .times(quantity)
+                          .minus(itemDiscount)
+                          .plus(itemTax);
 
-                      return (
-                        <TableRow key={item}>
-                          <TableCell>{item}</TableCell>
-                          <TableCell>{challanNumber || "-"}</TableCell>
-                          <TableCell>{quantity}</TableCell>
-                          <TableCell>₹{price.toString()}</TableCell>
-                          <TableCell>
-                            ₹{itemDiscount.toString()}{" "}
-                            {discountType === "percentage"
-                              ? `(${discountPercentage.toString()}%)`
-                              : ""}
-                          </TableCell>
-                          <TableCell>₹{itemTax.toString()}</TableCell>
-                          <TableCell>₹{itemTotal.toString()}</TableCell>
-                        </TableRow>
-                      );
-                    })}
+                        return (
+                          <TableRow key={item}>
+                            <TableCell>{item}</TableCell>
+                            <TableCell>{challanNumber || "-"}</TableCell>
+                            <TableCell>{quantity}</TableCell>
+                            <TableCell>₹{price.toString()}</TableCell>
+                            <TableCell>
+                              ₹{itemDiscount.toString()}{" "}
+                              {discountType === "percentage"
+                                ? `(${discountPercentage.toString()}%)`
+                                : ""}
+                            </TableCell>
+                            <TableCell>₹{itemTax.toString()}</TableCell>
+                            <TableCell>₹{itemTotal.toString()}</TableCell>
+                          </TableRow>
+                        );
+                      },
+                    )}
                   </TableBody>
                   <TableFooter>
                     <TableRow>
@@ -292,7 +294,7 @@ export function InvoicePage() {
                     </TableRow>
                     <TableRow>
                       <TableCell colSpan={5} className="text-sm font-semibold">
-                        TOTAL BEFORE TAX:
+                        TOTAL BEFORE DISCOUNT:
                       </TableCell>
                       <TableCell className="text-left text-sm font-medium">
                         ₹{totalAfterDiscount.toString()}

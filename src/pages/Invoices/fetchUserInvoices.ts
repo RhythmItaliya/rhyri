@@ -6,16 +6,19 @@ import {
   query,
   startAfter,
   where,
+  Timestamp,
 } from "firebase/firestore";
 import { db } from "../../lib/firebase";
 import { FirebaseError } from "firebase/app";
-
+import { startOfDay } from "date-fns";
 import { Invoice } from "../../types";
 import { PaginationState } from "./schema";
 
 export const fetchUserInvoices = async (
   uid: string,
   pagination: PaginationState,
+  restrictionDate?: Date | null,
+  restrictionType?: "disable" | "hide",
 ) => {
   try {
     const {
@@ -39,6 +42,17 @@ export const fetchUserInvoices = async (
       orderBy("invoiceDate", "desc"),
       limit(increasedPageSize),
     );
+
+    if (restrictionType === "hide" && restrictionDate) {
+      baseQuery = query(
+        baseQuery,
+        where(
+          "invoiceDate",
+          ">",
+          Timestamp.fromDate(startOfDay(restrictionDate)),
+        ),
+      );
+    }
 
     if (statusFilterValue) {
       baseQuery = query(

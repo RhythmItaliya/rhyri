@@ -18,7 +18,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useTheme } from "../../contexts/ThemeContext";
 
 export function DashboardPage() {
-  const { currentUser } = useAuth();
+  const { currentUser, restrictionDate, restrictionType } = useAuth();
 
   const { theme } = useTheme();
   const isDarkTheme = theme === "dark";
@@ -30,8 +30,9 @@ export function DashboardPage() {
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["dashboard", currentUser.uid],
-    queryFn: () => fetchUserInvoicesStats(currentUser.uid),
+    queryKey: ["dashboard", currentUser.uid, restrictionDate, restrictionType],
+    queryFn: () =>
+      fetchUserInvoicesStats(currentUser.uid, restrictionDate, restrictionType),
   });
 
   if (error) {

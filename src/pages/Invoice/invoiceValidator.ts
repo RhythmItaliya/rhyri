@@ -7,7 +7,7 @@ export const invoiceValidator = z.object({
     .email({ message: "Invalid email address" })
     .optional(),
   companyTelephone: z.string().min(1, { message: "required" }),
-  companyTagline: z.string().min(1, { message: "required" }),
+  companyTagline: z.string().optional(),
   companyAddress: z.string().min(1, { message: "required" }),
   companyState: z.string().min(1, { message: "required" }),
   companyCity: z.string().min(1, { message: "required" }),

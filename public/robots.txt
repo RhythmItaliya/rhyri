@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /invoice/edit/
+Disallow: /client/edit/
+Disallow: /company/edit/
+Disallow: /bank/edit/
+
+Sitemap: https://www.rhyri.com/sitemap.xml

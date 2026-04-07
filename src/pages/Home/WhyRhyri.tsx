@@ -15,12 +15,10 @@ export function WhyRhyri() {
               className="h-10 w-10 text-foreground"
               aria-hidden="true"
             />
-            <h3 className="text-lg font-semibold">
-              Intuitive Invoice Creation
-            </h3>
+            <h3 className="text-lg font-semibold">Professional Grade Design</h3>
             <p className="text-muted">
-              Effortlessly generate professional invoices with a user-friendly
-              interface
+              Generate high quality, professional invoices tailored for your
+              business in seconds.
             </p>
           </CardContent>
         </Card>
@@ -30,10 +28,10 @@ export function WhyRhyri() {
               className="h-10 w-10 text-foreground"
               aria-hidden="true"
             />
-            <h3 className="text-lg font-semibold">Dashboard Overview</h3>
+            <h3 className="text-lg font-semibold">Financial Insights</h3>
             <p className="text-muted">
-              Monitor key metrics and gain insights into your financial
-              performance at a glance
+              Monitor your business growth and billing performance with a
+              powerful, streamlined dashboard.
             </p>
           </CardContent>
         </Card>
@@ -43,9 +41,10 @@ export function WhyRhyri() {
               className="h-10 w-10 text-foreground"
               aria-hidden="true"
             />
-            <h3 className="text-lg font-semibold">User-Friendly Interface</h3>
+            <h3 className="text-lg font-semibold">Sleek User Interface</h3>
             <p className="text-muted">
-              Save time and reduce complexity with an intuitive design
+              Focus on what matters—your billing—with a distraction-free,
+              professional workspace.
             </p>
           </CardContent>
         </Card>
@@ -56,11 +55,11 @@ export function WhyRhyri() {
               aria-hidden="true"
             />
             <h3 className="text-lg font-semibold">
-              Dynamic Invoice Management
+              Enterprise-Ready Management
             </h3>
             <p className="text-muted">
-              Effortlessly manage invoices with a dynamic table that tailors to
-              your need
+              Efficiently handle your entire invoice history with
+              industrial-grade filtering and data scaling.
             </p>
           </CardContent>
         </Card>

@@ -10,11 +10,6 @@ const oauthProviders = [
     strategy: "oauth_google",
     icon: "google",
   },
-  // {
-  //   name: "Github",
-  //   strategy: "oauth_github",
-  //   icon: "github",
-  // },
 ] satisfies {
   name: string;
   strategy: OAuthStrategy;

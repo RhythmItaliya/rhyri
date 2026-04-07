@@ -18,29 +18,31 @@ export async function pdfGenerate(
       <link rel="preconnect" href="https://fonts.googleapis.com">
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
       <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
-      <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
       <style>
         @page {
           size: A4;
-          margin: 14px;
+          margin: 7mm;
         }
         body {
-          font-family: "Inter", sans-serif;
           margin: 0;
           padding: 0;
-          width: 100%;
-          height: 100%;
+          font-family: 'Inter', sans-serif;
+          -webkit-print-color-adjust: exact;
+        }
+        * {
           box-sizing: border-box;
         }
-        .invoice-content {
-          width: 100%;
-          box-sizing: border-box;
-          border: 1px solid black;
+        .invoice-wrapper {
+          width: 196mm;
+          height: 283mm;
+          display: flex;
+          flex-direction: column;
+          background: white;
         }
       </style>
     </head>
     <body>
-      <div class="invoice-content">
+      <div class="invoice-wrapper">
         ${data}
       </div>
     </body>
@@ -68,7 +70,6 @@ export async function pdfGenerate(
 
     return url;
   } catch (error) {
-    console.error("Error during PDF generation:", error);
     throw new Error("Failed to generate PDF. Please try again later.");
   }
 }

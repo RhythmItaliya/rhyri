@@ -1,13 +1,14 @@
 import * as React from "react";
 import {
-  GithubAuthProvider,
   GoogleAuthProvider,
   User,
   UserCredential,
   signInWithPopup,
   signOut,
 } from "firebase/auth";
-import { auth } from "../lib/firebase";
+import { auth, db } from "../lib/firebase";
+import { doc, setDoc, onSnapshot, Timestamp } from "firebase/firestore";
+
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Icons } from "../components/Icons";
 import { useLocation } from "react-router-dom";
@@ -16,7 +17,7 @@ interface AuthProviderProps {
   children: React.ReactNode;
 }
 
-export type OAuthStrategy = "oauth_google" | "oauth_github";
+export type OAuthStrategy = "oauth_google";
 
 const authRequiredRoutes = [
   "/dashboard",
@@ -30,8 +31,13 @@ const authRequiredRoutes = [
   "/banks",
 ];
 
+export type RestrictionType = "disable" | "hide";
+
 interface AuthContextProps {
   currentUser: User | null;
+  restrictionDate: Date | null;
+  restrictionType: RestrictionType;
+  isAdmin: boolean;
   signOutCurrentUser: () => Promise<void>;
   signIn: (strategy: OAuthStrategy) => Promise<UserCredential | undefined>;
 }
@@ -61,14 +67,37 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     },
   });
 
+  const [restrictionDate, setRestrictionDate] = React.useState<Date | null>(
+    null,
+  );
+  const [restrictionType, setRestrictionType] =
+    React.useState<RestrictionType>("disable");
+  const isAdmin = currentUser?.email === import.meta.env.VITE_ADMIN_EMAIL;
+
+  const syncUserProfile = async (user: User) => {
+    try {
+      const userRef = doc(db, "users", user.uid);
+      await setDoc(
+        userRef,
+        {
+          email: user.email,
+          displayName: user.displayName,
+          photoURL: user.photoURL,
+          uid: user.uid,
+          lastLogin: Timestamp.now(),
+        },
+        { merge: true },
+      );
+    } catch (error) {
+      console.error("Error syncing user profile:", error);
+    }
+  };
+
   const signInMutationFn = useMutation({
     mutationFn: async (strategy: OAuthStrategy) => {
       switch (strategy) {
         case "oauth_google":
           return signInWithPopup(auth, new GoogleAuthProvider());
-
-        case "oauth_github":
-          return signInWithPopup(auth, new GithubAuthProvider());
 
         default:
           return;
@@ -90,12 +119,43 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   React.useEffect(() => {
+    let unsubscribeSnapshot: (() => void) | undefined;
+
     const unSubscribe = auth.onAuthStateChanged((user) => {
       queryClient.setQueryData(["user"], user);
+      if (user) {
+        syncUserProfile(user);
+
+        const userRef = doc(db, "users", user.uid);
+        unsubscribeSnapshot = onSnapshot(userRef, (docSnap) => {
+          if (docSnap.exists()) {
+            const data = docSnap.data();
+            if (data.restrictionDate) {
+              setRestrictionDate(
+                data.restrictionDate instanceof Timestamp
+                  ? data.restrictionDate.toDate()
+                  : new Date(data.restrictionDate),
+              );
+            } else {
+              setRestrictionDate(null);
+            }
+
+            setRestrictionType(
+              data.restrictionType === "hide" ? "hide" : "disable",
+            );
+          }
+        });
+      } else {
+        setRestrictionDate(null);
+        if (unsubscribeSnapshot) unsubscribeSnapshot();
+      }
       setIsLoading(false);
     });
 
-    return unSubscribe;
+    return () => {
+      unSubscribe();
+      if (unsubscribeSnapshot) unsubscribeSnapshot();
+    };
   }, [queryClient]);
 
   const isAuthRequiredRoute = authRequiredRoutes.some((route) =>
@@ -106,6 +166,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     <AuthContext.Provider
       value={{
         currentUser,
+        restrictionDate,
+        restrictionType,
+        isAdmin,
         signOutCurrentUser,
         signIn,
       }}

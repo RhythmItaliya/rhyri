@@ -1,4 +1,5 @@
 import { InvoiceForm } from "../InvoiceForm";
+import { toast } from "sonner";
 import { Skeleton } from "../../../components/Skeleton";
 
 import { Navigate, useNavigate, useParams } from "react-router-dom";
@@ -9,6 +10,8 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useAuth } from "../../../contexts/AuthContext";
 import { catchError } from "../../../lib/utils";
 import { InvoiceInputs } from "../invoiceValidator";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "../../../lib/firebase";
 import { updateInvoice } from "./updateInvoice";
 
 export function EditInvoicePage() {
@@ -29,6 +32,23 @@ export function EditInvoicePage() {
 
   const { mutate: editInvoice, isPending } = useMutation({
     mutationFn: async (values: InvoiceInputs) => {
+      // Check for duplicate invoiceNumber
+      const invoicesRef = collection(db, "invoices");
+      const q = query(
+        invoicesRef,
+        where("uid", "==", currentUser.uid),
+        where("invoiceCustomNumber", "==", values.invoiceCustomNumber),
+      );
+      const querySnapshot = await getDocs(q);
+
+      const isDuplicate = querySnapshot.docs.some((doc) => doc.id !== id);
+
+      if (isDuplicate) {
+        throw new Error(
+          `Invoice number "${values.invoiceCustomNumber}" already exists in another invoice.`,
+        );
+      }
+
       const amount = values.itemList.reduce(
         (total, item) => total + item.price * item.quantity,
         0,
@@ -36,9 +56,11 @@ export function EditInvoicePage() {
       await updateInvoice({ ...values, amount }, id);
     },
     onSuccess() {
+      toast.success("Invoice updated successfully");
       navigate(`/invoice/${id}`);
     },
-    onError(error) {
+    onError(error: any) {
+      toast.error(error.message);
       catchError(error);
     },
   });

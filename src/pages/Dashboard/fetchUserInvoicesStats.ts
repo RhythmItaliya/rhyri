@@ -1,13 +1,39 @@
-import { collection, getDocs, query, where } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+  Timestamp,
+  orderBy,
+} from "firebase/firestore";
+import { startOfDay } from "date-fns";
 import { db } from "../../lib/firebase";
+
 import { Invoice } from "../../types";
 import { FirebaseError } from "firebase/app";
 
-export const fetchUserInvoicesStats = async (uid: string) => {
+export const fetchUserInvoicesStats = async (
+  uid: string,
+  restrictionDate?: Date | null,
+  restrictionType?: "disable" | "hide",
+) => {
   try {
     const invoicesRef = collection(db, "invoices");
 
-    const userInvoicesQuery = query(invoicesRef, where("uid", "==", uid));
+    let userInvoicesQuery = query(invoicesRef, where("uid", "==", uid));
+
+    if (restrictionType === "hide" && restrictionDate) {
+      userInvoicesQuery = query(
+        userInvoicesQuery,
+        where(
+          "invoiceDate",
+          ">",
+          Timestamp.fromDate(startOfDay(restrictionDate)),
+        ),
+        orderBy("invoiceDate", "desc"),
+      );
+    }
+
     const querySnapshot = await getDocs(userInvoicesQuery);
 
     const totalInvoiceCount = querySnapshot.size;

@@ -6,6 +6,7 @@ import { Icons } from "./Icons";
 import { cn } from "../lib/utils";
 import { Skeleton } from "./Skeleton";
 import { useTheme } from "../contexts/ThemeContext";
+import { useAuth } from "../contexts/AuthContext";
 
 const UserMenu = React.lazy(() =>
   import("./UserMenu").then((module) => ({ default: module.UserMenu })),
@@ -24,6 +25,7 @@ export function MainNav() {
   const navigate = useNavigate();
   const { theme } = useTheme();
   const isDarkTheme = theme === "dark";
+  const { isAdmin } = useAuth();
 
   const handleLogoClick = () => {
     navigate("/dashboard");
@@ -82,6 +84,21 @@ export function MainNav() {
                 {item.title}
               </NavLink>
             ))}
+            {isAdmin && (
+              <NavLink
+                to="/admin"
+                className={({ isActive }) =>
+                  cn(
+                    "font-medium text-muted text-sm sm:text-base hover:text-foreground",
+                    {
+                      "text-foreground": isActive,
+                    },
+                  )
+                }
+              >
+                Admin
+              </NavLink>
+            )}
           </div>
         </div>
 
@@ -146,6 +163,22 @@ export function MainNav() {
               {item.title}
             </NavLink>
           ))}
+          {isAdmin && (
+            <NavLink
+              to="/admin"
+              onClick={() => handleNavLinkClick("/admin")}
+              className={({ isActive }) =>
+                cn(
+                  "font-medium text-muted text-sm sm:text-base hover:text-foreground py-2 px-2",
+                  {
+                    "text-foreground": isActive,
+                  },
+                )
+              }
+            >
+              Admin
+            </NavLink>
+          )}
         </div>
       </div>
 

@@ -15,45 +15,142 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
   } = data;
 
   return (
-    <div className="invoice-content border border-black">
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        height: "283mm",
+        width: "196mm",
+        border: "1px solid black",
+        background: "white",
+        boxSizing: "border-box",
+        overflow: "hidden",
+      }}
+    >
       {/* Title */}
-      <h1 className="text-4xl p-2 font-extrabold uppercase text-blue-600 border-b border-black text-center">
-        {company.companyName}
-      </h1>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          width: "100%",
+        }}
+      >
+        <h1
+          style={{
+            fontSize: "32px",
+            padding: "8px 0",
+            fontWeight: "900",
+            textTransform: "uppercase",
+            color: "#2563eb",
+            textAlign: "center",
+            margin: 0,
+            width: "100%",
+            borderBottom: "1px solid black",
+          }}
+        >
+          {company.companyName}
+        </h1>
+      </div>
 
       {/* Sub Title */}
-      <h2 className="text-1xl p-2 font-bold uppercase text-gray-800 border-b border-black text-center">
+      <h2
+        style={{
+          fontSize: "14px",
+          padding: "8px",
+          fontWeight: "700",
+          textTransform: "uppercase",
+          color: "#1f2937",
+          borderBottom: "1px solid black",
+          textAlign: "center",
+          margin: 0,
+        }}
+      >
         {company.companyTagline}
       </h2>
 
-      <div className="flex">
+      <div style={{ display: "flex" }}>
         {/* Address Section */}
-        <div className="address w-1/2 flex text-start pl-2 border-r border-black p-1">
-          <p className="text-xs font-semibold uppercase leading-tight">
-            <span className="block mb-1">{company.companyAddress}</span>
-            <span className="block mb-1">
+        <div
+          style={{
+            width: "50%",
+            display: "flex",
+            textAlign: "left",
+            paddingLeft: "8px",
+            borderRight: "1px solid black",
+            padding: "4px",
+          }}
+        >
+          <p
+            style={{
+              fontSize: "12px",
+              fontWeight: "600",
+              textTransform: "uppercase",
+              lineHeight: "1.25",
+              margin: 0,
+            }}
+          >
+            <span style={{ display: "block", marginBottom: "4px" }}>
+              {company.companyAddress}
+            </span>
+            <span style={{ display: "block", marginBottom: "4px" }}>
               {company.companyCity}, {company.companyPostCode}
             </span>
-            <span className="block">
+            <span style={{ display: "block" }}>
               {company.companyState}, {company.companyCountry}
             </span>
           </p>
         </div>
 
         {/* Contact Info Section */}
-        <div className="contact-info w-1/2 flex justify-end text-end pr-2 p-1 text-xs uppercase">
-          <div className="flex flex-col w-full">
-            <div className="flex justify-between mb-1">
-              <span className="text-gray-600">{fieldNames.contactName}</span>
-              <span className="font-semibold">{company.companyPersonName}</span>
+        <div
+          style={{
+            width: "50%",
+            display: "flex",
+            justifyContent: "flex-end",
+            textAlign: "right",
+            paddingRight: "8px",
+            padding: "4px",
+            fontSize: "12px",
+            textTransform: "uppercase",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              width: "100%",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginBottom: "4px",
+              }}
+            >
+              <span style={{ color: "#4b5563" }}>{fieldNames.contactName}</span>
+              <span style={{ fontWeight: "600" }}>
+                {company.companyPersonName}
+              </span>
             </div>
-            <div className="flex justify-between mb-1">
-              <span className="text-gray-600">{fieldNames.contactTel}</span>
-              <span className="font-semibold">{company.companyTelephone}</span>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginBottom: "4px",
+              }}
+            >
+              <span style={{ color: "#4b5563" }}>{fieldNames.contactTel}</span>
+              <span style={{ fontWeight: "600" }}>
+                {company.companyTelephone}
+              </span>
             </div>
-            <div className="flex justify-between">
-              <span className="text-gray-600">{fieldNames.contactEmail}</span>
-              <span className="font-semibold lowercase">
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <span style={{ color: "#4b5563" }}>
+                {fieldNames.contactEmail}
+              </span>
+              <span style={{ fontWeight: "600", textTransform: "lowercase" }}>
                 {company.companyEmail}
               </span>
             </div>
@@ -62,38 +159,92 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
       </div>
 
       {/* GST Section */}
-      <div className="border-t border-black">
-        <div className="flex border-b border-black">
-          <div className="flex-1 border-r border-black p-2">
-            <p className="text-sm text-gray-600 uppercase flex justify-between px-2">
-              <span className="text-left">{fieldNames.gstin}</span>
-              <span className="font-semibold text-black text-right">
+      <div style={{ borderTop: "1px solid black" }}>
+        <div style={{ display: "flex", borderBottom: "1px solid black" }}>
+          <div
+            style={{
+              flex: 1,
+              borderRight: "1px solid black",
+              padding: "8px",
+            }}
+          >
+            <p
+              style={{
+                fontSize: "14px",
+                color: "#4b5563",
+                textTransform: "uppercase",
+                display: "flex",
+                justifyContent: "space-between",
+                paddingLeft: "8px",
+                paddingRight: "8px",
+                margin: 0,
+              }}
+            >
+              <span style={{ textAlign: "left" }}>{fieldNames.gstin}</span>
+              <span
+                style={{
+                  fontWeight: "600",
+                  color: "black",
+                  textAlign: "right",
+                }}
+              >
                 {company.companyGSTNumber}
               </span>
             </p>
           </div>
-          <div className="flex-1 border-r border-black p-2">
-            <p className="text-sm font-bold text-blue-600 uppercase text-center">
+          <div
+            style={{
+              flex: 1,
+              borderRight: "1px solid black",
+              padding: "8px",
+            }}
+          >
+            <p
+              style={{
+                fontSize: "14px",
+                fontWeight: "700",
+                color: "#2563eb",
+                textTransform: "uppercase",
+                textAlign: "center",
+                margin: 0,
+              }}
+            >
               {fieldNames.invoiceTax}
             </p>
           </div>
-          <div className="flex-1 p-2">
-            <p className="text-sm font-semibold text-black uppercase text-right">
+          <div style={{ flex: 1, padding: "8px" }}>
+            <p
+              style={{
+                fontSize: "14px",
+                fontWeight: "600",
+                color: "black",
+                textTransform: "uppercase",
+                textAlign: "right",
+                margin: 0,
+              }}
+            >
               {fieldNames.originalForReceipt}
             </p>
           </div>
         </div>
       </div>
 
-      <div className="flex">
+      <div style={{ display: "flex" }}>
         {/* Customer Details Section */}
-        <div className="w-1/2 border-b border-black">
-          <table className="w-full text-xs">
+        <div style={{ width: "50%", borderBottom: "1px solid black" }}>
+          <table style={{ width: "100%", fontSize: "12px" }}>
             <thead>
               <tr>
                 <th
                   colSpan={2}
-                  className="text-md text-center border-b text-gray-600 py-2 border-black"
+                  style={{
+                    fontSize: "14px",
+                    textAlign: "center",
+                    borderBottom: "1px solid black",
+                    color: "#4b5563",
+                    paddingTop: "8px",
+                    paddingBottom: "8px",
+                  }}
                 >
                   {fieldNames.customerDetails}
                 </th>
@@ -101,34 +252,94 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
             </thead>
             <tbody>
               <tr>
-                <td className="text-gray-600 p-1 text-left pl-2 uppercase">
+                <td
+                  style={{
+                    color: "#4b5563",
+                    padding: "4px",
+                    textAlign: "left",
+                    paddingLeft: "8px",
+                    textTransform: "uppercase",
+                  }}
+                >
                   {fieldNames.customerName}
                 </td>
-                <td className="uppercase font-semibold text-right pr-2">
+                <td
+                  style={{
+                    textTransform: "uppercase",
+                    fontWeight: "600",
+                    textAlign: "right",
+                    paddingRight: "8px",
+                  }}
+                >
                   {customer.clientName}
                 </td>
               </tr>
               <tr>
-                <td className="text-gray-600 pr-4 p-1 text-left pl-2 uppercase">
+                <td
+                  style={{
+                    color: "#4b5563",
+                    paddingLeft: "8px",
+                    padding: "4px",
+                    textAlign: "left",
+                    textTransform: "uppercase",
+                  }}
+                >
                   {fieldNames.gstin}
                 </td>
-                <td className="uppercase font-semibold text-right pr-2">
+                <td
+                  style={{
+                    textTransform: "uppercase",
+                    fontWeight: "600",
+                    textAlign: "right",
+                    paddingRight: "8px",
+                  }}
+                >
                   {customer.clientGSTNumber}
                 </td>
               </tr>
               <tr>
-                <td className="text-gray-600 pr-4 p-1 text-left pl-2 uppercase">
+                <td
+                  style={{
+                    color: "#4b5563",
+                    paddingLeft: "8px",
+                    padding: "4px",
+                    textAlign: "left",
+                    textTransform: "uppercase",
+                  }}
+                >
                   {fieldNames.customerTel}
                 </td>
-                <td className="uppercase font-semibold text-right pr-2">
+                <td
+                  style={{
+                    textTransform: "uppercase",
+                    fontWeight: "600",
+                    textAlign: "right",
+                    paddingRight: "8px",
+                  }}
+                >
                   {customer.clientTelephone}
                 </td>
               </tr>
               <tr>
-                <td className="text-gray-600 pr-4 p-1 text-left pl-2 uppercase">
+                <td
+                  style={{
+                    color: "#4b5563",
+                    paddingLeft: "8px",
+                    padding: "4px",
+                    textAlign: "left",
+                    textTransform: "uppercase",
+                  }}
+                >
                   {fieldNames.customerEmail}
                 </td>
-                <td className="lowercase font-semibold text-right pr-2">
+                <td
+                  style={{
+                    textTransform: "lowercase",
+                    fontWeight: "600",
+                    textAlign: "right",
+                    paddingRight: "8px",
+                  }}
+                >
                   {customer.clientEmail}
                 </td>
               </tr>
@@ -137,13 +348,26 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
         </div>
 
         {/* Invoice Details Section */}
-        <div className="w-1/2 border-b border-l border-black">
-          <table className="w-full text-xs">
+        <div
+          style={{
+            width: "50%",
+            borderBottom: "1px solid black",
+            borderLeft: "1px solid black",
+          }}
+        >
+          <table style={{ width: "100%", fontSize: "12px" }}>
             <thead>
               <tr>
                 <th
                   colSpan={2}
-                  className="text-md text-center border-b text-gray-600 py-2 border-black"
+                  style={{
+                    fontSize: "14px",
+                    textAlign: "center",
+                    borderBottom: "1px solid black",
+                    color: "#4b5563",
+                    paddingTop: "8px",
+                    paddingBottom: "8px",
+                  }}
                 >
                   {fieldNames.invoiceDetails}
                 </th>
@@ -151,26 +375,71 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
             </thead>
             <tbody>
               <tr>
-                <td className="text-gray-600 p-1 uppercase text-left pl-2">
+                <td
+                  style={{
+                    color: "#4b5563",
+                    padding: "4px",
+                    textTransform: "uppercase",
+                    textAlign: "left",
+                    paddingLeft: "8px",
+                  }}
+                >
                   {fieldNames.invoiceNo}
                 </td>
-                <td className="uppercase font-semibold text-right pr-2">
+                <td
+                  style={{
+                    textTransform: "uppercase",
+                    fontWeight: "600",
+                    textAlign: "right",
+                    paddingRight: "8px",
+                  }}
+                >
                   {invoice.invoiceCustomNumber}
                 </td>
               </tr>
               <tr>
-                <td className="text-gray-600 p-1 uppercase text-left pl-2">
+                <td
+                  style={{
+                    color: "#4b5563",
+                    padding: "4px",
+                    textTransform: "uppercase",
+                    textAlign: "left",
+                    paddingLeft: "8px",
+                  }}
+                >
                   {fieldNames.invoiceCreateDate}
                 </td>
-                <td className="uppercase font-semibold text-right pr-2">
+                <td
+                  style={{
+                    textTransform: "uppercase",
+                    fontWeight: "600",
+                    textAlign: "right",
+                    paddingRight: "8px",
+                  }}
+                >
                   {invoice.creationDate}
                 </td>
               </tr>
               <tr>
-                <td className="text-gray-600 p-1 uppercase text-left pl-2">
+                <td
+                  style={{
+                    color: "#4b5563",
+                    padding: "4px",
+                    textTransform: "uppercase",
+                    textAlign: "left",
+                    paddingLeft: "8px",
+                  }}
+                >
                   {fieldNames.dueDate}
                 </td>
-                <td className="uppercase font-semibold text-right pr-2">
+                <td
+                  style={{
+                    textTransform: "uppercase",
+                    fontWeight: "600",
+                    textAlign: "right",
+                    paddingRight: "8px",
+                  }}
+                >
                   {invoice.dueDate}
                 </td>
               </tr>
@@ -180,11 +449,20 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
       </div>
 
       {/* Product Details Section */}
-      <div className="text-center text-xs w-full">
-        <table className="w-full border-collapse">
+      <div style={{ textAlign: "center", fontSize: "12px", width: "100%" }}>
+        <table style={{ width: "100%", borderCollapse: "collapse" }}>
           <thead>
             <tr>
-              <th className="text-md text-center border-b text-gray-600 border-black py-2">
+              <th
+                style={{
+                  fontSize: "14px",
+                  textAlign: "center",
+                  borderBottom: "1px solid black",
+                  color: "#4b5563",
+                  paddingTop: "8px",
+                  paddingBottom: "8px",
+                }}
+              >
                 {fieldNames.productDetails}
               </th>
             </tr>
@@ -193,221 +471,274 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
       </div>
 
       {/* Data Section */}
-      <div className="border-b border-black">
-        <div
-          style={{ position: "relative", overflow: "auto", minHeight: "100px" }}
+      <div
+        style={{
+          flexGrow: 1,
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <table
+          style={{
+            width: "100%",
+            height: "100%",
+            fontSize:
+              items.length > 20 ? "9px" : items.length > 13 ? "10px" : "12px",
+            color: "black",
+            borderCollapse: "collapse",
+            tableLayout: "fixed",
+          }}
         >
-          <table
-            style={{
-              width: "100%",
-              fontSize: "12px",
-              color: "black",
-              position: "relative",
-            }}
-          >
-            <thead>
-              <tr className="border-b border-black">
-                <th style={{ textAlign: "center", padding: 0, width: "50px" }}>
-                  {fieldNames.srNo}
-                </th>
-                <th
-                  style={{
-                    textAlign: "left",
-                    paddingTop: "8px",
-                    paddingBottom: "8px",
-                    paddingLeft: "4px",
-                    position: "relative",
-                    width: "400px",
-                    borderLeft: "1px solid black",
-                  }}
-                >
-                  {fieldNames.productName}
-                </th>
-                <th
-                  style={{
-                    textAlign: "center",
-                    paddingTop: "8px",
-                    paddingBottom: "8px",
-                    padding: 0,
-                    position: "relative",
-                    width: "100px",
-                    borderLeft: "1px solid black",
-                  }}
-                >
-                  {fieldNames.challanNo}
-                </th>
-                <th
-                  style={{
-                    textAlign: "center",
-                    paddingTop: "8px",
-                    paddingBottom: "8px",
-                    padding: 0,
-                    position: "relative",
-                    width: "120px",
-                    borderLeft: "1px solid black",
-                  }}
-                >
-                  {fieldNames.qty}
-                </th>
-                <th
-                  style={{
-                    textAlign: "center",
-                    paddingTop: "8px",
-                    paddingBottom: "8px",
-                    padding: 0,
-                    position: "relative",
-                    width: "120px",
-                    borderLeft: "1px solid black",
-                  }}
-                >
-                  {fieldNames.rate}
-                </th>
-                <th
-                  style={{
-                    textAlign: "center",
-                    paddingTop: "8px",
-                    paddingBottom: "8px",
-                    padding: 0,
-                    position: "relative",
-                    width: "120px",
-                    borderLeft: "1px solid black",
-                  }}
-                >
-                  {fieldNames.total}
-                </th>
-              </tr>
-            </thead>
+          <thead>
+            <tr
+              style={{
+                borderBottom: "1px solid black",
+                backgroundColor: "#f9fafb",
+              }}
+            >
+              <th
+                style={{ textAlign: "center", padding: "8px 0", width: "5%" }}
+              >
+                {fieldNames.srNo}
+              </th>
+              <th
+                style={{
+                  textAlign: "left",
+                  padding: "8px 4px",
+                  width: "45%",
+                  borderLeft: "1px solid black",
+                }}
+              >
+                {fieldNames.productName}
+              </th>
+              <th
+                style={{
+                  textAlign: "center",
+                  padding: "8px 0",
+                  width: "10%",
+                  borderLeft: "1px solid black",
+                }}
+              >
+                {fieldNames.challanNo}
+              </th>
+              <th
+                style={{
+                  textAlign: "center",
+                  padding: "8px 0",
+                  width: "13%",
+                  borderLeft: "1px solid black",
+                }}
+              >
+                {fieldNames.qty}
+              </th>
+              <th
+                style={{
+                  textAlign: "center",
+                  padding: "8px 0",
+                  width: "13%",
+                  borderLeft: "1px solid black",
+                }}
+              >
+                {fieldNames.rate}
+              </th>
+              <th
+                style={{
+                  textAlign: "center",
+                  padding: "8px 0",
+                  width: "14%",
+                  borderLeft: "1px solid black",
+                }}
+              >
+                {fieldNames.total}
+              </th>
+            </tr>
+          </thead>
 
-            <tbody>
-              {items.map((item, index) => (
-                <tr key={index}>
-                  <td
-                    style={{
-                      padding: "4px",
-                      textAlign: "center",
-                      fontSize: "12px",
-                    }}
-                  >
-                    {index + 1}
-                  </td>
-                  <td
-                    style={{
-                      padding: "4px",
-                      textAlign: "left",
-                      fontSize: "12px",
-                      borderLeft: "1px solid black",
-                    }}
-                  >
-                    {item.name || ""}
-                  </td>
-                  <td
-                    style={{
-                      padding: "4px",
-                      textAlign: "center",
-                      fontSize: "12px",
-                      borderLeft: "1px solid black",
-                    }}
-                  >
-                    {item.challanNumber || "-"}
-                  </td>
-                  <td
-                    style={{
-                      padding: "4px",
-                      textAlign: "center",
-                      fontSize: "12px",
-                      borderLeft: "1px solid black",
-                    }}
-                  >
-                    {item.qty}
-                  </td>
-                  <td
-                    style={{
-                      padding: "4px",
-                      textAlign: "center",
-                      fontSize: "14px",
-                      borderLeft: "1px solid black",
-                    }}
-                  >
-                    {formatCurrency(item.rate)}
-                  </td>
-                  <td
-                    style={{
-                      padding: "4px",
-                      textAlign: "center",
-                      fontSize: "14px",
-                      borderLeft: "1px solid black",
-                    }}
-                  >
-                    {formatCurrency(item.total)}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+          <tbody>
+            {items.map((item, index) => (
+              <tr key={index} style={{ height: "1px" }}>
+                <td
+                  style={{
+                    padding:
+                      items.length > 20
+                        ? "2px 4px"
+                        : items.length > 13
+                          ? "3px 4px"
+                          : "4px",
+                    textAlign: "center",
+                    fontSize:
+                      items.length > 20
+                        ? "9px"
+                        : items.length > 13
+                          ? "10px"
+                          : "12px",
+                    verticalAlign: "top",
+                  }}
+                >
+                  {index + 1}
+                </td>
+                <td
+                  style={{
+                    padding:
+                      items.length > 20
+                        ? "2px 4px"
+                        : items.length > 13
+                          ? "3px 4px"
+                          : "4px",
+                    textAlign: "left",
+                    fontSize:
+                      items.length > 20
+                        ? "9px"
+                        : items.length > 13
+                          ? "10px"
+                          : "12px",
+                    borderLeft: "1px solid black",
+                    verticalAlign: "top",
+                  }}
+                >
+                  {(item.name || "").toUpperCase()}
+                </td>
+                <td
+                  style={{
+                    padding:
+                      items.length > 20
+                        ? "2px 4px"
+                        : items.length > 13
+                          ? "3px 4px"
+                          : "4px",
+                    textAlign: "center",
+                    fontSize:
+                      items.length > 20
+                        ? "9px"
+                        : items.length > 13
+                          ? "10px"
+                          : "12px",
+                    borderLeft: "1px solid black",
+                    verticalAlign: "top",
+                  }}
+                >
+                  {(item.challanNumber || "-").toUpperCase()}
+                </td>
+                <td
+                  style={{
+                    padding:
+                      items.length > 20
+                        ? "2px 4px"
+                        : items.length > 13
+                          ? "3px 4px"
+                          : "4px",
+                    textAlign: "center",
+                    fontSize:
+                      items.length > 20
+                        ? "9px"
+                        : items.length > 13
+                          ? "10px"
+                          : "12px",
+                    borderLeft: "1px solid black",
+                    verticalAlign: "top",
+                  }}
+                >
+                  {item.qty}
+                </td>
+                <td
+                  style={{
+                    padding:
+                      items.length > 20
+                        ? "2px 4px"
+                        : items.length > 13
+                          ? "3px 4px"
+                          : "4px",
+                    textAlign: "center",
+                    fontSize:
+                      items.length > 20
+                        ? "9px"
+                        : items.length > 13
+                          ? "10px"
+                          : "12px",
+                    borderLeft: "1px solid black",
+                    verticalAlign: "top",
+                  }}
+                >
+                  {formatCurrency(item.rate)}
+                </td>
+                <td
+                  style={{
+                    padding:
+                      items.length > 20
+                        ? "2px 4px"
+                        : items.length > 13
+                          ? "3px 4px"
+                          : "4px",
+                    textAlign: "center",
+                    fontSize:
+                      items.length > 20
+                        ? "9px"
+                        : items.length > 13
+                          ? "10px"
+                          : "12px",
+                    borderLeft: "1px solid black",
+                    verticalAlign: "top",
+                  }}
+                >
+                  {formatCurrency(item.total)}
+                </td>
+              </tr>
+            ))}
+            {/* Filler Row for Full-Page Vertical Lines */}
+            <tr>
+              <td style={{ height: "100%" }}></td>
+              <td style={{ borderLeft: "1px solid black" }}></td>
+              <td style={{ borderLeft: "1px solid black" }}></td>
+              <td style={{ borderLeft: "1px solid black" }}></td>
+              <td style={{ borderLeft: "1px solid black" }}></td>
+              <td style={{ borderLeft: "1px solid black" }}></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
       {/* Total Section */}
-      <div className="border-b border-black">
+      <div
+        style={{
+          borderBottom: "1px solid black",
+          borderTop: "1px solid black",
+        }}
+      >
         <table
           style={{
             width: "100%",
             fontSize: "12px",
             color: "black",
-            position: "relative",
+            borderCollapse: "collapse",
+            tableLayout: "fixed",
           }}
         >
-          <thead>
-            <tr>
-              <th style={{ padding: 0, width: "50px" }}></th>
-              <th
-                style={{ padding: 0, position: "relative", width: "400px" }}
-              ></th>
-              <th
-                style={{ padding: 0, position: "relative", width: "100px" }}
-              ></th>
-              <th
-                style={{ padding: 0, position: "relative", width: "120px" }}
-              ></th>
-              <th
-                style={{ padding: 0, position: "relative", width: "120px" }}
-              ></th>
-              <th
-                style={{ padding: 0, position: "relative", width: "120px" }}
-              ></th>
-            </tr>
-          </thead>
           <tbody>
             <tr>
+              <td style={{ width: "5%" }}></td>
+              <td style={{ width: "45%" }}></td>
+              <td style={{ width: "10%" }}></td>
+              <td style={{ width: "13%" }}></td>
               <td
                 style={{
+                  width: "13%",
                   padding: "8px",
-                  textAlign: "center",
-                  fontWeight: "600",
+                  textAlign: "right",
+                  fontWeight: "700",
+                  borderLeft: "1px solid black",
+                  textTransform: "uppercase",
                 }}
-                colSpan={2}
               >
                 {fieldNames.total}
               </td>
               <td
                 style={{
+                  width: "14%",
                   padding: "8px",
-                  textAlign: "center",
-                  fontWeight: "600",
-                }}
-              ></td>
-              <td
-                style={{
-                  padding: "8px",
-                  textAlign: "center",
-                  fontWeight: "600",
-                }}
-              ></td>
-              <td
-                style={{
-                  padding: "8px",
-                  textAlign: "center",
-                  fontWeight: "600",
+                  textAlign: "right",
+                  fontWeight: "700",
+                  borderLeft: "1px solid black",
+                  paddingRight: "16px",
                 }}
               >
                 {formatCurrency(totals.totalAmount)}
@@ -417,146 +748,372 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
         </table>
       </div>
 
-      {/* End Details Section */}
-      <div className="flex">
-        <div className="flex-1">
-          <div className="border-b border-black">
-            <p className="text-xs text-gray-600 mb-1 text-center border-b border-black">
+      <div style={{ display: "flex", minHeight: "300px" }}>
+        <div
+          style={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "stretch",
+          }}
+        >
+          <div style={{ borderBottom: "1px solid black", flex: 1 }}>
+            <p
+              style={{
+                fontSize: "12px",
+                color: "#4b5563",
+                marginBottom: "4px",
+                textAlign: "center",
+                borderBottom: "1px solid black",
+                margin: 0,
+              }}
+            >
               {fieldNames.totalInWords}
             </p>
-            <p className="text-xs font-semibold text-gray-800 min-h-[5rem] p-1 uppercase text-start">
+            <p
+              style={{
+                fontSize: "12px",
+                fontWeight: "600",
+                color: "#1f2937",
+                minHeight: "3rem",
+                padding: "8px",
+                textTransform: "uppercase",
+                textAlign: "center",
+                margin: 0,
+              }}
+            >
               {totalInWords}
             </p>
           </div>
 
-          <div>
-            <p className="text-xs text-gray-600 text-center border-b border-black">
+          <div style={{ flex: 1 }}>
+            <p
+              style={{
+                fontSize: "12px",
+                color: "#4b5563",
+                textAlign: "center",
+                borderBottom: "1px solid black",
+                margin: 0,
+              }}
+            >
               {fieldNames.bankDetails}
             </p>
-            <div className="flex flex-col p-2 text-xs text-gray-800 uppercase">
-              <div className="flex justify-between mb-1">
-                <span className="text-gray-600 uppercase">
-                  {fieldNames.bankName}
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                padding: "8px 16px",
+                fontSize: "12px",
+                color: "#1f2937",
+                textTransform: "uppercase",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  marginBottom: "2px",
+                }}
+              >
+                <span style={{ color: "#4b5563" }}>{fieldNames.bankName}</span>
+                <span style={{ fontWeight: "600" }}>
+                  {bankDetails.bankName}
                 </span>
-                <span className="font-semibold">{bankDetails.bankName}</span>
               </div>
-              <div className="flex justify-between mb-1">
-                <span className="text-gray-600 uppercase">
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  marginBottom: "2px",
+                }}
+              >
+                <span style={{ color: "#4b5563" }}>
                   {fieldNames.accountNumber}
                 </span>
-                <span className="font-semibold">
+                <span style={{ fontWeight: "600" }}>
                   {bankDetails.bankAccountNumber}
                 </span>
               </div>
-              <div className="flex justify-between mb-1">
-                <span className="text-gray-600 uppercase">
-                  {fieldNames.ifscCode}
-                </span>
-                <span className="font-semibold">
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  marginBottom: "2px",
+                }}
+              >
+                <span style={{ color: "#4b5563" }}>{fieldNames.ifscCode}</span>
+                <span style={{ fontWeight: "600" }}>
                   {bankDetails.bankIfscCode}
                 </span>
               </div>
-              <div className="flex justify-between mb-1">
-                <span className="text-gray-600 uppercase">
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  marginBottom: "2px",
+                }}
+              >
+                <span style={{ color: "#4b5563" }}>
                   {fieldNames.branchName}
                 </span>
-                <span className="font-semibold">
+                <span style={{ fontWeight: "600" }}>
                   {bankDetails.bankBranchName}
                 </span>
               </div>
             </div>
           </div>
 
-          <div className="flex-1 border-t border-black w-full">
-            <div className="border-b border-black">
-              <p className="text-xs text-gray-600 text-center">
+          <div style={{ flex: 1, borderTop: "1px solid black", width: "100%" }}>
+            <div style={{ borderBottom: "1px solid black" }}>
+              <p
+                style={{
+                  fontSize: "12px",
+                  color: "#4b5563",
+                  textAlign: "center",
+                  margin: 0,
+                }}
+              >
                 {fieldNames.termsAndConditions}
               </p>
             </div>
-            <ul className="list-disc list-inside text-xs text-gray-800 p-2 space-y-1">
+            <ul
+              style={{
+                listStyleType: "disc",
+                listStylePosition: "inside",
+                fontSize: "12px",
+                color: "#1f2937",
+                padding: "8px",
+                margin: 0,
+              }}
+            >
               {termsAndConditions.map((term, index) => (
-                <li key={index}>{term}</li>
+                <li key={index} style={{ marginBottom: "4px" }}>
+                  {term}
+                </li>
               ))}
             </ul>
           </div>
         </div>
 
         {/* Count Section */}
-        <div className="flex-1 border-l border-black">
-          <table className="w-full border-collapse">
+        <div style={{ flex: 1, borderLeft: "1px solid black" }}>
+          <table style={{ width: "100%", borderCollapse: "collapse" }}>
             <tbody>
-              <tr className="text-xs">
-                <td className="py-1 px-4 border-r border-black font-semibold text-left uppercase">
+              <tr style={{ fontSize: "12px" }}>
+                <td
+                  style={{
+                    width: "72%",
+                    padding: "4px 16px",
+                    borderRight: "1px solid black",
+                    fontWeight: "600",
+                    textAlign: "left",
+                    textTransform: "uppercase",
+                  }}
+                >
                   {fieldNames.discount} ({totals.discountPercent}
                   {totals.discountType === "percentage" ? "%" : "₹"})
                 </td>
-                <td className="py-1 px-4 font-bold text-right">
+                <td
+                  style={{
+                    padding: "4px 16px",
+                    fontWeight: "700",
+                    textAlign: "right",
+                  }}
+                >
                   {formatCurrency(totals.discountApplied)}
                 </td>
               </tr>
-              <tr className="text-xs">
-                <td className="py-1 px-4 border-r border-black font-semibold text-left uppercase">
+              <tr style={{ fontSize: "12px" }}>
+                <td
+                  style={{
+                    padding: "4px 16px",
+                    borderRight: "1px solid black",
+                    fontWeight: "600",
+                    textAlign: "left",
+                    textTransform: "uppercase",
+                  }}
+                >
                   {fieldNames.totalBeforeTax}
                 </td>
-                <td className="py-1 px-4 font-bold text-right">
+                <td
+                  style={{
+                    padding: "4px 16px",
+                    fontWeight: "700",
+                    textAlign: "right",
+                  }}
+                >
                   {formatCurrency(totals.totalBeforeTax)}
                 </td>
               </tr>
-              <tr className="text-xs">
-                <td className="py-1 px-4 border-r border-black font-semibold text-left uppercase">
+              <tr style={{ fontSize: "12px" }}>
+                <td
+                  style={{
+                    padding: "4px 16px",
+                    borderRight: "1px solid black",
+                    fontWeight: "600",
+                    textAlign: "left",
+                    textTransform: "uppercase",
+                  }}
+                >
                   {fieldNames.gst} ({totals.gstPercent}%)
                 </td>
-                <td className="py-1 px-4 font-bold text-right">
+                <td
+                  style={{
+                    padding: "4px 16px",
+                    fontWeight: "700",
+                    textAlign: "right",
+                  }}
+                >
                   {totals.gstAmount}
                 </td>
               </tr>
-              <tr className="text-xs">
-                <td className="py-1 px-4 border-r border-black font-semibold text-left uppercase">
+              <tr style={{ fontSize: "12px" }}>
+                <td
+                  style={{
+                    padding: "4px 16px",
+                    borderRight: "1px solid black",
+                    fontWeight: "600",
+                    textAlign: "left",
+                    textTransform: "uppercase",
+                  }}
+                >
                   {fieldNames.sgst} ({totals.sgstPercent}%)
                 </td>
-                <td className="py-1 px-4 font-bold text-right">
+                <td
+                  style={{
+                    padding: "4px 16px",
+                    fontWeight: "700",
+                    textAlign: "right",
+                  }}
+                >
                   {totals.sgstAmount}
                 </td>
               </tr>
-              <tr className="text-xs">
-                <td className="py-1 px-4 border-r border-black font-semibold text-left uppercase">
+              <tr style={{ fontSize: "12px" }}>
+                <td
+                  style={{
+                    padding: "4px 16px",
+                    borderRight: "1px solid black",
+                    fontWeight: "600",
+                    textAlign: "left",
+                    textTransform: "uppercase",
+                  }}
+                >
                   {fieldNames.otherTax} ({totals.otherTaxPercent}
                   {totals.otherTaxType === "percentage" ? "%" : "₹"})
                 </td>
-                <td className="py-1 px-4 font-bold text-right">
+                <td
+                  style={{
+                    padding: "4px 16px",
+                    fontWeight: "700",
+                    textAlign: "right",
+                  }}
+                >
                   {formatCurrency(totals.otherTaxAmount)}
                 </td>
               </tr>
-              <tr className="text-xs">
-                <td className="px-4 border-r border-black font-semibold text-left uppercase"></td>
-                <td className="px-4 border-t border-black font-bold text-right">
+              <tr style={{ fontSize: "12px" }}>
+                <td
+                  style={{
+                    padding: "0 16px",
+                    borderRight: "1px solid black",
+                    fontWeight: "600",
+                    textAlign: "left",
+                    textTransform: "uppercase",
+                  }}
+                ></td>
+                <td
+                  style={{
+                    padding: "0 16px",
+                    borderTop: "1px solid black",
+                    fontWeight: "700",
+                    textAlign: "right",
+                  }}
+                >
                   {formatCurrency(totals.finalAmount)}
                 </td>
               </tr>
-              <tr className="text-lg border-t border-black">
-                <td className="py-1 px-4 border-r border-black font-bold text-center uppercase text-blue-600">
+              <tr style={{ fontSize: "18px", borderTop: "1px solid black" }}>
+                <td
+                  style={{
+                    padding: "4px 16px",
+                    borderRight: "1px solid black",
+                    fontWeight: "700",
+                    textAlign: "center",
+                    textTransform: "uppercase",
+                    color: "#2563eb",
+                  }}
+                >
                   {fieldNames.total}
                 </td>
-                <td className="py-1 px-4 font-bold text-right">
+                <td
+                  style={{
+                    padding: "4px 16px",
+                    fontWeight: "700",
+                    textAlign: "right",
+                  }}
+                >
                   {formatCurrency(totals.roundedAmount)}
                 </td>
               </tr>
             </tbody>
           </table>
 
-          <div className="border-t border-black">
-            <div className="flex flex-col items-center">
-              <p className="text-xs text-gray-600 p-1">
+          <div style={{ borderTop: "1px solid black" }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <p
+                style={{
+                  fontSize: "12px",
+                  color: "#4b5563",
+                  padding: "4px 0",
+                  margin: 0,
+                  textAlign: "center",
+                }}
+              >
                 {fieldNames.candidateStatement}
               </p>
-              <p className="text-xl font-bold text-gray-800 uppercase">
+              <p
+                style={{
+                  fontSize: "14px",
+                  fontWeight: "700",
+                  color: "#1f2937",
+                  textTransform: "uppercase",
+                  margin: 0,
+                  textAlign: "center",
+                }}
+              >
                 {company.companyName}
               </p>
             </div>
 
-            <div className="flex flex-col items-center">
-              <div className="border-t border-black w-full"></div>
-              <p className="text-xs text-gray-600 mt-10">
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "flex-end",
+                minHeight: "60px",
+                flexGrow: 1,
+              }}
+            >
+              <div
+                style={{ borderTop: "1px solid black", width: "100%" }}
+              ></div>
+              <p
+                style={{
+                  fontSize: "10px",
+                  color: "#4b5563",
+                  padding: "4px 0 12px 0",
+                  margin: 0,
+                  textAlign: "center",
+                }}
+              >
                 {fieldNames.authorisedSignature}
               </p>
             </div>

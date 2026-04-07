@@ -3,7 +3,6 @@ import { AuthNav } from "./AuthNav";
 import { buttonVariants } from "../../components/ui/Button";
 import { Link } from "react-router-dom";
 // import { cn } from "../../lib/utils"
-import { UnderTheHood } from "./UnderTheHood";
 import { WhyRhyri } from "./WhyRhyri";
 import { useTheme } from "../../contexts/ThemeContext";
 
@@ -17,11 +16,12 @@ export function HomePage() {
       <main className="max-width y-paddings space-y-10">
         <section className="hero">
           <h1 className="hero-heading">
-            A powerful tool for managing and creating invoices efficiently
+            Create Professional Invoices Effortlessly
           </h1>
           <p className="hero-subtitle">
-            Simplify your invoicing and billing with Your Invoice App. Manage
-            your finances with ease.
+            Generate high-quality, professional grade invoices for your business
+            in seconds. The most efficient way to handle your billing with
+            Rhyri.
           </p>
         </section>
 
@@ -29,14 +29,6 @@ export function HomePage() {
           <Link to="/sign-in" className={buttonVariants({ variant: "accent" })}>
             Get started
           </Link>
-          {/* <Link
-              to="https://github.com/RhythmItaliya"
-              target="_blank"
-              className={cn(buttonVariants({ variant: "outline" }))}
-            >
-              <Icons.github className="h-4 w-4 mr-2" aria-hidden="true" />
-              Github
-            </Link> */}
         </div>
 
         <img
@@ -46,12 +38,14 @@ export function HomePage() {
 
         <WhyRhyri />
 
-        <UnderTheHood />
-
         <footer>
           <p className="text-center">
-            Built by{" "}
-            <Link to="https://github.com/RhythmItaliya" className="underline">
+            Made by{" "}
+            <Link
+              to="https://rhythmitaliya.com/"
+              target="_blank"
+              className="underline"
+            >
               Rhythm Italiya
             </Link>
           </p>

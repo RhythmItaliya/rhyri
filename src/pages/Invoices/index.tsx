@@ -17,11 +17,10 @@ import { fetchUserInvoices } from "./fetchUserInvoices";
 import { InvoiceStatus } from "../../types";
 import { ColumnDef, PaginationState } from "./schema";
 import { useDownloadInvoice } from "../../lib/invoiceUtils";
-import ProgressPopup from "../../components/popup/ProgressPopup";
 
 export function InvoicesPage() {
-  const { currentUser } = useAuth();
-  const { downloadInvoice, progress } = useDownloadInvoice();
+  const { currentUser, restrictionDate, restrictionType } = useAuth();
+  const { downloadInvoice, downloadingId } = useDownloadInvoice();
 
   if (!currentUser) return null;
 
@@ -34,6 +33,12 @@ export function InvoicesPage() {
   });
 
   const [columns, setColumns] = React.useState<ColumnDef[]>([
+    {
+      id: "srNo",
+      header: "Sr. No.",
+      isVisible: true,
+      canHide: true,
+    },
     {
       id: "invoice",
       header: "Invoice id",
@@ -80,8 +85,20 @@ export function InvoicesPage() {
   const hasPrevPage = pagination.pageIndex !== 0;
 
   const { data, isPending } = useQuery({
-    queryKey: ["invoices", currentUser.uid, pagination],
-    queryFn: () => fetchUserInvoices(currentUser.uid, pagination),
+    queryKey: [
+      "invoices",
+      currentUser.uid,
+      pagination,
+      restrictionDate,
+      restrictionType,
+    ],
+    queryFn: () =>
+      fetchUserInvoices(
+        currentUser.uid,
+        pagination,
+        restrictionDate,
+        restrictionType,
+      ),
     placeholderData: keepPreviousData,
   });
 
@@ -163,6 +180,7 @@ export function InvoicesPage() {
             invoices={data?.userInvoices}
             columns={columns}
             onDownload={handleDownload}
+            downloadingId={downloadingId}
           />
 
           <InvoicesTablePagination
@@ -173,7 +191,6 @@ export function InvoicesPage() {
           />
         </div>
       </div>
-      <ProgressPopup progress={progress} />
     </>
   );
 }

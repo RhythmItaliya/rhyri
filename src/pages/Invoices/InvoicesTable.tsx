@@ -8,9 +8,9 @@ import {
 } from "../../components/ui/Table";
 import { Skeleton } from "../../components/Skeleton";
 
-import { formatCurrency, formatFirestoreTimestamp } from "../../lib/utils";
+import { cn, formatCurrency, formatFirestoreTimestamp } from "../../lib/utils";
 
-import type { Timestamp } from "firebase/firestore";
+import { Timestamp } from "firebase/firestore";
 import { InvoiceStatus } from "../../types";
 import { ColumnDef } from "./schema";
 
@@ -19,6 +19,15 @@ import { InvoiceStatusBadge } from "../../components/InvoiceStatusBadge";
 import { InvoiceActions } from "../../components/action/InvoiceActions";
 import { Icons } from "../../components/Icons";
 import { useTheme } from "../../contexts/ThemeContext";
+import { useAuth } from "../../contexts/AuthContext";
+
+import { startOfDay } from "date-fns";
+
+const isDateRestricted = (date: any, restrictionDate: Date | null) => {
+  if (!restrictionDate) return false;
+  const d = date instanceof Timestamp ? date.toDate() : new Date(date);
+  return startOfDay(d) <= startOfDay(restrictionDate);
+};
 
 interface InvoicesTableProps {
   invoices?: {
@@ -35,6 +44,7 @@ interface InvoicesTableProps {
     invoiceId: string,
     event: React.MouseEvent<HTMLDivElement>,
   ) => void;
+  downloadingId?: string | null;
 }
 
 export function InvoicesTable({
@@ -42,12 +52,14 @@ export function InvoicesTable({
   invoices,
   columns,
   onDownload,
+  downloadingId,
 }: InvoicesTableProps) {
   const navigate = useNavigate();
   const visibleColumns = columns.filter((column) => column.isVisible);
 
   const { theme } = useTheme();
   const isDarkTheme = theme === "dark";
+  const { restrictionDate } = useAuth();
 
   return (
     <div className="rounded-sm border">
@@ -67,58 +79,84 @@ export function InvoicesTable({
               </TableCell>
             </TableRow>
           ) : invoices?.length ? (
-            invoices.map((invoice) => (
-              <TableRow
-                key={invoice.id}
-                className="cursor-pointer"
-                onClick={() => navigate(`/invoice/${invoice.id}`)}
-              >
-                {visibleColumns.map((column) => (
-                  <TableCell key={column.id} className="uppercase">
-                    {column.id === "invoice" && (invoice.id || " - ")}
-                    {column.id === "invoiceCustomNumber" &&
-                      (invoice.invoiceCustomNumber || " - ")}
-                    {column.id === "date" &&
-                      (invoice.date
-                        ? formatFirestoreTimestamp(invoice.date)
-                        : " - ")}
-                    {column.id === "client" &&
-                      (invoice.client ? invoice.client.toUpperCase() : " - ")}
-                    {column.id === "status" && (
-                      <InvoiceStatusBadge status={invoice.status} />
-                    )}
-                    {column.id === "amount" &&
-                      (invoice.amount ? formatCurrency(invoice.amount) : " - ")}
+            invoices.map((invoice, index) => {
+              const restricted = isDateRestricted(
+                invoice.date,
+                restrictionDate,
+              );
+              return (
+                <TableRow
+                  key={invoice.id}
+                  className={cn(
+                    "cursor-pointer",
+                    restricted && "opacity-50 grayscale pointer-events-none",
+                  )}
+                  onClick={() =>
+                    !restricted && navigate(`/invoice/${invoice.id}`)
+                  }
+                >
+                  {visibleColumns.map((column) => (
+                    <TableCell key={column.id} className="uppercase">
+                      {column.id === "srNo" && index + 1}
+                      {column.id === "invoice" && (invoice.id || " - ")}
+                      {column.id === "invoiceCustomNumber" &&
+                        (invoice.invoiceCustomNumber || " - ")}
+                      {column.id === "date" &&
+                        (invoice.date
+                          ? formatFirestoreTimestamp(invoice.date)
+                          : " - ")}
+                      {column.id === "client" &&
+                        (invoice.client ? invoice.client.toUpperCase() : " - ")}
+                      {column.id === "status" && (
+                        <InvoiceStatusBadge status={invoice.status} />
+                      )}
+                      {column.id === "amount" &&
+                        (invoice.amount
+                          ? formatCurrency(invoice.amount)
+                          : " - ")}
+                    </TableCell>
+                  ))}
+
+                  <TableCell>
+                    <div
+                      className={cn(
+                        "inline-flex items-center justify-center rounded-md font-medium transition-colors h-10 w-10",
+                        invoice.id === downloadingId || restricted
+                          ? "cursor-not-allowed opacity-70"
+                          : "hover:bg-border/80 cursor-pointer",
+                      )}
+                      onClick={(event) => {
+                        if (invoice.id === downloadingId || restricted) return;
+                        onDownload(
+                          invoice.id,
+                          event as React.MouseEvent<HTMLDivElement>,
+                        );
+                      }}
+                    >
+                      {invoice.id === downloadingId ? (
+                        <Icons.spinner className="h-5 w-5 animate-spin" />
+                      ) : (
+                        (isDarkTheme
+                          ? Icons.downloadDark
+                          : Icons.downloadLight)({})
+                      )}
+                    </div>
                   </TableCell>
-                ))}
 
-                <TableCell>
-                  <div
-                    className="inline-flex items-center justify-center rounded-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-sm hover:bg-border/80 h-10 w-10 cursor-pointer"
-                    onClick={(event) =>
-                      onDownload(
-                        invoice.id,
-                        event as React.MouseEvent<HTMLDivElement>,
-                      )
-                    }
-                  >
-                    {(isDarkTheme ? Icons.downloadDark : Icons.downloadLight)(
-                      {},
-                    )}
-                  </div>
-                </TableCell>
-
-                <TableCell>
-                  <InvoiceActions
-                    isInvoicePage={false}
-                    invoiceId={invoice.id}
-                    isMarkedAsPaid={invoice.status === "paid"}
-                    isDrafted={invoice.status === "drafted"}
-                    isPending={invoice.status === "pending"}
-                  />
-                </TableCell>
-              </TableRow>
-            ))
+                  <TableCell>
+                    <div className={cn(restricted && "pointer-events-none")}>
+                      <InvoiceActions
+                        isInvoicePage={false}
+                        invoiceId={invoice.id}
+                        isMarkedAsPaid={invoice.status === "paid"}
+                        isDrafted={invoice.status === "drafted"}
+                        isPending={invoice.status === "pending"}
+                      />
+                    </div>
+                  </TableCell>
+                </TableRow>
+              );
+            })
           ) : (
             <TableRow>
               <TableCell
