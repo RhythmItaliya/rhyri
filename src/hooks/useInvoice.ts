@@ -2,13 +2,15 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { FirebaseError } from "firebase/app";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { db } from "../lib/firebase";
-import { catchError } from "../lib/utils";
+import { appToast, catchError } from "../lib/utils";
 
 import { fetchInvoice } from "../pages/Invoice/fetchInvoice";
 import { transformInvoiceData } from "../pages/Invoice/download/TransformInvoiceData";
-import { pdfGenerate } from "../pages/Invoice/download/PdfGenerate";
 import { renderToHtml } from "../lib/renderToHtml";
-import axios from "axios";
+import {
+  buildDocumentFilename,
+  generateAndDownloadPdf,
+} from "../lib/documentPdf";
 
 export const useInvoice = () => {
   const queryClient = useQueryClient();
@@ -28,8 +30,14 @@ export const useInvoice = () => {
     onSettled: async () => {
       return await queryClient.invalidateQueries({
         predicate: (query) =>
-          query.queryKey[0] === "invoice" || query.queryKey[0] === "invoices",
+          query.queryKey[0] === "invoice" ||
+          query.queryKey[0] === "invoices" ||
+          query.queryKey[0] === "dashboard" ||
+          query.queryKey[0] === "recent-invoices",
       });
+    },
+    onSuccess() {
+      appToast.success("Invoice marked as paid");
     },
     onError(error) {
       catchError(error);
@@ -51,8 +59,14 @@ export const useInvoice = () => {
     onSettled: async () => {
       return await queryClient.invalidateQueries({
         predicate: (query) =>
-          query.queryKey[0] === "invoice" || query.queryKey[0] === "invoices",
+          query.queryKey[0] === "invoice" ||
+          query.queryKey[0] === "invoices" ||
+          query.queryKey[0] === "dashboard" ||
+          query.queryKey[0] === "recent-invoices",
       });
+    },
+    onSuccess() {
+      appToast.success("Invoice moved to draft");
     },
     onError(error) {
       catchError(error);
@@ -74,8 +88,14 @@ export const useInvoice = () => {
     onSettled: async () => {
       return await queryClient.invalidateQueries({
         predicate: (query) =>
-          query.queryKey[0] === "invoice" || query.queryKey[0] === "invoices",
+          query.queryKey[0] === "invoice" ||
+          query.queryKey[0] === "invoices" ||
+          query.queryKey[0] === "dashboard" ||
+          query.queryKey[0] === "recent-invoices",
       });
+    },
+    onSuccess() {
+      appToast.success("Invoice marked as pending");
     },
     onError(error) {
       catchError(error);
@@ -97,8 +117,14 @@ export const useInvoice = () => {
     onSettled: async () => {
       return await queryClient.invalidateQueries({
         predicate: (query) =>
-          query.queryKey[0] === "invoice" || query.queryKey[0] === "invoices",
+          query.queryKey[0] === "invoice" ||
+          query.queryKey[0] === "invoices" ||
+          query.queryKey[0] === "dashboard" ||
+          query.queryKey[0] === "recent-invoices",
       });
+    },
+    onSuccess() {
+      appToast.success("Invoice deleted");
     },
     onError(error) {
       catchError(error);
@@ -142,17 +168,9 @@ export const useInvoice = () => {
           throw new Error("Invalid HTML content");
 
         onProgress("Generating PDF...");
-        const pdfUrl = await pdfGenerate(html);
-        if (!pdfUrl) throw new Error("PDF URL was not generated");
-
-        onProgress("Fetching PDF...");
-        const response = await axios.get(pdfUrl, {
-          responseType: "blob",
-        });
-
         const filename = createFilename(transformedData);
         onProgress("Downloading PDF...");
-        downloadBlob(response.data, filename);
+        await generateAndDownloadPdf({ html, filename });
 
         onProgress("Download complete");
       } catch (error) {
@@ -167,33 +185,12 @@ export const useInvoice = () => {
   });
 
   function createFilename(transformedData: any) {
-    const clientName = transformedData.customer.clientName || "invoice";
-    const invoiceCustomNumber =
-      transformedData.invoice.invoiceCustomNumber || "";
-    const sanitizedClientName = clientName
-      .replace(/[<>:"\/\\|?*]+/g, "")
-      .toUpperCase();
-    const sanitizedInvoiceNumber = invoiceCustomNumber.replace(
-      /[<>:"\/\\|?*]+/g,
-      "",
-    );
-    return (
-      sanitizedClientName +
-      (sanitizedInvoiceNumber
-        ? `_${sanitizedInvoiceNumber.toUpperCase()}`
-        : "") +
-      ".pdf"
-    );
-  }
-
-  function downloadBlob(blobData: any, filename: string) {
-    const blob = new Blob([blobData], { type: "application/pdf" });
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.setAttribute("download", filename);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    return buildDocumentFilename({
+      name: transformedData.customer.clientName,
+      number: transformedData.invoice.invoiceCustomNumber,
+      type: "invoice",
+      fallback: "invoice",
+    });
   }
 
   return {

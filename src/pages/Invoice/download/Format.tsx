@@ -42,7 +42,7 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
             padding: "8px 0",
             fontWeight: "900",
             textTransform: "uppercase",
-            color: "#2563eb",
+            color: "black",
             textAlign: "center",
             margin: 0,
             width: "100%",
@@ -203,7 +203,7 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
               style={{
                 fontSize: "14px",
                 fontWeight: "700",
-                color: "#2563eb",
+                color: "black",
                 textTransform: "uppercase",
                 textAlign: "center",
                 margin: 0,
@@ -219,7 +219,7 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
                 fontWeight: "600",
                 color: "black",
                 textTransform: "uppercase",
-                textAlign: "right",
+                textAlign: "center",
                 margin: 0,
               }}
             >
@@ -702,50 +702,36 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
         style={{
           borderBottom: "1px solid black",
           borderTop: "1px solid black",
+          display: "flex",
+          width: "100%",
+          fontSize: "12px",
+          color: "black",
         }}
       >
-        <table
+        <div
           style={{
-            width: "100%",
-            fontSize: "12px",
-            color: "black",
-            borderCollapse: "collapse",
-            tableLayout: "fixed",
+            width: "86%",
+            padding: "8px",
+            textAlign: "center",
+            fontWeight: "700",
+            textTransform: "uppercase",
+            boxSizing: "border-box",
           }}
         >
-          <tbody>
-            <tr>
-              <td style={{ width: "5%" }}></td>
-              <td style={{ width: "45%" }}></td>
-              <td style={{ width: "10%" }}></td>
-              <td style={{ width: "13%" }}></td>
-              <td
-                style={{
-                  width: "13%",
-                  padding: "8px",
-                  textAlign: "right",
-                  fontWeight: "700",
-                  borderLeft: "1px solid black",
-                  textTransform: "uppercase",
-                }}
-              >
-                {fieldNames.total}
-              </td>
-              <td
-                style={{
-                  width: "14%",
-                  padding: "8px",
-                  textAlign: "right",
-                  fontWeight: "700",
-                  borderLeft: "1px solid black",
-                  paddingRight: "16px",
-                }}
-              >
-                {formatCurrency(totals.totalAmount)}
-              </td>
-            </tr>
-          </tbody>
-        </table>
+          {fieldNames.total}
+        </div>
+        <div
+          style={{
+            width: "14%",
+            padding: "8px 16px 8px 8px",
+            textAlign: "right",
+            fontWeight: "700",
+            borderLeft: "1px solid black",
+            boxSizing: "border-box",
+          }}
+        >
+          {formatCurrency(totals.totalAmount)}
+        </div>
       </div>
 
       <div style={{ display: "flex", minHeight: "300px" }}>
@@ -1041,7 +1027,7 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
                     fontWeight: "700",
                     textAlign: "center",
                     textTransform: "uppercase",
-                    color: "#2563eb",
+                    color: "black",
                   }}
                 >
                   {fieldNames.total}

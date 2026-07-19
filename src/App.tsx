@@ -23,6 +23,18 @@ const InvoicesPage = React.lazy(() =>
   })),
 );
 
+const PurchaseBillsPage = React.lazy(() =>
+  import("./pages/PurchaseBills").then((module) => ({
+    default: module.PurchaseBillsPage,
+  })),
+);
+
+const ChallansPage = React.lazy(() =>
+  import("./pages/Challans").then((module) => ({
+    default: module.ChallansPage,
+  })),
+);
+
 const ClientsPage = React.lazy(() =>
   import("./pages/Clientes").then((module) => ({
     default: module.ClientsPage,
@@ -50,6 +62,18 @@ const CreateInvoicePage = React.lazy(() =>
   })),
 );
 
+const CreatePurchaseBillPage = React.lazy(() =>
+  import("./pages/PurchaseBill/new").then((module) => ({
+    default: module.CreatePurchaseBillPage,
+  })),
+);
+
+const CreateChallanPage = React.lazy(() =>
+  import("./pages/Challan/new").then((module) => ({
+    default: module.CreateChallanPage,
+  })),
+);
+
 const CreateClientPage = React.lazy(() =>
   import("./pages/Client/new").then((module) => ({
     default: module.CreateClientPage,
@@ -73,6 +97,18 @@ const InvoicePage = React.lazy(() =>
   import("./pages/Invoice").then((module) => ({ default: module.InvoicePage })),
 );
 
+const PurchaseBillPage = React.lazy(() =>
+  import("./pages/PurchaseBill").then((module) => ({
+    default: module.PurchaseBillPage,
+  })),
+);
+
+const ChallanPage = React.lazy(() =>
+  import("./pages/Challan").then((module) => ({
+    default: module.ChallanPage,
+  })),
+);
+
 const ClientPage = React.lazy(() =>
   import("./pages/Client").then((module) => ({ default: module.ClientPage })),
 );
@@ -89,6 +125,18 @@ const BankPage = React.lazy(() =>
 const EditInvoicePage = React.lazy(() =>
   import("./pages/Invoice/edit").then((module) => ({
     default: module.EditInvoicePage,
+  })),
+);
+
+const EditPurchaseBillPage = React.lazy(() =>
+  import("./pages/PurchaseBill/edit").then((module) => ({
+    default: module.EditPurchaseBillPage,
+  })),
+);
+
+const EditChallanPage = React.lazy(() =>
+  import("./pages/Challan/edit").then((module) => ({
+    default: module.EditChallanPage,
   })),
 );
 
@@ -126,6 +174,8 @@ export default function App() {
       <Route element={<RootLayout />}>
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/invoices" element={<InvoicesPage />} />
+        <Route path="/purchase-bills" element={<PurchaseBillsPage />} />
+        <Route path="/challans" element={<ChallansPage />} />
         <Route path="/clients" element={<ClientsPage />} />
         <Route path="/companies" element={<CompaniesPage />} />
         <Route path="/banks" element={<BanksPage />} />
@@ -141,6 +191,15 @@ export default function App() {
         <Route path="/invoice/new" element={<CreateInvoicePage />} />
         <Route path="/invoice/edit/:id" element={<EditInvoicePage />} />
         <Route path="/invoice/:id" element={<InvoicePage />} />
+        <Route path="/purchase-bill/new" element={<CreatePurchaseBillPage />} />
+        <Route
+          path="/purchase-bill/edit/:id"
+          element={<EditPurchaseBillPage />}
+        />
+        <Route path="/purchase-bill/:id" element={<PurchaseBillPage />} />
+        <Route path="/challan/new" element={<CreateChallanPage />} />
+        <Route path="/challan/edit/:id" element={<EditChallanPage />} />
+        <Route path="/challan/:id" element={<ChallanPage />} />
       </Route>
 
       <Route element={<ClientLayout />}>

@@ -15,9 +15,11 @@ const UserMenu = React.lazy(() =>
 const mainNavItems = [
   { title: "Dashboard", href: "/dashboard" },
   { title: "Invoices", href: "/invoices" },
+  { title: "Challans", href: "/challans" },
+  { title: "Purchase Bills", href: "/purchase-bills" },
   { title: "Clients", href: "/clients" },
-  { title: "Companies", href: "/companies" },
   { title: "Banks", href: "/banks" },
+  { title: "Companies", href: "/companies" },
 ];
 
 export function MainNav() {
