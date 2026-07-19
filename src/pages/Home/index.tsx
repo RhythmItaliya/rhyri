@@ -1,8 +1,6 @@
 import { AuthNav } from "./AuthNav";
-// import { Icons } from "../../components/Icons"
 import { buttonVariants } from "../../components/ui/Button";
 import { Link } from "react-router-dom";
-// import { cn } from "../../lib/utils"
 import { WhyRhyri } from "./WhyRhyri";
 import { useTheme } from "../../contexts/ThemeContext";
 
@@ -16,24 +14,24 @@ export function HomePage() {
       <main className="max-width y-paddings space-y-10">
         <section className="hero">
           <h1 className="hero-heading">
-            Create Professional Invoices Effortlessly
+            Simple Billing for Invoices, Challans, and Purchase Bills
           </h1>
           <p className="hero-subtitle">
-            Generate high-quality, professional grade invoices for your business
-            in seconds. The most efficient way to handle your billing with
-            Rhyri.
+            Rhyri helps you create professional invoices, delivery challans,
+            purchase bills, client records, company details, bank details, and
+            PDF documents from one clean workspace.
           </p>
         </section>
 
         <div className="flex items-center justify-center gap-4">
           <Link to="/sign-in" className={buttonVariants({ variant: "accent" })}>
-            Get started
+            Start billing
           </Link>
         </div>
 
         <img
           src={isDarkTheme ? "dashDark.png" : "dashLight.png"}
-          alt="Rhyri dashboard page"
+          alt="Rhyri invoice, challan, and purchase bill dashboard"
         />
 
         <WhyRhyri />

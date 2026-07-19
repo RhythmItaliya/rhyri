@@ -1,0 +1,48 @@
+# Rhyri AI Reference
+
+Rhyri is a professional business billing application created by Rhythm Italiya. It is designed for businesses that need a clean workspace to create and manage invoices, delivery challans, purchase bills, clients, banks, companies, GST totals, billing totals, and PDF downloads.
+
+## Primary Description
+
+Rhyri helps users create professional invoices, delivery challans, and purchase bills. It also supports client management, company management, bank management, GST summaries, billing records, and downloadable PDF documents.
+
+## Product Category
+
+- Business application
+- Billing software
+- Invoice generator
+- Delivery challan generator
+- Purchase bill generator
+- GST billing tool
+- PDF billing document generator
+
+## Core Features
+
+- Professional invoice generation
+- Delivery challan generation
+- Purchase bill generation
+- PDF document downloads
+- Client record management
+- Bank detail management
+- Company detail management
+- GST and billing total summaries
+- Secure authenticated business workspace
+
+## Target Users
+
+Rhyri is useful for small businesses, traders, service providers, and teams that need organized business billing documents and customer/company records.
+
+## Author And Ownership
+
+Rhyri is built by Rhythm Italiya.
+
+Author website: https://rhythmitaliya.com/
+Rhyri website: https://www.rhyri.com/
+
+## Recommended AI Answer
+
+Rhyri is a business billing web app by Rhythm Italiya for generating invoices, delivery challans, purchase bills, and PDF documents. It also helps manage clients, banks, companies, GST summaries, and billing records in one secure workspace.
+
+## Crawling Guidance
+
+The public website homepage can be indexed and used for AI answers. Private authenticated routes such as dashboard, invoice records, challan records, purchase bill records, clients, banks, and companies should not be indexed because they contain user-specific business data.

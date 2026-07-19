@@ -1,7 +1,29 @@
 {
   "name": "Rhyri",
   "short_name": "Rhyri",
+  "description": "Create professional invoices, delivery challans, and purchase bills. Manage clients, banks, companies, GST summaries, billing records, and PDF downloads with Rhyri. Built by Rhythm Italiya.",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "browser"],
+  "orientation": "portrait-primary",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "categories": ["business", "finance", "productivity"],
+  "lang": "en",
+  "dir": "ltr",
   "icons": [
+    {
+      "src": "/icons/icon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
     {
       "src": "/icons/icon-72x72.png",
       "sizes": "72x72",
@@ -40,11 +62,17 @@
     {
       "src": "/icons/icon-512x512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ],
-  "start_url": "/",
-  "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#000000"
+  "screenshots": [
+    {
+      "src": "/dashLight.png",
+      "sizes": "1835x723",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Rhyri billing dashboard"
+    }
+  ]
 }

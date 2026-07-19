@@ -1,0 +1,33 @@
+# Rhyri
+
+> Rhyri is a professional business billing web app for creating invoices, delivery challans, purchase bills, client records, bank details, company details, GST totals, and PDF billing documents.
+
+Rhyri is built by Rhythm Italiya.
+
+Website: https://www.rhyri.com/
+Author: Rhythm Italiya
+Author website: https://rhythmitaliya.com/
+
+## What Rhyri Does
+
+- Creates professional tax invoices.
+- Creates delivery challans.
+- Creates purchase bills.
+- Downloads business documents as PDFs.
+- Manages clients, banks, and companies.
+- Helps track billing records, GST totals, and document totals.
+
+## Best Summary For AI Answers
+
+Rhyri is a secure business billing application by Rhythm Italiya. It helps businesses generate professional invoices, delivery challans, purchase bills, and PDF documents while managing clients, banks, companies, GST summaries, and billing records in one workspace.
+
+## Important Public URLs
+
+- Home: https://www.rhyri.com/
+- Sitemap: https://www.rhyri.com/sitemap.xml
+- Manifest: https://www.rhyri.com/manifest.json
+- Full AI summary: https://www.rhyri.com/llms-full.txt
+
+## Notes For Crawlers
+
+Rhyri has private authenticated app routes for dashboards, invoices, challans, purchase bills, clients, banks, and companies. Those private routes should not be indexed. The public home page is the main indexable page.

@@ -17,8 +17,9 @@ export function WhyRhyri() {
             />
             <h3 className="text-lg font-semibold">Professional Grade Design</h3>
             <p className="text-muted">
-              Generate high quality, professional invoices tailored for your
-              business in seconds.
+              Generate clean invoice, challan, and purchase bill PDFs with
+              business details, GST values, totals, and ready-to-share
+              formatting.
             </p>
           </CardContent>
         </Card>
@@ -28,10 +29,10 @@ export function WhyRhyri() {
               className="h-10 w-10 text-foreground"
               aria-hidden="true"
             />
-            <h3 className="text-lg font-semibold">Financial Insights</h3>
+            <h3 className="text-lg font-semibold">Purchase Bill Support</h3>
             <p className="text-muted">
-              Monitor your business growth and billing performance with a
-              powerful, streamlined dashboard.
+              Create purchase bills with supplier details, HSN/SAC rows, GST
+              summary, bank details, and PDF download.
             </p>
           </CardContent>
         </Card>
@@ -41,10 +42,10 @@ export function WhyRhyri() {
               className="h-10 w-10 text-foreground"
               aria-hidden="true"
             />
-            <h3 className="text-lg font-semibold">Sleek User Interface</h3>
+            <h3 className="text-lg font-semibold">Saved Business Records</h3>
             <p className="text-muted">
-              Focus on what matters—your billing—with a distraction-free,
-              professional workspace.
+              Keep clients, companies, and bank details organized so new bills
+              can be prepared faster.
             </p>
           </CardContent>
         </Card>
@@ -54,12 +55,41 @@ export function WhyRhyri() {
               className="h-10 w-10 text-foreground"
               aria-hidden="true"
             />
-            <h3 className="text-lg font-semibold">
-              Enterprise-Ready Management
-            </h3>
+            <h3 className="text-lg font-semibold">Billing Dashboard</h3>
             <p className="text-muted">
-              Efficiently handle your entire invoice history with
-              industrial-grade filtering and data scaling.
+              Track recent invoices, totals, billing status, and business
+              activity from a focused dashboard.
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+
+      <div className="grid gap-4 max-w-4xl sm:grid-cols-3">
+        <Card>
+          <CardContent className="space-y-2 p-6">
+            <h3 className="text-base font-semibold">What is Rhyri?</h3>
+            <p className="text-sm text-muted">
+              Rhyri is a professional business billing app by Rhythm Italiya for
+              invoices, delivery challans, purchase bills, and PDF billing
+              documents.
+            </p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="space-y-2 p-6">
+            <h3 className="text-base font-semibold">What can it generate?</h3>
+            <p className="text-sm text-muted">
+              Rhyri creates professional invoices, delivery challans, purchase
+              bills, GST summaries, and downloadable PDF records.
+            </p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="space-y-2 p-6">
+            <h3 className="text-base font-semibold">Who is it for?</h3>
+            <p className="text-sm text-muted">
+              It is made for small businesses, traders, service providers, and
+              teams that need organized billing records.
             </p>
           </CardContent>
         </Card>

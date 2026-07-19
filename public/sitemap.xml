@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+>
   <url>
     <loc>https://www.rhyri.com/</loc>
-    <lastmod>2026-04-07</lastmod>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-07-19</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://www.rhyri.com/sign-in</loc>
-    <lastmod>2026-04-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://www.rhyri.com/dashLight.png</image:loc>
+      <image:title>Rhyri business billing dashboard</image:title>
+      <image:caption>Rhyri invoice, challan, purchase bill, client, bank, and company management dashboard built by Rhythm Italiya.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.rhyri.com/dashDark.png</image:loc>
+      <image:title>Rhyri dark mode billing dashboard</image:title>
+      <image:caption>Professional business billing software for invoices, delivery challans, purchase bills, PDF downloads, and GST summaries.</image:caption>
+    </image:image>
   </url>
 </urlset>
