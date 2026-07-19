@@ -353,7 +353,7 @@ export function ChallanForm({
                     name={`itemList.${index}.size`}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Size</FormLabel>
+                        <FormLabel>Challan No.</FormLabel>
                         <FormControl>
                           <Input {...field} className="uppercase" />
                         </FormControl>
