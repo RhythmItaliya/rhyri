@@ -11,7 +11,7 @@ import { Timestamp } from "firebase/firestore";
 import { startOfDay } from "date-fns";
 
 export function RecentInvoices() {
-  const { currentUser, restrictionDate } = useAuth();
+  const { currentUser, restrictionDate, restrictionType } = useAuth();
 
   const isDateRestricted = (date: any, restrictionDate: Date | null) => {
     if (!restrictionDate) return false;
@@ -26,8 +26,14 @@ export function RecentInvoices() {
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ["recent-invoices", currentUser.uid],
-    queryFn: () => fetchRecentInvoices(currentUser.uid),
+    queryKey: [
+      "recent-invoices",
+      currentUser.uid,
+      restrictionDate,
+      restrictionType,
+    ],
+    queryFn: () =>
+      fetchRecentInvoices(currentUser.uid, restrictionDate, restrictionType),
   });
 
   return (

@@ -1,14 +1,13 @@
 import { InvoiceForm } from "../InvoiceForm";
-import { toast } from "sonner";
 import { Skeleton } from "../../../components/Skeleton";
 
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 
 import { fetchInvoice } from "../fetchInvoice";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { useAuth } from "../../../contexts/AuthContext";
-import { catchError } from "../../../lib/utils";
+import { appToast, catchError } from "../../../lib/utils";
 import { InvoiceInputs } from "../invoiceValidator";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../../lib/firebase";
@@ -18,6 +17,7 @@ export function EditInvoicePage() {
   const navigate = useNavigate();
   const { id } = useParams();
   const { currentUser } = useAuth();
+  const queryClient = useQueryClient();
 
   if (!currentUser || !id) return null;
 
@@ -56,11 +56,15 @@ export function EditInvoicePage() {
       await updateInvoice({ ...values, amount }, id);
     },
     onSuccess() {
-      toast.success("Invoice updated successfully");
+      appToast.success("Invoice updated successfully");
+      queryClient.invalidateQueries({ queryKey: ["invoice"] });
+      queryClient.invalidateQueries({ queryKey: ["invoices"] });
+      queryClient.invalidateQueries({ queryKey: ["dashboard"] });
+      queryClient.invalidateQueries({ queryKey: ["recent-invoices"] });
       navigate(`/invoice/${id}`);
     },
     onError(error: any) {
-      toast.error(error.message);
+      appToast.error(error.message);
       catchError(error);
     },
   });

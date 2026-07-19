@@ -4,10 +4,11 @@ import { Skeleton } from "../../../components/Skeleton";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 
 import { fetchClient } from "../fetchClient";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { useAuth } from "../../../contexts/AuthContext";
-import { catchError } from "../../../lib/utils";
+import { appToast, catchError } from "../../../lib/utils";
+import { invalidateRootQueries } from "../../../lib/queryInvalidation";
 import { ClientInputs } from "../clientValidator";
 import { updateClient } from "./updateClient";
 
@@ -15,6 +16,7 @@ export function EditClientPage() {
   const navigate = useNavigate();
   const { id } = useParams();
   const { currentUser } = useAuth();
+  const queryClient = useQueryClient();
 
   if (!currentUser || !id) return null;
 
@@ -32,9 +34,12 @@ export function EditClientPage() {
       await updateClient(values, id);
     },
     onSuccess() {
+      appToast.success("Client updated successfully");
+      invalidateRootQueries(queryClient, ["client", "clients"]);
       navigate(`/client/${id}`);
     },
     onError(error) {
+      appToast.error("Unable to update client");
       catchError(error);
     },
   });

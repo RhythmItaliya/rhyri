@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../../lib/firebase";
 
@@ -8,12 +8,14 @@ import { useNavigate } from "react-router-dom";
 import { CompanyInputs } from "../companyValidator";
 import { CompanyForm } from "../CompanyForm";
 
-import { catchError } from "../../../lib/utils";
+import { appToast, catchError } from "../../../lib/utils";
+import { invalidateRootQueries } from "../../../lib/queryInvalidation";
 import { generateCompanyId } from "./generateCompanyId";
 
 export function CreateCompanyPage() {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   if (!currentUser) {
     console.error("No authenticated user found");
@@ -30,9 +32,12 @@ export function CreateCompanyPage() {
       });
     },
     onSuccess() {
+      appToast.success("Company created successfully");
+      invalidateRootQueries(queryClient, ["companies"]);
       navigate("/companies");
     },
     onError(error) {
+      appToast.error("Unable to create company");
       catchError(error);
     },
   });

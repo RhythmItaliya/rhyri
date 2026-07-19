@@ -10,8 +10,8 @@ import { auth, db } from "../lib/firebase";
 import { doc, setDoc, onSnapshot, Timestamp } from "firebase/firestore";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Icons } from "../components/Icons";
 import { useLocation } from "react-router-dom";
+import { LogoLoader } from "../components/LogoLoader";
 
 interface AuthProviderProps {
   children: React.ReactNode;
@@ -20,6 +20,7 @@ interface AuthProviderProps {
 export type OAuthStrategy = "oauth_google";
 
 const authRequiredRoutes = [
+  "/admin",
   "/dashboard",
   "/invoice",
   "/invoices",
@@ -29,12 +30,17 @@ const authRequiredRoutes = [
   "/companies",
   "/bank",
   "/banks",
+  "/purchase-bill",
+  "/purchase-bills",
+  "/challan",
+  "/challans",
 ];
 
 export type RestrictionType = "disable" | "hide";
 
 interface AuthContextProps {
   currentUser: User | null;
+  isAuthLoading: boolean;
   restrictionDate: Date | null;
   restrictionType: RestrictionType;
   isAdmin: boolean;
@@ -166,6 +172,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     <AuthContext.Provider
       value={{
         currentUser,
+        isAuthLoading: isLoading,
         restrictionDate,
         restrictionType,
         isAdmin,
@@ -174,9 +181,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       }}
     >
       {isLoading && isAuthRequiredRoute ? (
-        <div className="min-h-screen w-full flex-center flex-col gap-2">
-          <Icons.logo className="h-10 w-10" />
-          <p className="text-muted">authenticating...</p>
+        <div className="min-h-screen w-full flex-center">
+          <LogoLoader size="lg" />
         </div>
       ) : (
         children

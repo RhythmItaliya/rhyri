@@ -2,7 +2,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { FirebaseError } from "firebase/app";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../lib/firebase";
-import { catchError } from "../lib/utils";
+import { appToast, catchError } from "../lib/utils";
+import { invalidateRootQueries } from "../lib/queryInvalidation";
 
 export const useBankClient = () => {
   const queryClient = useQueryClient();
@@ -22,12 +23,13 @@ export const useBankClient = () => {
       }
     },
     onSettled: async () => {
-      return await queryClient.invalidateQueries({
-        predicate: (query) =>
-          query.queryKey[0] === "bank" || query.queryKey[0] === "banks",
-      });
+      return await invalidateRootQueries(queryClient, ["bank", "banks"]);
+    },
+    onSuccess() {
+      appToast.success("Bank deleted");
     },
     onError(error) {
+      appToast.error("Unable to delete bank");
       catchError(error);
     },
   });

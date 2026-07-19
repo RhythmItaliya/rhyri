@@ -19,10 +19,9 @@ import {
   TableRow,
 } from "../../components/ui/Table";
 import { Button } from "../../components/ui/Button";
-import { toast } from "sonner";
 import { format } from "date-fns";
 import { CalendarIcon } from "@radix-ui/react-icons";
-import { cn } from "../../lib/utils";
+import { appToast, cn } from "../../lib/utils";
 import { Calendar } from "../../components/ui/Calendar";
 import {
   Popover,
@@ -62,7 +61,7 @@ export function AdminPage() {
       setUsers(userList);
     } catch (error) {
       console.error("Error fetching users:", error);
-      toast.error("Failed to load users");
+      appToast.error("Failed to load users");
     } finally {
       setLoading(false);
     }
@@ -83,11 +82,11 @@ export function AdminPage() {
         restrictionDate: date ? Timestamp.fromDate(date) : null,
       });
 
-      toast.success("Restriction date updated");
+      appToast.success("Restriction date updated");
       fetchUsers(); // Refresh list
     } catch (error) {
       console.error("Error updating restriction date:", error);
-      toast.error("Failed to update restriction date");
+      appToast.error("Failed to update restriction date");
     }
   };
 
@@ -99,11 +98,11 @@ export function AdminPage() {
         restrictionType: type,
       });
 
-      toast.success("Restriction type updated to " + type);
+      appToast.success("Restriction type updated to " + type);
       fetchUsers(); // Refresh list
     } catch (error) {
       console.error("Error updating restriction type:", error);
-      toast.error("Failed to update restriction type");
+      appToast.error("Failed to update restriction type");
     }
   };
 

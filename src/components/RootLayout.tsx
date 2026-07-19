@@ -2,9 +2,9 @@ import * as React from "react";
 import { Outlet } from "react-router-dom";
 
 import { MainNav } from "./MainNav";
-import { Icons } from "./Icons";
 
 import { ProtectedRoute } from "./ProtectedRoute";
+import { LogoLoader } from "./LogoLoader";
 
 export function RootLayout() {
   return (
@@ -14,8 +14,8 @@ export function RootLayout() {
         <main className="sm:px-8 lg:px-16 xl:px-24">
           <React.Suspense
             fallback={
-              <div className="flex-center">
-                <Icons.spinner className="h-6 w-6 text-muted animate-spin" />
+              <div className="flex-center py-12">
+                <LogoLoader />
               </div>
             }
           >

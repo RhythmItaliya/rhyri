@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../../lib/firebase";
 
@@ -8,12 +8,14 @@ import { useNavigate } from "react-router-dom";
 import { ClientInputs } from "../clientValidator";
 import { ClientForm } from "../ClientForm";
 
-import { catchError } from "../../../lib/utils";
+import { appToast, catchError } from "../../../lib/utils";
+import { invalidateRootQueries } from "../../../lib/queryInvalidation";
 import { generateClientId } from "./generateClientId";
 
 export function CreateClientPage() {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   if (!currentUser) {
     console.error("No authenticated user found");
@@ -30,9 +32,12 @@ export function CreateClientPage() {
       });
     },
     onSuccess() {
+      appToast.success("Client created successfully");
+      invalidateRootQueries(queryClient, ["clients"]);
       navigate("/clients");
     },
     onError(error) {
+      appToast.error("Unable to create client");
       catchError(error);
     },
   });

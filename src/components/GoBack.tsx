@@ -8,9 +8,13 @@ export function GoBack() {
   const location = useLocation();
 
   const handleGoBack = () => {
-    // If the current path is "/invoice/:id", always redirect to "/invoice"
+    // If the current path is an invoice detail/edit/create route, go to invoice list.
     if (location.pathname.startsWith("/invoice/")) {
       navigate("/invoices");
+    }
+    // If the current path is a purchase bill detail/edit/create route, go to purchase bill list.
+    else if (location.pathname.startsWith("/purchase-bill/")) {
+      navigate("/purchase-bills");
     }
     // If the current path is "/sign-in", always redirect to "/"
     else if (location.pathname === "/sign-in") {

@@ -17,6 +17,33 @@ import { fetchUserInvoicesStats } from "./fetchUserInvoicesStats";
 import { useQuery } from "@tanstack/react-query";
 import { useTheme } from "../../contexts/ThemeContext";
 
+interface StatCardProps {
+  title: string;
+  icon: React.ReactNode;
+  value: string | number;
+  isLoading: boolean;
+}
+
+function StatCard({ title, icon, value, isLoading }: StatCardProps) {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="text-muted font-medium text-sm">
+          {title}
+        </CardTitle>
+        {icon}
+      </CardHeader>
+      <CardContent>
+        {isLoading ? (
+          <Skeleton className="h-8 w-20" />
+        ) : (
+          <h2 className="font-bold text-xl">{value}</h2>
+        )}
+      </CardContent>
+    </Card>
+  );
+}
+
 export function DashboardPage() {
   const { currentUser, restrictionDate, restrictionType } = useAuth();
 
@@ -49,75 +76,91 @@ export function DashboardPage() {
 
       <div className="grid gap-4 py-6">
         <div className="grid sm:grid-cols-3 gap-4">
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-muted font-medium text-sm">
-                Total Invoices
-              </CardTitle>
-              <Icons.invoices className="h-5 w-5" aria-hidden="true" />
-            </CardHeader>
-            <CardContent>
-              {isLoading ? (
-                <Skeleton className="h-8 w-12" />
-              ) : (
-                <h2 className="font-bold text-xl">
-                  {invoiceStats ? invoiceStats.totalInvoiceCount : "N/A"}
-                </h2>
-              )}
-            </CardContent>
-          </Card>
+          <StatCard
+            title="Total Invoices"
+            icon={<Icons.invoices className="h-5 w-5" aria-hidden="true" />}
+            value={invoiceStats?.totalInvoiceCount ?? 0}
+            isLoading={isLoading}
+          />
 
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-muted font-medium text-sm">
-                Total Invoice Amount
-              </CardTitle>
-              <div>
-                {isDarkTheme ? (
-                  <Icons.amountDark className="h-4 w-4" aria-hidden="true" />
-                ) : (
-                  <Icons.amountLight className="h-4 w-4" aria-hidden="true" />
-                )}
-              </div>
-            </CardHeader>
-            <CardContent>
-              {isLoading ? (
-                <Skeleton className="h-8 w-12" />
+          <StatCard
+            title="Invoice Amount"
+            icon={
+              isDarkTheme ? (
+                <Icons.amountDark className="h-4 w-4" aria-hidden="true" />
               ) : (
-                <h2 className="font-bold text-xl">
-                  {invoiceStats
-                    ? formatCurrency(invoiceStats.totalInvoicesAmount)
-                    : "N/A"}
-                </h2>
-              )}
-            </CardContent>
-          </Card>
+                <Icons.amountLight className="h-4 w-4" aria-hidden="true" />
+              )
+            }
+            value={formatCurrency(invoiceStats?.totalInvoicesAmount ?? 0)}
+            isLoading={isLoading}
+          />
 
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-muted font-medium text-sm">
-                Average Invoice Amount
-              </CardTitle>
-              <div>
-                {isDarkTheme ? (
-                  <Icons.amountDark className="h-4 w-4" aria-hidden="true" />
-                ) : (
-                  <Icons.amountLight className="h-4 w-4" aria-hidden="true" />
-                )}
-              </div>
-            </CardHeader>
-            <CardContent>
-              {isLoading ? (
-                <Skeleton className="h-8 w-12" />
+          <StatCard
+            title="Average Invoice"
+            icon={
+              isDarkTheme ? (
+                <Icons.amountDark className="h-4 w-4" aria-hidden="true" />
               ) : (
-                <h2 className="font-bold text-xl">
-                  {invoiceStats
-                    ? formatCurrency(invoiceStats.averageInvoiceAmount)
-                    : "N/A"}
-                </h2>
-              )}
-            </CardContent>
-          </Card>
+                <Icons.amountLight className="h-4 w-4" aria-hidden="true" />
+              )
+            }
+            value={formatCurrency(invoiceStats?.averageInvoiceAmount ?? 0)}
+            isLoading={isLoading}
+          />
+
+          <StatCard
+            title="Purchase Bills"
+            icon={<Icons.table className="h-5 w-5" aria-hidden="true" />}
+            value={invoiceStats?.totalPurchaseBillCount ?? 0}
+            isLoading={isLoading}
+          />
+
+          <StatCard
+            title="Purchase Bill Amount"
+            icon={
+              isDarkTheme ? (
+                <Icons.amountDark className="h-4 w-4" aria-hidden="true" />
+              ) : (
+                <Icons.amountLight className="h-4 w-4" aria-hidden="true" />
+              )
+            }
+            value={formatCurrency(invoiceStats?.totalPurchaseBillsAmount ?? 0)}
+            isLoading={isLoading}
+          />
+
+          <StatCard
+            title="Challans"
+            icon={<Icons.table className="h-5 w-5" aria-hidden="true" />}
+            value={invoiceStats?.totalChallanCount ?? 0}
+            isLoading={isLoading}
+          />
+
+          <StatCard
+            title="Challan Amount"
+            icon={
+              isDarkTheme ? (
+                <Icons.amountDark className="h-4 w-4" aria-hidden="true" />
+              ) : (
+                <Icons.amountLight className="h-4 w-4" aria-hidden="true" />
+              )
+            }
+            value={formatCurrency(invoiceStats?.totalChallansAmount ?? 0)}
+            isLoading={isLoading}
+          />
+
+          <StatCard
+            title="Total Billing Amount"
+            icon={
+              isDarkTheme ? (
+                <Icons.amountDark className="h-4 w-4" aria-hidden="true" />
+              ) : (
+                <Icons.amountLight className="h-4 w-4" aria-hidden="true" />
+              )
+            }
+            value={formatCurrency(invoiceStats?.totalBusinessAmount ?? 0)}
+            isLoading={isLoading}
+          />
         </div>
 
         <div className="grid lg:grid-cols-7 gap-4">
@@ -126,11 +169,27 @@ export function DashboardPage() {
               <CardTitle>Overview</CardTitle>
             </CardHeader>
             <CardContent className="pl-2">
-              <InvoiceChart
-                pendingInvoicesCount={invoiceStats?.pendingInvoicesCount || 0}
-                paidInvoicesCount={invoiceStats?.paidInvoicesCount || 0}
-                draftedInvoicesCount={invoiceStats?.draftedInvoicesCount || 0}
-              />
+              {isLoading ? (
+                <Skeleton className="h-[350px] w-full" />
+              ) : (
+                <InvoiceChart
+                  pendingInvoicesCount={invoiceStats?.pendingInvoicesCount || 0}
+                  paidInvoicesCount={invoiceStats?.paidInvoicesCount || 0}
+                  draftedInvoicesCount={invoiceStats?.draftedInvoicesCount || 0}
+                  pendingPurchaseBillsCount={
+                    invoiceStats?.pendingPurchaseBillsCount || 0
+                  }
+                  paidPurchaseBillsCount={
+                    invoiceStats?.paidPurchaseBillsCount || 0
+                  }
+                  draftedPurchaseBillsCount={
+                    invoiceStats?.draftedPurchaseBillsCount || 0
+                  }
+                  pendingChallansCount={invoiceStats?.pendingChallansCount || 0}
+                  paidChallansCount={invoiceStats?.paidChallansCount || 0}
+                  draftedChallansCount={invoiceStats?.draftedChallansCount || 0}
+                />
+              )}
             </CardContent>
           </Card>
 

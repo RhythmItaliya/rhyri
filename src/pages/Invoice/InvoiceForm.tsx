@@ -1,5 +1,4 @@
 import { useForm, useFieldArray, Control, useWatch } from "react-hook-form";
-import { toast } from "sonner";
 
 import {
   Form,
@@ -30,7 +29,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CalendarIcon, TrashIcon } from "@radix-ui/react-icons";
 import { Icons } from "../../components/Icons";
 import { useAuth } from "../../contexts/AuthContext";
-import { cn, formatCurrency } from "../../lib/utils";
+import { appToast, cn, formatCurrency } from "../../lib/utils";
 import { addDays, format, startOfDay } from "date-fns";
 import { Calendar } from "../../components/ui/Calendar";
 import { Bank, Client, Company, Invoice } from "../../types";
@@ -312,7 +311,7 @@ export function InvoiceForm({
     const isValid = await form.trigger();
 
     if (!clientSelected || !companySelected || !bankSelected) {
-      toast.error(
+      appToast.error(
         "Please select a company, client, and bank details before submitting.",
       );
       return;
@@ -324,9 +323,9 @@ export function InvoiceForm({
         .filter(Boolean);
 
       if (errorMessages.length > 0) {
-        toast.error(`Validation Failed: ${errorMessages.join(", ")}`);
+        appToast.error(`Validation Failed: ${errorMessages.join(", ")}`);
       } else {
-        toast.error("Form validation failed. Please check all fields.");
+        appToast.error("Form validation failed. Please check all fields.");
       }
       return;
     }

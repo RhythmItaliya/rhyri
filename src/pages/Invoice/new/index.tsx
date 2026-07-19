@@ -1,5 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
-import { toast } from "sonner";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   collection,
   doc,
@@ -19,12 +18,13 @@ import { useNavigate } from "react-router-dom";
 import { InvoiceInputs } from "../invoiceValidator";
 import { InvoiceForm } from "../InvoiceForm";
 
-import { catchError } from "../../../lib/utils";
+import { appToast, catchError } from "../../../lib/utils";
 import { generateInvoiceId } from "./generateInvoiceId";
 
 export function CreateInvoicePage() {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [defaultCustomNumber, setDefaultCustomNumber] = useState("");
 
   if (!currentUser) {
@@ -101,11 +101,14 @@ export function CreateInvoicePage() {
       });
     },
     onSuccess() {
-      toast.success("Invoice created successfully");
+      appToast.success("Invoice created successfully");
+      queryClient.invalidateQueries({ queryKey: ["invoices"] });
+      queryClient.invalidateQueries({ queryKey: ["dashboard"] });
+      queryClient.invalidateQueries({ queryKey: ["recent-invoices"] });
       navigate("/invoices");
     },
     onError(error: any) {
-      toast.error(error.message);
+      appToast.error(error.message);
       catchError(error);
     },
   });

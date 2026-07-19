@@ -1,14 +1,23 @@
 import { Navigate } from "react-router-dom";
 import { GoBack } from "../../components/GoBack";
 import { Icons } from "../../components/Icons";
+import { LogoLoader } from "../../components/LogoLoader";
 import { useAuth } from "../../contexts/AuthContext";
 import { OAuthSignIn } from "./OAuthSignIn";
 
 export function SignInPage() {
-  const { currentUser } = useAuth();
+  const { currentUser, isAuthLoading } = useAuth();
+
+  if (isAuthLoading) {
+    return (
+      <main className="min-h-screen w-full flex-center">
+        <LogoLoader size="lg" />
+      </main>
+    );
+  }
 
   if (currentUser) {
-    return <Navigate to="/dashboard" />;
+    return <Navigate to="/dashboard" replace />;
   }
 
   return (
