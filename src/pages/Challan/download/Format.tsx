@@ -162,7 +162,7 @@ function ChallanCopy({
           padding: "2mm 0",
           fontWeight: 900,
           textTransform: "uppercase",
-          color: "black",
+          color: "blue",
           textAlign: "center",
           margin: 0,
           borderBottom: "1px solid black",
@@ -263,6 +263,7 @@ function ChallanCopy({
               fontWeight: 900,
               textAlign: "center",
               textTransform: "uppercase",
+              color: "blue",
             }}
           >
             {fieldNames.deliveryChallan}
@@ -458,7 +459,7 @@ function ChallanCopy({
           style={{
             width: "100%",
             fontSize: "8px",
-            color: "black",
+            color: "blue",
             borderCollapse: "collapse",
             tableLayout: "fixed",
           }}

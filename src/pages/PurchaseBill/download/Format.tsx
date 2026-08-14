@@ -70,7 +70,7 @@ const PurchaseBillFormat: React.FC<PurchaseBillFormatProps> = ({ data }) => {
           padding: "8px 0",
           fontWeight: 900,
           textTransform: "uppercase",
-          color: "black",
+          color: "blue",
           textAlign: "center",
           margin: 0,
           width: "100%",
@@ -205,7 +205,7 @@ const PurchaseBillFormat: React.FC<PurchaseBillFormatProps> = ({ data }) => {
               style={{
                 fontSize: "14px",
                 fontWeight: 700,
-                color: "black",
+                color: "blue",
                 textTransform: "uppercase",
                 textAlign: "center",
                 margin: 0,
@@ -476,7 +476,7 @@ const PurchaseBillFormat: React.FC<PurchaseBillFormatProps> = ({ data }) => {
           style={{
             width: "100%",
             fontSize: "12px",
-            color: "black",
+            color: "blue",
             borderCollapse: "collapse",
             tableLayout: "fixed",
           }}
@@ -682,7 +682,7 @@ const PurchaseBillFormat: React.FC<PurchaseBillFormatProps> = ({ data }) => {
                     fontWeight: 700,
                     textAlign: "center",
                     textTransform: "uppercase",
-                    color: "black",
+                    color: "blue",
                   }}
                 >
                   {fieldNames.total}
@@ -692,6 +692,7 @@ const PurchaseBillFormat: React.FC<PurchaseBillFormatProps> = ({ data }) => {
                     padding: "4px 16px",
                     fontWeight: 700,
                     textAlign: "right",
+                    color: "blue",
                   }}
                 >
                   {formatCurrency(totals.roundedAmount)}

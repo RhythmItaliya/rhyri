@@ -42,7 +42,7 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
             padding: "8px 0",
             fontWeight: "900",
             textTransform: "uppercase",
-            color: "black",
+            color: "blue",
             textAlign: "center",
             margin: 0,
             width: "100%",
@@ -203,7 +203,7 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
               style={{
                 fontSize: "14px",
                 fontWeight: "700",
-                color: "black",
+                color: "blue",
                 textTransform: "uppercase",
                 textAlign: "center",
                 margin: 0,
@@ -705,7 +705,7 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
           display: "flex",
           width: "100%",
           fontSize: "12px",
-          color: "black",
+          color: "blue",
         }}
       >
         <div
@@ -1027,7 +1027,7 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
                     fontWeight: "700",
                     textAlign: "center",
                     textTransform: "uppercase",
-                    color: "black",
+                    color: "blue",
                   }}
                 >
                   {fieldNames.total}
@@ -1037,6 +1037,7 @@ const FormatTest: React.FC<FormatTestProps> = ({ data, fieldNames }) => {
                     padding: "4px 16px",
                     fontWeight: "700",
                     textAlign: "right",
+                    color: "blue",
                   }}
                 >
                   {formatCurrency(totals.roundedAmount)}
